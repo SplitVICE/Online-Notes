@@ -16,9 +16,13 @@ function sha512_hashing_rounds($input, $rounds)
     return $result;
 }
 
-function sha512_compare($salt, $input1, $input2)
+function sha512_compare($salt, $password, $database_password)
 {
-    return hash("sha512", $input1) == hash("sha512", $input2);
+    $password_ingredients = $salt . $password;
+
+    $password_salted_and_hashed = sha512_hashing($password_ingredients);
+
+    return $password_salted_and_hashed == $database_password;
 }
 
 function generateRandomString($length = 10) {

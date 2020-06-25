@@ -1,8 +1,8 @@
 <?php
 
-require "logic/database/mysql.php";
+require "../logic/database/mysql.php";
 
-$public_notes_result = fetch_public_notes_for_home_page();
+$public_notes_result = fetch_private_notes_for_private_page($_SESSION['user_id']);
 $notes_array = array();
 
 if ($public_notes_result->num_rows > 0) {

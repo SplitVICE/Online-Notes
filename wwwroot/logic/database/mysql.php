@@ -96,6 +96,54 @@ function fetch_public_notes_for_home_page()
     return $public_notes_result;
 }
 
+function fetch_private_notes_for_private_page($username_id)
+{
+    require '../../config.php';
+    $conn = new mysqli(
+        $database_server_name,
+        $database_username,
+        $database_password,
+        $database_name
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT * FROM NOTE WHERE owner_id = '" . $username_id . "'";
+    $private_notes_result = $conn->query($sql);
+    $conn->close();
+    return $private_notes_result;
+}
+
+function insert_private_note($note_title, $note_description)
+{
+    require '../../../config.php';
+    require '../../../memory.php';
+    $conn = new mysqli(
+        $database_server_name,
+        $database_username,
+        $database_password,
+        $database_name
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
+                                    VALUES(?, ?, ?, false, false)")) {
+        $stmt->bind_param("sss", $_SESSION["user_id"], $note_title, $note_description);
+
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    $conn->close();
+    $url = "/private";
+    header('Location: ' . $url);
+}
+
 function register_a_new_user($username, $password, $salt)
 {
     require '../../../config.php';
@@ -137,18 +185,59 @@ function check_username_disponibility($username)
         die("Database connection failed: " . $conn->connect_error);
     }
 
-    if ($stmt = $conn->prepare("SELECT * FROM USER WHERE username = ?")) {
+    $sql_query = "SELECT * FROM USER WHERE username = ?";
+
+    if ($stmt = $conn->prepare($sql_query)) {
 
         $stmt->bind_param("s", $username);
 
         $stmt->execute();
 
-        $stmt->bind_result($username_result);
+        $stmt->bind_result($results);
 
-        $stmt->fetch();
+        $result = $stmt->fetch();
 
         $stmt->close();
 
-        return $username_result;
+        return $result;
+    }
+}
+
+function check_if_username_exists($username)
+{
+    require '../../../config.php';
+    $conn = new mysqli(
+        $database_server_name,
+        $database_username,
+        $database_password,
+        $database_name
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $sql_query = "SELECT * FROM USER WHERE username = ?";
+
+    if ($stmt = $conn->prepare($sql_query)) {
+
+        $stmt->bind_param("s", $username);
+
+        $stmt->execute();
+
+        $stmt->bind_result($ID, $username, $password, $salt);
+
+        $json = array();
+        if ($stmt->fetch()) {
+            $json = array('ID' => $ID, 'username' => $username, 'password' => $password, 'salt' => $salt);
+        } else {
+            $json = array('ID' => 'no record found');
+        }
+
+        $conn->close();
+
+        $stmt->close();
+
+        return $json;
     }
 }

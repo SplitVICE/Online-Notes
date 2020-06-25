@@ -1,4 +1,16 @@
-<?php require "../memory.php"; ?>
+<?php
+
+require "../../memory.php";
+
+if (isset($_SESSION['user_logged_in'])) {
+    if (!$_SESSION['user_logged_in']) {
+        header("Location: /");
+    }
+} else {
+    header("Location: /");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,12 +26,14 @@
     <title>Online notes</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <link rel="shortcut icon" type="image/ico" href="resources/img/favicon.ico">
-    <link rel="stylesheet" href="resources/styles/style.css">
+    <link rel="stylesheet" href="../resources/styles/style.css">
 </head>
 
 <body>
+
+
     <div class="header">
-        <h5 class="site_title">Online notes - Alpha 1.1.0</h5>
+        <h5 class="site_title">Online notes - Alpha 1.0.0</h5>
         <div class="author_webpage">
             <a target="_blank" href="https://justvice.github.io">Author webpage</a>
         </div>
@@ -28,14 +42,13 @@
     <div class="store_notes">
         Stored notes
     </div>
-    <?php require './logic/notes/render-public-notes.php'; ?>
+    <?php require '../logic/notes/render-private-notes.php'; ?>
     <hr>
-
     <div class="write_a_new_note">
         Write a new note
     </div>
     <div class="new_note_form">
-        <form action="./logic/get/insert-public-note.php" method="GET">
+        <form action="../logic/get/insert-private-note.php" method="GET">
             <label for="note_title">Note title:</label>
             <input placeholder="Note title here." type="text" name="note_title" id="note_title">
             <br>
@@ -56,7 +69,7 @@
     <footer>
         Online Notes - Made with love from Costa Rica by VICE.
     </footer>
-    <script src="./resources/script/home-scripts.js"></script>
+    <script src="../resources/script/private-home-script.js"></script>
 </body>
 
 </html>

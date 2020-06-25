@@ -1,15 +1,24 @@
 <?php
 
-require "../tasks.php";
-require "../database/mysql.php";
+if (empty($_POST['username_input']) || empty($_POST['password_input'])) {
+    header("Location: ../../register/index.php?error=emptyFields");
+} else {
 
-$username = $_POST["username_input"];
-$password = $_POST["password_input"];
+    require "../tasks.php";
+    require "../database/mysql.php";
 
-$salt = generateRandomString(100);
-$password_ingredients = $salt . $password;
-$password_hashed = sha512_hashing($password_ingredients);
+    $username = $_POST["username_input"];
+    $password = $_POST["password_input"];
 
-$is_username_not_taken = check_username_disponibility($username);
+    $salt = generateRandomString(100);
+    $password_ingredients = $salt . $password;
+    $password_hashed = sha512_hashing($password_ingredients);
 
-//register_a_new_user($username, $password_hashed, $salt);
+    $is_username_not_taken = check_username_disponibility($username);
+
+    if (!$is_username_not_taken) {
+        register_a_new_user($username, $password_hashed, $salt);
+    }else{
+        header("Location: ../../register/index.php?error=usernameTaken");
+    }
+}

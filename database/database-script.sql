@@ -4,7 +4,7 @@ USE online_notes;
 
 CREATE TABLE NOTE (
     ID int NOT NULL AUTO_INCREMENT,
-	owner_id varchar(50),
+	owner_id LONGTEXT,
     title varchar(500),
     description varchar(65535),
 	archived boolean,

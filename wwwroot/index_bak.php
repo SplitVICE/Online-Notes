@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <!-- HTML5 coding protocole -->
+    <!-- HTML5 coding protocol -->
     <meta charset="utf-8">
 
     <!-- Responsive tag -->
@@ -27,7 +27,7 @@
     <script src="/js/global.js"></script> -->
 
     <!-- Browser icon -->
-    <link rel="shortcut icon" type="image/ico" href="/favicon.ico">
+    
 
     <!-- Browser tab title -->
     <title>Public notes</title>
