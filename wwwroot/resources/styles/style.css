@@ -1,0 +1,100 @@
+body{
+    padding:0;
+    margin: 0;
+    background-color: rgb(216, 216, 216);
+}
+
+div{
+    display:block;
+}
+
+.note_container{
+    margin: 0px;
+    margin-left: 60px;
+    margin-right: 60px;
+    padding: 7px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(185, 185, 185);
+    border-radius: 15px;
+    
+}
+
+.note_title{
+    color:rgb(124, 124, 124);
+    padding: 11px;
+    font-size: 13px;
+    border-radius: 15px;
+    display:inline-block;
+    background-color: rgb(221, 224, 233);
+    font-style: italic;
+    margin-left: 21px;
+    margin-right: 21px;
+}
+
+.note_description{
+    color:black;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.note_delete_button{
+    padding: 7px;
+    margin-left: 4px;
+}
+
+.no_public_notes_stored{
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: white;
+    padding: 13px;
+    display: block;
+    text-align: center;
+    border-radius: 15px;
+    border: 1px solid rgb(185, 185, 185);
+}
+
+.header{
+    background-color: white;
+    display:block;
+    padding: 22px;
+}
+
+.site_title{
+    font-size: 32px;
+    display: inline;
+}
+
+.author_webpage{
+    font-style: italic;
+    color:pink;
+    margin-top: 10px;
+    margin-left: 50px;
+}
+
+.store_notes{
+    padding: 20px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+.write_a_new_note{
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.new_note_form{
+    margin-left: 180px;
+    margin-right: 90px;
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+footer{
+    text-align: center;
+    padding: 10px;
+    padding-bottom: 20px;
+    color:rgb(136, 136, 136);
+    font-size: 15px;
+}
