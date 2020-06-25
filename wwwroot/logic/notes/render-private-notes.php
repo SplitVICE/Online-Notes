@@ -23,9 +23,11 @@ if ($public_notes_result->num_rows > 0) {
         $ID = $notes_array[$array_length - 1]['ID'];
 
         echo "<div class='note_container'>";
+        echo "<pre>";
         echo "<div class='note_title'>" . $title . "</div>";
         echo "<br>";
         echo "<div class='note_description'>" . $description . "</div>";
+        echo "</pre>";
         echo "<div class='note_delete_button'><a href='#' onclick='deletePublicNote(" . $ID . ")'>Delete this note</a></div>";
         echo "</div>";
         echo "<br>";
@@ -34,6 +36,6 @@ if ($public_notes_result->num_rows > 0) {
     }
 } else {
     echo "<div class='no_public_notes_stored'>";
-    echo "No public notes stored.";
+    echo "No private notes stored.";
     echo "</div>";
 }

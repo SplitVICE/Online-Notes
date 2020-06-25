@@ -22,7 +22,7 @@ div{
     display:inline-block;
     background-color: rgb(221, 224, 233);
     font-style: italic;
-    margin-left: 21px;
+    margin-left: 29px;
     margin-right: 21px;
 }
 
@@ -30,6 +30,7 @@ div{
     color:black;
     margin-left: 12px;
     margin-right: 12px;
+    margin-top: 15px;
 }
 
 .note_delete_button{

@@ -76,6 +76,32 @@ function delete_public_note($note_id)
     header('Location: ' . $url);
 }
 
+function delete_private_note($note_id)
+{
+    require '../../../config.php';
+    $conn = new mysqli(
+        $database_server_name,
+        $database_username,
+        $database_password,
+        $database_name
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    if ($stmt = $conn->prepare("DELETE FROM NOTE WHERE ID = ?;")) {
+        $stmt->bind_param("i", $note_id);
+
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    $conn->close();
+    $url = "/private";
+    header('Location: ' . $url);
+}
+
 function fetch_public_notes_for_home_page()
 {
     require '../config.php';

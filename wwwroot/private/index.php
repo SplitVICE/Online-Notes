@@ -54,7 +54,7 @@ if (isset($_SESSION['user_logged_in'])) {
             <br>
             <label for="note_description">Note description:</label>
             <br>
-            <textarea placeholder="Enter your note here. Come here again to see your note. You and anyone else can delete it at any time." name="note_description" id="note_description" cols="90" rows="10" required></textarea>
+            <textarea placeholder="Enter your note here. Come here again to see your note. Only those with this account credentials can create and these delete notes.&#13;&#10;&#13;&#10;Do not store sensitive information.&#13;&#10;Read FAQ for more info." name="note_description" id="note_description" cols="90" rows="10" required></textarea>
             <br>
             <button type="submit">Submit</button>
         </form>

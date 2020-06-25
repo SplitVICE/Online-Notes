@@ -9,7 +9,7 @@ function deletePublicNote(note_id) {
         confirmButtonText: 'Delete'
     }).then((result) => {
         if (result.value) {
-            location.href = "../logic/get/delete-public-note.php?note_id=" + note_id;
+            location.href = "../logic/get/delete-private-note.php?note_id=" + note_id;
         }
     })
 }
