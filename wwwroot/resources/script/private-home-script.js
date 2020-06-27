@@ -1,4 +1,4 @@
-function deletePublicNote(note_id) {
+function deletePrivateNote(note_id) {
     Swal.fire({
         title: 'Are you sure you want to delete this note?',
         text: "The note will be deleted permanently.",
@@ -13,3 +13,20 @@ function deletePublicNote(note_id) {
         }
     })
 }
+
+function deleteUserAccount() {
+    Swal.fire({
+        title: 'Delete account',
+        text: "Your account will be permanently deleted. Are you sure?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Delete'
+    }).then((result) => {
+        if (result.value) {
+            location.href = "./delete-user.php";
+        }
+    })
+}
+

@@ -28,7 +28,7 @@ if ($public_notes_result->num_rows > 0) {
         echo "<br>";
         echo "<div class='note_description'>" . $description . "</div>";
         echo "</pre>";
-        echo "<div class='note_delete_button'><a href='#' onclick='deletePublicNote(" . $ID . ")'>Delete this note</a></div>";
+        echo "<div class='note_delete_button'><a href='#' onclick='deletePrivateNote(" . $ID . ")'>Delete this note</a></div>";
         echo "</div>";
         echo "<br>";
 

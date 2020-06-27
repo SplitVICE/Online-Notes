@@ -5,17 +5,6 @@ function sha512_hashing($input)
     return hash("sha512", $input);
 }
 
-function sha512_hashing_rounds($input, $rounds)
-{
-    $result = $input;
-
-    for($i = 0; $i <= $rounds; $i++){
-        $result = hash("sha512", $result);
-    }
-
-    return $result;
-}
-
 function sha512_compare($salt, $password, $database_password)
 {
     $password_ingredients = $salt . $password;

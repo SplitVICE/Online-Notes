@@ -4,10 +4,10 @@ require "../../memory.php";
 
 if (isset($_SESSION['user_logged_in'])) {
     if (!$_SESSION['user_logged_in']) {
-        header("Location: /");
+        header("Location: /login?error=notLoggedIn");
     }
 } else {
-    header("Location: /");
+    header("Location: /login?error=notLoggedIn");
 }
 
 ?>
@@ -27,17 +27,47 @@ if (isset($_SESSION['user_logged_in'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <link rel="shortcut icon" type="image/ico" href="resources/img/favicon.ico">
     <link rel="stylesheet" href="../resources/styles/style.css">
+    <script src="../resources/script/private-home-script.js"></script>
 </head>
 
 <body>
 
 
     <div class="header">
-        <h5 class="site_title">Online notes - Alpha 1.0.0</h5>
-        <div class="author_webpage">
-            <a target="_blank" href="https://justvice.github.io">Author webpage</a>
-        </div>
+        <h5 class="site_title">Online notes - Alpha 1.2.0</h5>
     </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- <a class="navbar-brand" href="#">Online Notes</a> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/" tabindex="-1" aria-disabled="true">Public notes<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        User actions
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="./user-log-out.php">Log out</a>
+                        <a class="dropdown-item" href="/private/change-password/">Change password</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" onclick="deleteUserAccount()">Delete my account</a>
+                    </div>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">FAQ<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">About<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
     <div class="store_notes">
         Stored notes
@@ -54,22 +84,15 @@ if (isset($_SESSION['user_logged_in'])) {
             <br>
             <label for="note_description">Note description:</label>
             <br>
-            <textarea placeholder="Enter your note here. Come here again to see your note. Only those with this account credentials can create and these delete notes.&#13;&#10;&#13;&#10;Do not store sensitive information.&#13;&#10;Read FAQ for more info." name="note_description" id="note_description" cols="90" rows="10" required></textarea>
+            <textarea placeholder="Enter your note here. Come here again to see your note. Only those with this account credentials can create and delete notes.&#13;&#10;&#13;&#10;Do not store sensitive information.&#13;&#10;Read FAQ for more info." name="note_description" id="note_description" cols="90" rows="10" required></textarea>
             <br>
             <button type="submit">Submit</button>
         </form>
     </div>
     <hr>
-    <div>
-        Login to create private notes. Make a free account here.
-        <br>
-        <a href="./login/">Login</a>
-        <a href="./register/">Register</a>
-    </div>
     <footer>
         Online Notes - Made with love from Costa Rica by VICE.
     </footer>
-    <script src="../resources/script/private-home-script.js"></script>
 </body>
 
 </html>

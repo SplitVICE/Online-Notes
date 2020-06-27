@@ -1,23 +1,24 @@
+<?php require "../memory.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
-    <title>Document</title>
-
-    <link rel="stylesheet" href="../resources/styles/style.css">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online notes</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <link rel="shortcut icon" type="image/ico" href="resources/img/favicon.ico">
+    <link rel="stylesheet" href="resources/styles/style.css">
 </head>
 
 <body>
+
     <div class="header">
         <h5 class="site_title">Online notes - Alpha 1.2.0</h5>
     </div>
@@ -30,9 +31,11 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Public notes</a>
+                </li>
                 <li class="nav-item active">
-                    <a class="nav-link " href="/">Public notes</a>
+                    <a class="nav-link" href="#">Private notes<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="#">FAQ<span class="sr-only">(current)</span></a>
@@ -43,53 +46,41 @@
             </ul>
         </div>
     </nav>
-    <div class="custom_container">
-        <br>
-        <h3>Do you want to store your own private notes?</h3>
-        <br>
-        <h6>Make a free account and to store private notes.</h6>
-        <p>
-            For further information, visit FAQ page.
-        </p>
-        <form action="../logic/post/register-user.php" method="POST">
-            <label for="">Username:</label>
-            <input type="text" name="username_input" id="username_input_id" required>
+
+
+
+    <div class="store_notes">
+        Stored notes
+    </div>
+    <?php require './logic/notes/render-public-notes.php'; ?>
+    <hr>
+
+    <div class="write_a_new_note">
+        Write a new note
+    </div>
+    <div class="new_note_form">
+        <form action="./logic/get/insert-public-note.php" method="GET">
+            <label for="note_title">Note title:</label>
+            <input placeholder="Note title here." type="text" name="note_title" id="note_title">
             <br>
-            <label for="">Password:</label>
-            <input type="password" name="password_input" id="" required>
+            <label for="note_description">Note description:</label>
             <br>
-            <label for="">Confirm password:</label>
-            <input type="password" name="password_input_repeat" id="" required>
+            <textarea placeholder="Enter your note here. Come here again to see your note. You and anyone else can delete notes at any time.&#13;&#10;&#13;&#10;Do not store sensitive information.&#13;&#10;Read FAQ for more info." name="note_description" id="note_description" cols="90" rows="10" required></textarea>
             <br>
-            <div class="button-submit">
-                <button type="submit">Submit</button>
-            </div>
+            <button type="submit">Submit</button>
         </form>
-        <?php
-        if (isset($_GET["error"])) {
-            if ($_GET['error'] == "emptyFields") {
-                echo "<div class='loginError'>";
-                echo "You must fill all the fields!";
-                echo "</div>";
-            } else if ($_GET['error'] == "usernameTaken") {
-                echo "<div class='loginError'>";
-                echo "Username already taken!";
-                echo "</div>";
-            } else if ($_GET['error'] == "passwordsDoNotMatch") {
-                echo "<div class='loginError'>";
-                echo "The passwords do not match. Try again.";
-                echo "</div>";
-            }
-        }
-        ?>
-        <a href="../login/">Login</a>
+    </div>
+    <hr>
+    <div>
+        Login or create a free account to store private notes.
         <br>
-        <a href="/">Go back home</a>
+        <a href="./login/">Login</a>
+        <a href="./register/">Register</a>
     </div>
     <footer>
         Online Notes - Made with love from Costa Rica by VICE.
     </footer>
-    <script src="script.js"></script>
+    <script src="./resources/script/home-scripts.js"></script>
 </body>
 
 </html>

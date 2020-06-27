@@ -11,7 +11,7 @@ if (empty($_POST['username_input']) || empty($_POST['password_input'])) {
     $username_input = $_POST["username_input"];
     $password_input = $_POST["password_input"];
 
-    $user_result = check_if_username_exists($username_input);
+    $user_result = bring_user_data_by_username($username_input);
 
     if ($user_result['ID'] == "no record found") {
         header("Location: ../../login/index.php?error=badCredentials");

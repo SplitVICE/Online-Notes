@@ -18,12 +18,52 @@
 </head>
 
 <body>
+
     <div class="header">
-        <h5 class="site_title">Online notes - Alpha 1.1.0</h5>
-        <div class="author_webpage">
-            <a target="_blank" href="https://justvice.github.io">Author webpage</a>
-        </div>
+        <h5 class="site_title">Online notes - Alpha 1.2.0</h5>
     </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- <a class="navbar-brand" href="#">Online Notes</a> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Public notes</a>
+                </li>
+                <?php
+                if (!$_SESSION['user_logged_in']) {
+                    echo
+                        '
+                        <li class="nav-item active">
+                            <a class="nav-link" href="./login/">Login<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="./register/">Register<span class="sr-only">(current)</span></a>
+                        </li>   
+                        ';
+                } else {
+                    echo '<li class="nav-item active">
+                        <a class="nav-link" href="./private/">Private notes<span class="sr-only">(current)</span></a>
+                    </li>';
+                }
+
+                ?>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">FAQ<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link " href="/api/">API</a>
+            </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">About<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
     <div class="store_notes">
         Stored notes
@@ -47,12 +87,6 @@
         </form>
     </div>
     <hr>
-    <div>
-        Login or create a free account to store private notes.
-        <br>
-        <a href="./login/">Login</a>
-        <a href="./register/">Register</a>
-    </div>
     <footer>
         Online Notes - Made with love from Costa Rica by VICE.
     </footer>
