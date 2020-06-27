@@ -1,0 +1,11 @@
+.custom_container{
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    
+    padding: 2%;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 20px;
+    padding-bottom: 30px;
+}

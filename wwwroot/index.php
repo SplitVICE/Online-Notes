@@ -53,11 +53,8 @@
 
                 ?>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">FAQ<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="./faq/">FAQ<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link " href="/api/">API</a>
-            </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="#">About<span class="sr-only">(current)</span></a>
                 </li>
