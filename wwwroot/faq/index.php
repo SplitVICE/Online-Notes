@@ -64,11 +64,11 @@
             </p>
             <h5>Are the private notes codified?</h5>
             <p>
-                Yes. All private notes are codified. However, you should not store sensitive data such as passwords inside the database.
+                No.
             </p>
             <h5>Are my credentials securely stored?</h5>
             <p>
-                Yes, your password is securely stored in a way only you can know the password. Even the administrators cannot see your passwords.
+                Yes, your password is securely stored in a way only you can know the password. Even the administrators cannot see or know your passwords.
             </p>
             <h5>TITLEXXXXXXXX</h5>
             <p>
