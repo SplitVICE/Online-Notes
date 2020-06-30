@@ -1,8 +1,10 @@
 <?php
 
+
+// Function to update the user's password.
 function update_user_password($new_password, $new_salt)
 {
-    $query_status = false;
+    $query_status = true;
 
     require '../../../config.php';
     require '../../../memory.php';
@@ -13,7 +15,6 @@ function update_user_password($new_password, $new_salt)
 
         $stmt->execute();
         $stmt->close();
-        $query_status = true;
     } else {
         $query_status = false;
     }
