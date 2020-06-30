@@ -19,11 +19,3 @@ CREATE TABLE USER (
 	salt varchar(250),
 	PRIMARY KEY (ID)
 );
-
-CREATE TABLE ADMIN(
-	ID int NOT NULL AUTO_INCREMENT,
-	username varchar(250),
-	password varchar(250),
-	salt varchar(250),
-	PRIMARY KEY (ID)
-);

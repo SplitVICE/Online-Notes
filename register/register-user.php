@@ -16,7 +16,7 @@ if (empty($_POST['username_input']) || empty($_POST['password_input'])) {
         $password_ingredients = $salt . $password;
         $password_hashed = sha512_hashing($password_ingredients);
 
-        $is_username_not_taken = check_username_disponibility($username);
+        $username = check_username_disponibility($username);
 
         if (!$is_username_not_taken) {
             register_a_new_user($username, $password_hashed, $salt);

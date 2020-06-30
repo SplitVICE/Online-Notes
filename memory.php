@@ -10,4 +10,4 @@ if (!isset($_SESSION['user_logged_in'])) {
     $_SESSION['user_username'] = "n/a";
 }
 
-require "env.php";
+require __DIR__ . "/env.php";

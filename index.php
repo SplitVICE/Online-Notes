@@ -1,4 +1,4 @@
-<?php require __DIR__ . "/app/memory.php"; ?>
+<?php require __DIR__ . "/memory.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +20,7 @@
 <body>
 
     <div class="header">
-        <h5 class="site_title">Online notes - Alpha 2.0.0</h5>
+        <h5 class="site_title">Online notes - Alpha 3.0.0</h5>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
