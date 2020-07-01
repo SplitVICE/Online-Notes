@@ -7,11 +7,12 @@ $new_password_confirm = $_POST['new_password_confirm'];
 if ($new_password != "" || $new_password_confirm != "") {
     if ($new_password == $new_password_confirm) {
 
-        require "../../logic/database/mysql.php";
-        require "../../logic/tasks.php";
-        require "../../../memory.php";
+        require "../../app/database/update.php";
+        require "../../app/database/read.php";
+        require "../../app/tasks.php";
+        require "../../memory.php";
 
-        $user_data = bring_user_data_by_username($_SESSION['user_username']);
+        $user_data = bring_user_data_by_username_changePasswordCheck($_SESSION['user_username']);
 
         if (sha512_compare($user_data['salt'], $current_password, $user_data['password'])) {
 

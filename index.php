@@ -13,14 +13,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online notes</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <link rel="shortcut icon" type="image/ico" href="resources/img/favicon.ico">
-    <link rel="stylesheet" href="resources/styles/style.css">
+    <link rel="shortcut icon" type="image/ico" href="public/img/favicon.ico">
+    <link rel="stylesheet" href="public/styles/style.css">
 </head>
 
 <body>
 
     <div class="header">
-        <h5 class="site_title">Online notes - Alpha 3.0.0</h5>
+        <h5 class="site_title">Online notes - Alpha 4.0.0</h5>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -47,7 +47,7 @@
                         ';
                 } else {
                     echo '<li class="nav-item active">
-                        <a class="nav-link" href="./private/">Private notes<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="./private-notes/">Private notes<span class="sr-only">(current)</span></a>
                     </li>';
                 }
 
@@ -87,7 +87,7 @@
     <footer>
         Online Notes - Made with love from Costa Rica by VICE.
     </footer>
-    <script src="./resources/script/home-scripts.js"></script>
+    <script src="./public/script/public-notes-index.js"></script>
 </body>
 
 </html>

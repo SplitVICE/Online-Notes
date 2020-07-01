@@ -7,6 +7,8 @@
 // .env.template contains all the environment variables the project needs to work.
 function create_connection_and_return_conn_variable()
 {   
+    require "../../memory.php";
+    
     // Creates mysqli variable called con with data stored at environment variables.
     $conn = new mysqli(
         $_ENV['database_server_name'],

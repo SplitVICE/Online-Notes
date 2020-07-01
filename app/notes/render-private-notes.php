@@ -1,6 +1,6 @@
 <?php
 
-require "../logic/database/mysql.php";
+require "../app/database/read.php";
 
 $public_notes_result = fetch_private_notes_for_private_page($_SESSION['user_id']);
 $notes_array = array();
@@ -18,8 +18,11 @@ if ($public_notes_result->num_rows > 0) {
         $description;
         $ID;
 
-        $title = $notes_array[$array_length - 1]['title'];
-        $description = $notes_array[$array_length - 1]['description'];
+        require "../app/tasks.php";
+
+        // Data get decrypted.
+        $title = AES128_decrypt($notes_array[$array_length - 1]['title']);
+        $description = AES128_decrypt($notes_array[$array_length - 1]['description']);
         $ID = $notes_array[$array_length - 1]['ID'];
 
         echo "<div class='note_container'>";

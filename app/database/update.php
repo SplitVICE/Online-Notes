@@ -1,14 +1,22 @@
 <?php
 
 
-// Function to update the user's password.
+// Updates the user's password.
 function update_user_password($new_password, $new_salt)
 {
     $query_status = true;
 
-    require '../../../config.php';
-    require '../../../memory.php';
-    $conn = create_connection_and_return_conn_variable();
+    require "../../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
 
     if ($stmt = $conn->prepare("UPDATE USER SET password = ?, salt = ? WHERE ID = ?")) {
         $stmt->bind_param("sss", $new_password, $new_salt, $_SESSION['user_id']);

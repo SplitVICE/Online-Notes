@@ -1,7 +1,7 @@
 <?php
 
-require "../../memory.php";
-require "../logic/database/mysql.php";
+require "../memory.php";
+require "../app/database/delete.php";
 
 $user_id = $_SESSION['user_id'];
 

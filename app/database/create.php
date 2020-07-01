@@ -10,9 +10,17 @@
 // The process to build the hashed password can be found at app/tasks.php
 function register_a_new_user($username, $password, $salt)
 {
-    require '../../../config.php';
-    require '../../../memory.php';
-    $conn = create_connection_and_return_conn_variable();
+    require "../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
 
     if ($stmt = $conn->prepare("INSERT INTO USER (username, password, salt)
                                     VALUES(?,?,?)")) {
@@ -43,8 +51,17 @@ function register_a_new_user($username, $password, $salt)
 // Required variables: too descriptive.
 function insert_public_note($note_title, $note_description)
 {
-    // Gets mysqli connection variable from create.php .
-    $conn = create_connection_and_return_conn_variable();
+    require "../../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
 
     // A prepared statement is made to perform the SQL query.
     if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
@@ -68,13 +85,27 @@ function insert_private_note($note_title, $note_description)
     // It is required to read user's ID to save the variable into
     // the database.
     // User's ID will determine who's the owner of this private note.
-    require '../../../config.php';
-    require '../../../memory.php';
-    $conn = create_connection_and_return_conn_variable();
+    require "../../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    require "../tasks.php";
+
+    // The note data get encrypted to be stored encrypted into the database.
+    $note_title_encrypted = AES128_encrypt($note_title);
+    $note_description_encrypted = AES128_encrypt($note_description);
 
     if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
                                     VALUES(?, ?, ?, false, false)")) {
-        $stmt->bind_param("sss", $_SESSION["user_id"], $note_title, $note_description);
+        $stmt->bind_param("sss", $_SESSION["user_id"], $note_title_encrypted, $note_description_encrypted);
 
         $stmt->execute();
         $stmt->close();

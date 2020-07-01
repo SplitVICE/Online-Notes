@@ -1,6 +1,6 @@
 <?php
 
-require '../database/mysql.php';
+require '../database/create.php';
 
 $note_title = $_GET['note_title'];
 $note_description = $_GET['note_description'];

@@ -1,6 +1,6 @@
 <?php
 
-require "../app/memory.php";
+require "../memory.php";
 
 if (isset($_SESSION['user_logged_in'])) {
     if (!$_SESSION['user_logged_in']) {
@@ -26,8 +26,8 @@ if (isset($_SESSION['user_logged_in'])) {
     <title>Online notes</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <link rel="shortcut icon" type="image/ico" href="resources/img/favicon.ico">
-    <link rel="stylesheet" href="../resources/styles/style.css">
-    <script src="../resources/script/private-home-script.js"></script>
+    <script src="../public/script/private-notes-index.js"></script>
+    <link rel="stylesheet" href="../../../public/styles/style.css">
 </head>
 
 <body>
@@ -50,11 +50,15 @@ if (isset($_SESSION['user_logged_in'])) {
                 </li>
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        User actions
+                        <?php
+                        // Prints username. If username longer than 20 characters
+                        // it will be always cut to show 20 characters.
+                        echo substr($_SESSION['user_username'], 0, 20)
+                        ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="./user-log-out.php">Log out</a>
-                        <a class="dropdown-item" href="/private/change-password/">Change password</a>
+                        <a class="dropdown-item" href="/private-notes/change-password/">Change password</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" onclick="deleteUserAccount()">Delete my account</a>
                     </div>
@@ -72,13 +76,13 @@ if (isset($_SESSION['user_logged_in'])) {
     <div class="store_notes">
         Stored notes
     </div>
-    <?php require '../logic/notes/render-private-notes.php'; ?>
+    <?php require '../app/notes/render-private-notes.php'; ?>
     <hr>
     <div class="write_a_new_note">
         Write a new note
     </div>
     <div class="new_note_form">
-        <form action="../logic/get/insert-private-note.php" method="GET">
+        <form action="../app/notes/insert-private-note.php" method="GET">
             <label for="note_title">Note title:</label>
             <input placeholder="Note title here." type="text" name="note_title" id="note_title">
             <br>

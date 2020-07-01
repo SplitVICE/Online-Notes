@@ -44,7 +44,7 @@
     $ciphering = "AES-128-CTR";
 
     // Use OpenSSl Encryption method 
-    $iv_length = openssl_cipher_iv_length($ciphering);
+    //$iv_length = openssl_cipher_iv_length($ciphering);
     $options = 0;
 
     // Non-NULL Initialization Vector for encryption 

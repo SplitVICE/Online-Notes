@@ -1,4 +1,4 @@
-.loginError{
+.error{
     color:red;
     font-weight: bold;
 }
@@ -25,5 +25,5 @@ input{
 }
 
 .button-submit{
-    margin-top: 20px;
+    margin-top: 25px;
 }

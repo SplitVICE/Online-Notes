@@ -72,7 +72,7 @@
             }
         }
         ?>
-        <form action="../logic/post/login-user.php" method="POST">
+        <form action="login-user.php" method="POST">
             <label for="">Username:</label>
             <input type="text" name="username_input" id="username_input_id">
             <br>

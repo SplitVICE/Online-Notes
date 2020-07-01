@@ -51,7 +51,7 @@
         <p>
             For further information, visit FAQ page.
         </p>
-        <form action="../logic/post/register-user.php" method="POST">
+        <form action="register-user.php" method="POST">
             <label for="">Username:</label>
             <input type="text" name="username_input" id="username_input_id" required>
             <br>

@@ -1,6 +1,6 @@
 <?php
 
-require "../../memory.php";
+require "../memory.php";
 
 $_SESSION['user_logged_in'] = false;
 $_SESSION['user_id'] = "n/a";

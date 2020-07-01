@@ -6,8 +6,17 @@
 // Go to route app/notes/render-private-notes.php to see this function being used.
 function fetch_private_notes_for_private_page($username_id)
 {
-    require '../../config.php';
-    $conn = create_connection_and_return_conn_variable();
+    require "../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
 
     $sql = "SELECT * FROM NOTE WHERE owner_id = '" . $username_id . "'";
     $private_notes_result = $conn->query($sql);
@@ -20,8 +29,17 @@ function fetch_private_notes_for_private_page($username_id)
 // username has not been taken.
 function check_username_disponibility($username)
 {
-    require '../../../config.php';
-    $conn = create_connection_and_return_conn_variable();
+    require "../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
 
     $sql_query = "SELECT * FROM USER WHERE username = ?";
 
@@ -51,8 +69,17 @@ function check_username_disponibility($username)
 // login/login-user.php .
 function bring_user_data_by_username($username)
 {
-    require '../../../config.php';
-    $conn = create_connection_and_return_conn_variable();
+    require "../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
 
     $sql_query = "SELECT * FROM USER WHERE username = ?";
 
@@ -64,18 +91,59 @@ function bring_user_data_by_username($username)
 
         $stmt->bind_result($ID, $username, $password, $salt);
 
-        $json = array();
+        $array = array();
         if ($stmt->fetch()) {
-            $json = array('ID' => $ID, 'username' => $username, 'password' => $password, 'salt' => $salt);
+            $array = array('ID' => $ID, 'username' => $username, 'password' => $password, 'salt' => $salt);
         } else {
-            $json = array('ID' => 'no record found');
+            $array = array('ID' => 'no record found');
         }
 
         $stmt->close();
 
         $conn->close();
 
-        return $json;
+        return $array;
+    }
+}
+
+// Same function as bring_user_data_by_username but used to change
+// user's password.
+function bring_user_data_by_username_changePasswordCheck($username)
+{
+    require "../../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $sql_query = "SELECT * FROM USER WHERE username = ?";
+
+    if ($stmt = $conn->prepare($sql_query)) {
+
+        $stmt->bind_param("s", $username);
+
+        $stmt->execute();
+
+        $stmt->bind_result($ID, $username, $password, $salt);
+
+        $array = array();
+        if ($stmt->fetch()) {
+            $array = array('ID' => $ID, 'username' => $username, 'password' => $password, 'salt' => $salt);
+        } else {
+            $array = array('ID' => 'no record found');
+        }
+
+        $stmt->close();
+
+        $conn->close();
+
+        return $array;
     }
 }
 
@@ -86,10 +154,18 @@ function bring_user_data_by_username($username)
 // This function is used at: app/api/insert-private-note/index.php .
 function check_credentials_return_id($username_input, $password_input)
 {
-    require '../../../config.php';
-    require "../../logic/tasks.php";
+    require "../tasks.php";
+    require "../../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
 
-    $conn = create_connection_and_return_conn_variable();
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
 
     $sql_query = "SELECT * FROM USER WHERE username = ?";
 
@@ -131,7 +207,16 @@ function check_credentials_return_id($username_input, $password_input)
 // Go to route app/notes/render-public-notes.php to see this function being used.
 function fetch_public_notes_for_home_page()
 {
-    $conn = create_connection_and_return_conn_variable();
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
 
     $sql_query = "SELECT * FROM NOTE WHERE owner_id = 'public'";
     $public_notes_result = $conn->query($sql_query);
