@@ -50,7 +50,7 @@
         <div class="online-notes-container">
         <img class="online-notes-image" src="/public/img/online-notes-logo-plus-letters.png" alt="Missing image!">
         <br>
-        <span class="online_notes_version">Version 4.2.1-alpha</span>
+        <span class="online_notes_version">Version 4.2.2-alpha</span>
         </div>
         <br>
         <div class="vice_image_div_container">
