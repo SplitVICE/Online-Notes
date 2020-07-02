@@ -14,23 +14,6 @@
     display: inline-block;
 }
 
-#vice_image{
-    width:150px;
-    height: auto;
-}
-
-.vice_image_class{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 45px;
-}
-
-.online_notes_version{
-    color:rgb(161, 161, 161);
-    font-size: 14px;
-    font-weight: bold;
-}
-
 p{
     padding: 0;
     margin: 0;
@@ -39,4 +22,30 @@ p{
 .title{
     font-size: 38px;
     font-weight: bold;
+}
+
+.online-notes-container{
+    margin-left: 35px;
+}
+
+.online-notes-image{
+    width: 200px;
+    height: auto;
+}
+
+.online_notes_version{
+    color:rgb(161, 161, 161);
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 62px;
+}
+
+#vice_image{
+    width:150px;
+    height: auto;
+}
+
+.vice_image_div_container{
+    margin-bottom: 20px;
+    margin-left: 45px;
 }

@@ -45,13 +45,13 @@ function delete_private_note($note_id)
             $_ENV['database_password'],
             $_ENV['database_name']
         );
-    
+
         if ($conn->connect_error) {
             die("Database connection failed: " . $conn->connect_error);
         }
 
         // The note is deleted by their associated owner's ID. This ID is stored inside 
-        // SESSION variables. This prevents further errors inside the database.
+        // SESSION variables. This prevents malicious actions on deleting private notes.
         if ($stmt = $conn->prepare("DELETE FROM NOTE WHERE ID = ? AND owner_id = ?;")) {
             $stmt->bind_param("is", $note_id, $_SESSION['user_id']);
 
@@ -114,6 +114,59 @@ function delete_associated_notes($user_id)
 
     if ($stmt = $conn->prepare("DELETE FROM NOTE WHERE owner_id = ?")) {
         $stmt->bind_param("s", $user_id);
+
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    $conn->close();
+}
+
+// Deletes a note in admin mode. Admins can delete any note.
+function delete_note_admin($note_id)
+{
+    require "../memory.php";
+    if ($_SESSION['admin_logged_in']) {
+        $conn = new mysqli(
+            $_ENV['database_server_name'],
+            $_ENV['database_username'],
+            $_ENV['database_password'],
+            $_ENV['database_name']
+        );
+
+        if ($conn->connect_error) {
+            die("Database connection failed: " . $conn->connect_error);
+        }
+
+        if ($stmt = $conn->prepare("DELETE FROM NOTE WHERE ID = ?;")) {
+            $stmt->bind_param("i", $note_id);
+
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        $conn->close();
+    }
+}
+
+// Deletes all the public notes stored in the database.
+function delete_all_public_notes(){
+    require "../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $value = "public";
+
+    if ($stmt = $conn->prepare("DELETE FROM NOTE WHERE owner_id = ?;")) {
+        $stmt->bind_param("s", $value);
 
         $stmt->execute();
         $stmt->close();

@@ -1,3 +1,4 @@
+<?php require "../memory.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +15,6 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="../public/styles/style.css">
-    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -47,46 +47,17 @@
         </div>
     </nav>
     <div class="custom_container">
-        <div class="online-notes-container">
-        <img class="online-notes-image" src="/public/img/online-notes-logo-plus-letters.png" alt="Missing image!">
-        <br>
-        <span class="online_notes_version">Version 4.2.1-alpha</span>
-        </div>
-        <br>
-        <div class="vice_image_div_container">
-            <img id="vice_image" src="../public/img/just-vice.png" alt="Missing image">
-        </div>
-        <p>
-            Online Notes created entirely by VICE.
-        </p>
-        <p>
-            Visit the author's web page clicking here: <a target="_blank" href="https://justvice.github.io/">VICE's archive web page.</a>
-        </p>
-        <br>
-        <h5>Credits</h5>
-        <p>
-            The following external PHP projects were used to create Online Notes:
-        </p>
-        <ul>
-            <li>
-                <a target="_blank" href="https://sweetalert2.github.io/">SweetAlert2</a>
-            </li>
-            <li>
-                <a target="_blank" href="https://github.com/vlucas/phpdotenv">PHP dotenv</a>
-            </li>
-            <li>
-                <a target="_blank" href="https://getcomposer.org/">Composer - Dependency Manager for PHP</a>
-            </li>
-        </ul>
-        <h5>Online Notes</h5>
-        <p>
-            Online Notes is a freeware build with PHP and MIT Licensed
-        </p>
-        <p>
-            You can download this entire project at it's Github repository and run your own Online Notes.
-            <br>
-            <a target="_blank" href="https://www.github.com/JustVice/Online-Notes/">Online Notes repository</a>
-        </p>
+        <?php
+        if ($_ENV['admin_password'] != "No password set") {
+            echo '<form action="./authentication-logic.php" method="POST">';
+            echo '<label for="">Enter admin password to continue</label>';
+            echo '<input type="password" name="password-input" id="password-input">';
+            echo '<button type="submit">Submit</button>';
+            echo '</form>';
+        } else {
+            echo 'Please, set admin password at the environment variables file (.env file) to open the dashboard.';
+        }
+        ?>
     </div>
     <hr>
     <footer>

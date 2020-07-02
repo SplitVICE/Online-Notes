@@ -1,6 +1,7 @@
 <?php
 
 require "../app/database/read.php";
+require "../app/tasks.php";
 
 $public_notes_result = fetch_private_notes_for_private_page($_SESSION['user_id']);
 $notes_array = array();
@@ -17,8 +18,6 @@ if ($public_notes_result->num_rows > 0) {
         $title;
         $description;
         $ID;
-
-        require "../app/tasks.php";
 
         // Data get decrypted.
         $title = AES128_decrypt($notes_array[$array_length - 1]['title']);

@@ -11,6 +11,16 @@ class Note
     public $in_trash_can;
 
     // Methods.
+    function set_id($ID)
+    {
+        $this->ID = $ID;
+    }
+
+    function get_id()
+    {
+        return $this->ID;
+    }
+
     function set_owner_id($owner_id)
     {
         $this->owner_id = $owner_id;
@@ -61,4 +71,3 @@ class Note
         return $this->in_trash_can;
     }
 }
-?>

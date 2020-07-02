@@ -13,14 +13,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online notes</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="public/script/global-script.js"></script>
     <link rel="shortcut icon" type="image/ico" href="public/img/favicon.ico">
     <link rel="stylesheet" href="public/styles/style.css">
 </head>
 
 <body>
-
     <div class="header">
-        <h5 class="site_title">Online notes - Alpha 4.0.0</h5>
+        <img class="header_image" src="/public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -56,7 +56,7 @@
                     <a class="nav-link" href="./faq/">FAQ<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">About<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/about">About<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
         </div>

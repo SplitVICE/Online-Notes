@@ -31,12 +31,18 @@ div{
     margin-left: 12px;
     margin-right: 12px;
     margin-top: 15px;
+    overflow-x: hidden;
+    word-wrap: break-word;
 }
 
-.note_delete_button{
+.note_action_buttons_container{
     padding: 7px;
     margin-left: 4px;
     margin-top: 7px;
+}
+
+.note_action_button{
+    margin-right: 17px;
 }
 
 .no_public_notes_stored{
@@ -49,7 +55,13 @@ div{
 .header{
     background-color: white;
     display:block;
-    padding: 22px;
+    padding: 5px;
+    padding-left: 40px;
+}
+
+.header_image{
+    width:440px;
+    height: auto;
 }
 
 .site_title{
