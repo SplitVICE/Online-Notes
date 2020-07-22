@@ -86,7 +86,7 @@
             <div id="characters_left">
                 Characters left:
                 <spanclass="amount_of_characters">
-                    6500
+                    1980
                     </span>
             </div>
             <br>
