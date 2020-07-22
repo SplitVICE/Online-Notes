@@ -65,10 +65,13 @@
     <div class="store_notes">
         Stored notes
     </div>
+    <div class="write_a_new_note_ahref">
+        <a href="#write_a_new_note_id">Write a new note</a>
+    </div>
     <?php require 'app/notes/render-public-notes.php'; ?>
     <hr>
 
-    <div class="write_a_new_note">
+    <div class="write_a_new_note" id="write_a_new_note_id">
         Write a new note
     </div>
     <div class="new_note_form">
@@ -78,7 +81,14 @@
             <br>
             <label for="note_description">Note description:</label>
             <br>
-            <textarea placeholder="Enter your note here. Come here again to see your note. You and anyone else can delete notes at any time.&#13;&#10;&#13;&#10;Do not store sensitive information.&#13;&#10;Read FAQ for more info." name="note_description" id="note_description" cols="90" rows="10" required></textarea>
+            <textarea cols="90" rows="10" required onkeyup="characters_counter()" placeholder="Enter your note here. Come here again to see your note. You and anyone else can delete notes at any time.&#13;&#10;&#13;&#10;Do not store sensitive information.&#13;&#10;Read FAQ for more info." name="note_description" id="note_description"></textarea>
+            <br>
+            <div id="characters_left">
+                Characters left:
+                <spanclass="amount_of_characters">
+                    6500
+                    </span>
+            </div>
             <br>
             <button type="submit">Submit</button>
         </form>

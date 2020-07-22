@@ -103,3 +103,26 @@ footer{
     color:rgb(136, 136, 136);
     font-size: 15px;
 }
+
+.write_a_new_note_ahref{
+    text-align: center;
+    font-size: 13px;
+    padding-bottom: 12px;
+}
+
+.title_content{
+    font-size: 22px;
+    color:red;
+}
+
+.subtitle_content{
+    
+}
+
+#characters_left{
+    font-size: 13px;
+}
+
+.red{
+    color:red;
+}

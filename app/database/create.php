@@ -129,7 +129,17 @@ function insert_private_note($note_title, $note_description)
 // Required variables: too descriptive.
 function insert_public_note_api($note_title, $note_description)
 {
-    $conn = create_connection_and_return_conn_variable();
+    require "../../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
 
     // This variable controls if the public note was successfully stored into the database.
     // This variable is returned as true if the query was successful.
@@ -157,13 +167,28 @@ function insert_public_note_api($note_title, $note_description)
 // the database who's the owner of this private note.
 function insert_private_note_api($note_title, $note_description, $user_id)
 {
+    require "../../memory.php";
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
     $query_status = true;
 
-    $conn = create_connection_and_return_conn_variable();
+    $note_title_encrypted = AES128_encrypt($note_title);
+    $note_description_encrypted = AES128_encrypt($note_description);
 
     if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
                                     VALUES(?, ?, ?, false, false)")) {
-        $stmt->bind_param("sss", $user_id, $note_title, $note_description);
+        $stmt->bind_param("sss", $user_id
+        , $note_title_encrypted
+        , $note_description_encrypted);
 
         $stmt->execute();
         $stmt->close();

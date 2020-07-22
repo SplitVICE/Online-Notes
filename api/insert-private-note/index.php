@@ -13,7 +13,8 @@ if (!isset($_GET['username']) || !isset($_GET['password'])) {
     $username = $_GET['username'];
     $password = $_GET['password'];
 
-    require "../../logic/database/mysql.php";
+    require "../../app/database/create.php";
+    require "../../app/database/read.php";
 
     $result = check_credentials_return_id($username, $password);
 

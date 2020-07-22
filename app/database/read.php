@@ -154,7 +154,7 @@ function bring_user_data_by_username_changePasswordCheck($username)
 // This function is used at: app/api/insert-private-note/index.php .
 function check_credentials_return_id($username_input, $password_input)
 {
-    require "../tasks.php";
+    require "../../app/tasks.php";
     require "../../memory.php";
     $conn = new mysqli(
         $_ENV['database_server_name'],
@@ -222,6 +222,35 @@ function fetch_public_notes_for_home_page()
     $public_notes_result = $conn->query($sql_query);
     $conn->close();
     return $public_notes_result;
+}
+
+// Fetches all the public stored on the database and returns them as a JSON.
+function fetch_public_notes_for_api()
+{
+    $conn = new mysqli(
+        $_ENV['database_server_name'],
+        $_ENV['database_username'],
+        $_ENV['database_password'],
+        $_ENV['database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $sql_query = "SELECT * FROM NOTE WHERE owner_id = 'public'";
+    $public_notes_result = $conn->query($sql_query);
+    $conn->close();
+
+    $notes_array = array();
+
+    if ($public_notes_result->num_rows > 0) {
+        for ($i = 0; $row = $public_notes_result->fetch_assoc(); $i++) {
+            $notes_array[$i] = $row;
+        }
+    }
+    
+    return $notes_array;
 }
 
 // Returns all the notes stored into the database in an array.

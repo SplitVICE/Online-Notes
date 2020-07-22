@@ -17,7 +17,7 @@ if (isset($_GET['note-description'])) {
         }
     }
 
-    require "../../logic/database/mysql.php";
+    require "../../app/database/create.php";
 
     if(insert_public_note_api($note_title, $note_description)){
         $response['status'] = "success";

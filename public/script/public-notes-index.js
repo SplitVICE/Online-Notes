@@ -28,3 +28,17 @@ function copyDescriptionToClipboard(id) {
     showModal_copied_into_clipboard("Description copied into clipboard");
 }
 
+// Updates the counter of max characters the database can handle
+// regarding how long the note description is.
+function characters_counter() {
+    const max_characters = 6500;
+    const text_area_value =
+        document.getElementById("note_description").value;
+    const number_of_characters = text_area_value.length;
+
+    const div_characters_left = document.getElementById('characters_left');
+    div_characters_left.innerHTML =
+        `Characters left: <span class="amount_of_characters">
+                    ` + (max_characters - number_of_characters) + `
+                </span>`
+}

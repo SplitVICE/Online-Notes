@@ -20,8 +20,8 @@
 
     <title>Document</title>
 
-    <link rel="stylesheet" href="../resources/styles/style.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../resources/styles/style.css">
 </head>
 
 <body>
@@ -56,8 +56,13 @@
                 </ul>
             </div>
         </nav>
+
         <div class="custom_container">
-            <h1>API usage</h1>
+
+            <div class="title_content">
+                API usage
+            </div>
+            
             <p>
                 There are a total of two APIs able to use.
             </p>
@@ -65,7 +70,7 @@
                 <li>Insert public notes via URL.</li>
                 <li>Insert private notes via URL.</li>
             </ul>
-            <h4>Insert private note via URL</h4>
+            <h4>Insert public note via URL</h4>
             <h6>Usage</h6>
             <p>
                 To post a new public note use the following URL route:
@@ -83,7 +88,7 @@
                 note-description - Holds the description of your new note.
             </p>
             <hr>
-            <h4>Insert public note via URL</h4>
+            <h4>Insert private note via URL</h4>
             <p>
                 This URL API allows users to post a new note related to a registered user.
             </p>
