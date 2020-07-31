@@ -23,13 +23,18 @@
 
     <!-- Scripts and styles -->
     <script src="public/script/global-script.js"></script>
+    <script src="public/script/description-characters-counter.js"></script>
+    <script src="public/script/sweetalert-functions.js"></script>
+    <script src="public/script/copy-notes-info.js"></script>
     <link rel="stylesheet" href="public/styles/style.css">
 </head>
 
 <body>
 
     <div class="header">
-        <img class="header_image" src="/public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
+        <a href="./">
+            <img class="header_image" src="/public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
+        </a>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -71,7 +76,7 @@
     </nav>
 
     <div class="store_notes">
-        Stored notes
+        Public notes
     </div>
     <div class="write_a_new_note_ahref">
         <a href="#write_a_new_note_id">Write a new note</a>

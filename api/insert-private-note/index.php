@@ -7,7 +7,7 @@ $response = array();
 
 if (!isset($_GET['username']) || !isset($_GET['password'])) {
     $response['status'] = "failed";
-    $response['description'] = "no credentials given";
+    $response['description'] = "credentials not given";
     echo $json_string = json_encode($response, JSON_PRETTY_PRINT);
 } else {
     $username = $_GET['username'];
@@ -16,7 +16,7 @@ if (!isset($_GET['username']) || !isset($_GET['password'])) {
     require "../../app/database/create.php";
     require "../../app/database/read.php";
 
-    $result = check_credentials_return_id($username, $password);
+    $result = check_credentials_return_id_api($username, $password);
 
     if ($result['ID'] != "NA") {
         if (isset($_GET['note-description'])) {
@@ -50,7 +50,7 @@ if (!isset($_GET['username']) || !isset($_GET['password'])) {
         }
     } else {
         $response['status'] = "failed";
-        $response['description'] = "bad credentials";
+        $response['description'] = "password is incorrect";
         echo $json_string = json_encode($response, JSON_PRETTY_PRINT);
     }
 }

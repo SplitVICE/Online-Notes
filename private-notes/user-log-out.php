@@ -6,5 +6,5 @@ $_SESSION['user_logged_in'] = false;
 $_SESSION['user_id'] = "n/a";
 $_SESSION['user_username'] = "n/a";
 
-$url = "/";
+$url = "../";
 header('Location: ' . $url);

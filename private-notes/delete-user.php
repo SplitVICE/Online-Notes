@@ -12,7 +12,7 @@ $_SESSION['user_logged_in'] = false;
 $_SESSION['user_id'] = "n/a";
 $_SESSION['user_username'] = "n/a";
 
-$url = "../../response/index.php?message=Your account was successfully deleted";
+$url = "../response/index.php?message=Your account was successfully deleted";
 header('Location: ' . $url);
 
 ?>

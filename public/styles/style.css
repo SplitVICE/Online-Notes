@@ -1,11 +1,7 @@
 body{
     padding:0;
     margin: 0;
-    background-color: rgb(228, 228, 228);
-}
-
-div{
-    display:block;
+    background-color: rgb(255, 235, 235);
 }
 
 .note_container{
@@ -82,6 +78,7 @@ div{
     font-size: 32px;
     font-weight: bold;
 }
+
 .write_a_new_note{
     margin-bottom: 10px;
     text-align: center;

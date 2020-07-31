@@ -35,13 +35,19 @@ if (isset($_SESSION['user_logged_in'])) {
 
     <!-- Scripts and styles -->
     <script src="../public/script/global-script.js"></script>
+    <script src="../public/script/description-characters-counter.js"></script>
+    <script src="../public/script/sweetalert-functions.js"></script>
+    <script src="../public/script/copy-notes-info.js"></script>
     <link rel="stylesheet" href="../public/styles/style.css">
+    <link rel="stylesheet" href="../public/styles/private-notes.css">
 </head>
 
 <body>
 
     <div class="header">
-        <img class="header_image" src="/public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
+        <a href="/">
+            <img class="header_image" src="/public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
+        </a>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -52,7 +58,7 @@ if (isset($_SESSION['user_logged_in'])) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/" tabindex="-1" aria-disabled="true">Public notes<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="../" tabindex="-1" aria-disabled="true">Public notes<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -62,7 +68,7 @@ if (isset($_SESSION['user_logged_in'])) {
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="./user-log-out.php">Log out</a>
-                        <a class="dropdown-item" href="/private-notes/change-password/">Change password</a>
+                        <a class="dropdown-item" href="./change-password/">Change password</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" onclick="deleteUserAccount()">Delete my account</a>
                     </div>
@@ -78,14 +84,14 @@ if (isset($_SESSION['user_logged_in'])) {
     </nav>
 
     <div class="store_notes">
-        Stored notes
+        Private notes
     </div>
     <div class="write_a_new_note_ahref">
         <a href="#write_a_new_note_id">Write a new note</a>
     </div>
     <?php require '../app/notes/render-private-notes.php'; ?>
     <hr>
-    
+
     <div class="accordion" id="accordionExample">
         <div class="card">
             <div class="card-header" id="headingTwo">

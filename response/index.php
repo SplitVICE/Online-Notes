@@ -7,6 +7,6 @@
 </head>
 <body>
     <?php echo "<h1>" . $_GET['message'] ."</h1>" ?>
-    <a href="/">Go back home.</a>
+    <a href="../">Go back home.</a>
 </body>
 </html>

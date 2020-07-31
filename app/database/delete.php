@@ -27,7 +27,7 @@ function delete_public_note($note_id)
     $conn->close();
 
     // User is redirected to project root route.
-    $url = "/";
+    $url = "../../";
     header('Location: ' . $url);
 }
 
@@ -60,10 +60,10 @@ function delete_private_note($note_id)
         }
 
         $conn->close();
-        $url = "/private-notes";
+        $url = "../../private-notes";
         header('Location: ' . $url);
     } else {
-        $url = "/";
+        $url = "../../";
         header('Location: ' . $url);
     }
 }
