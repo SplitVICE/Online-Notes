@@ -12,10 +12,10 @@ function register_a_new_user($username, $password, $salt)
 {
     require "../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -53,10 +53,10 @@ function insert_public_note($note_title, $note_description)
 {
     require "../../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -87,10 +87,10 @@ function insert_private_note($note_title, $note_description)
     // User's ID will determine who's the owner of this private note.
     require "../../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -131,10 +131,10 @@ function insert_public_note_api($note_title, $note_description)
 {
     require "../../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -169,10 +169,10 @@ function insert_private_note_api($note_title, $note_description, $user_id)
 {
     require "../../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {

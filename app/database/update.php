@@ -8,10 +8,10 @@ function update_user_password($new_password, $new_salt)
 
     require "../../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {

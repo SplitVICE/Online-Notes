@@ -25,11 +25,9 @@ if ($public_notes_result->num_rows > 0) {
         $ID = $notes_array[$array_length - 1]['ID'];
 
         echo "<div class='note_container'>";
-        echo "<pre>";
         echo "<div class='note_title'>" . $title . "</div>";
         echo "<br>";
-        echo "<div class='note_description'>" . $description . "</div>";
-        echo "</pre>";
+        echo "<div class='note_description'>" . nl2br($description) . "</div>";
         echo "<div class='note_delete_button'><a href='#' onclick='deletePrivateNote(" . $ID . ")'>Delete this note</a></div>";
         echo "</div>";
         echo "<br>";

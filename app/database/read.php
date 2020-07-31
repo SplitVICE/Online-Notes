@@ -8,10 +8,10 @@ function fetch_private_notes_for_private_page($username_id)
 {
     require "../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -31,10 +31,10 @@ function check_username_disponibility($username)
 {
     require "../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -71,10 +71,10 @@ function bring_user_data_by_username($username)
 {
     require "../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -112,10 +112,10 @@ function bring_user_data_by_username_changePasswordCheck($username)
 {
     require "../../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -157,10 +157,10 @@ function check_credentials_return_id($username_input, $password_input)
     require "../../app/tasks.php";
     require "../../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -208,10 +208,10 @@ function check_credentials_return_id($username_input, $password_input)
 function fetch_public_notes_for_home_page()
 {
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -228,10 +228,10 @@ function fetch_public_notes_for_home_page()
 function fetch_public_notes_for_api()
 {
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -259,10 +259,10 @@ function fetch_public_notes_for_api()
 function return_all_notes_in_an_array()
 {
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -353,10 +353,10 @@ function return_all_notes_in_an_array()
 function return_all_accounts_in_an_array()
 {
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {

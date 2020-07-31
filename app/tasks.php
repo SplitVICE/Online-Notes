@@ -4,7 +4,7 @@
 // Returns the result.
 function AES128_encrypt($string_input)
 {
-    $encryption_key = $_ENV['master_key'];
+    $encryption_key = $_ENV['onlinenotes_master_key'];
     $ciphering = "AES-128-CTR";
     $string_to_encrypt = $string_input;
 
@@ -24,7 +24,7 @@ function AES128_encrypt($string_input)
 // Returns the result.
 function AES128_decrypt($string_input)
 {
-    $decryption_key = $_ENV['master_key'];
+    $decryption_key = $_ENV['onlinenotes_master_key'];
     $ciphering = "AES-128-CTR";
     $string_to_decrypt = $string_input;
 

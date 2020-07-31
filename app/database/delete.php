@@ -7,10 +7,10 @@ function delete_public_note($note_id)
 {
     require "../../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -40,10 +40,10 @@ function delete_private_note($note_id)
     if (isset($_SESSION['user_logged_in'])) {
         require "../../memory.php";
         $conn = new mysqli(
-            $_ENV['database_server_name'],
-            $_ENV['database_username'],
-            $_ENV['database_password'],
-            $_ENV['database_name']
+            $_ENV['onlinenotes_database_server_name'],
+            $_ENV['onlinenotes_database_username'],
+            $_ENV['onlinenotes_database_password'],
+            $_ENV['onlinenotes_database_name']
         );
 
         if ($conn->connect_error) {
@@ -73,10 +73,10 @@ function delete_user($user_id)
 {
     require "../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -102,10 +102,10 @@ function delete_associated_notes($user_id)
 {
     require "../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {
@@ -128,10 +128,10 @@ function delete_note_admin($note_id)
     require "../memory.php";
     if ($_SESSION['admin_logged_in']) {
         $conn = new mysqli(
-            $_ENV['database_server_name'],
-            $_ENV['database_username'],
-            $_ENV['database_password'],
-            $_ENV['database_name']
+            $_ENV['onlinenotes_database_server_name'],
+            $_ENV['onlinenotes_database_username'],
+            $_ENV['onlinenotes_database_password'],
+            $_ENV['onlinenotes_database_name']
         );
 
         if ($conn->connect_error) {
@@ -153,10 +153,10 @@ function delete_note_admin($note_id)
 function delete_all_public_notes(){
     require "../memory.php";
     $conn = new mysqli(
-        $_ENV['database_server_name'],
-        $_ENV['database_username'],
-        $_ENV['database_password'],
-        $_ENV['database_name']
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
     );
 
     if ($conn->connect_error) {

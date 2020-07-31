@@ -2,8 +2,8 @@ let noteLengthError_messageTooLarge_hasBeenShowed = false;
 
 function deletePublicNote(note_id) {
     Swal.fire({
-        title: 'Are you sure you want to delete this note?',
-        text: "The note will be deleted permanently.",
+        title: 'Delete note?',
+        text: "Note will be deleted permanently. Are you sure?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -20,14 +20,14 @@ function copyTitleToClipboard(id) {
     note_title_id = "note_title_" + id
     const title = document.getElementById(note_title_id).innerText
     copy_text_to_clipboard(title);
-    showModal_copied_into_clipboard("Title copied into clipboard");
+    sweetAlert_success("Title copied into clipboard");
 }
 
 function copyDescriptionToClipboard(id) {
     note_description_id = "note_description_" + id
     const desc = document.getElementById(note_description_id).innerText
     copy_text_to_clipboard(desc);
-    showModal_copied_into_clipboard("Description copied into clipboard");
+    sweetAlert_success("Description copied into clipboard");
 }
 
 // Updates the counter of max characters the database can handle
