@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Online notes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/ico" href="../public/img/favicon.ico">
+    <link rel="shortcut icon" type="image/ico" href="../../public/img/favicon.ico">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -18,15 +18,15 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
     <!-- Scripts and styles -->
-    <link rel="stylesheet" href="../public/styles/style.css">
-    <link rel="stylesheet" href="../public/styles/white-background.css">
+    <link rel="stylesheet" href="../../public/styles/style.css">
+    <link rel="stylesheet" href="../../public/styles/white-background.css">
 </head>
 
 <body>
 
     <div class="header">
-        <a href="../">
-            <img class="header_image img-fluid" src="../public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
+        <a href="../../">
+            <img class="header_image img-fluid" src="../../public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
         </a>
     </div>
 
@@ -34,19 +34,18 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+
                 <li class="nav-item active">
-                    <a class="nav-link " href="../">Public notes</a>
+                    <a class="nav-link " href="../../">Public notes</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="../login/">Login<span class="sr-only">(current)</span></a>
+                    <a class="nav-link " href="../../private-notes/">Private notes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Register</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">FAQ<span class="sr-only">(current)</span></a>
+                    <a class="nav-link disabled" href="/faq">FAQ<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="#">About<span class="sr-only">(current)</span></a>
@@ -56,52 +55,70 @@
     </nav>
 
     <div class="container">
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-7">
-                <br>
-                <div class="title">
-                    Register and start storing private notes.
+
+        <div>For developers</div>
+        <div>API</div>
+        <p>
+            There are a total of two APIs able to be used.
+        </p>
+        <ul>
+            <li>Insert public notes via URL.</li>
+            <li>Insert private notes via URL.</li>
+        </ul>
+        <div>Insert private note via URL</div>
+        <div>Usage</div>
+        <p>
+            To post a new public note use the following URL route:
+        </p>
+        <p>
+            <b>
+                <div class="route-example">
+                    /api/insert-public-note/index.php?note-title=YourNoteTitle&ampnote-description=YourNoteDescription
                 </div>
-                <br>
-                <form action="register-user.php" method="POST">
-                    <div class="form-group">
-                        <input placeholder="Username" class="form-control" type="text" name="username_input" id="username_input_id" required>
-                    </div>
-                    <div class="form-group">
-                        <input placeholder="Password" class="form-control" type="password" name="password_input" id="" required>
-                    </div>
-                    <div class="form-group">
-                        <input placeholder="Confirm password" class="form-control" type="password" name="password_input_repeat" id="" required>
-                    </div>
-                    <button class="btn btn-primary btn-block" type="submit">Submit</button>
-                    <br>
-                    <?php
-                    if (isset($_GET["error"])) {
-                        if ($_GET['error'] == "emptyFields") {
-                            echo "<div class='alert alert-danger'>";
-                            echo "You must fill all the fields!";
-                            echo "</div>";
-                        } else if ($_GET['error'] == "usernameTaken") {
-                            echo "<div class='alert alert-danger'>";
-                            echo "The username given is already in use.";
-                            echo "</div>";
-                        } else if ($_GET['error'] == "passwordsDoNotMatch") {
-                            echo "<div class='alert alert-danger'>";
-                            echo "The passwords do not match. Try again.";
-                            echo "</div>";
-                        }
-                    }
-                    ?>
-                </form>
-                <div>
-                    Already have an account?
-                    <a href="../login/">Login</a>
+            </b>
+        </p>
+        <div>Variables</div>
+        <p>
+            note-title - This variable is optional. Holds the title of your new note.
+        </p>
+        <p>
+            note-description - Holds the description of your new note.
+        </p>
+        <div>Insert public note via URL</div>
+        <p>
+            This URL API allows users to post a new note related to a registered user.
+        </p>
+        <p>
+            NOTE: The user and password of the user must be written on the URL. Use by your own risk.
+        </p>
+        <div>Usage</div>
+        <p>
+            Use the following route:
+        </p>
+        <p>
+            <b>
+                <div class="route-example">
+                    /api/insert-private-note/index.php?note-title=YourNoteTitle&ampnote-description=Your-Note-Description&ampusername=Your-User-Name&amppassword=YourPassword
                 </div>
-            </div>
-        </div>
+            </b>
+        </p>
+        <div>Variables</div>
+        <p>
+            note-title - This variable is optional. Holds the title of your new note.
+        </p>
+        <p>
+            note-description - Holds the description of your new note.
+        </p>
+        <p>
+            username - Your username must be typed in this field to grant access to the written account.
+        </p>
+        <p>
+            password - Your password must be typed in this field to grant access to the written account by cheeking
+            credentials.
+        </p>
+
     </div>
-    </div>
-    <br>
+
     <footer>
         <div class="container">
             <a target="_blank" href="https://github.com/JustVice/Online-Notes">
@@ -119,7 +136,6 @@
             </div>
         </div>
     </footer>
-    <script src="script.js"></script>
 </body>
 
 </html>

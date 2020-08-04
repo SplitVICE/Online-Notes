@@ -33,7 +33,7 @@
 
     <div class="header">
         <a href="./">
-            <img class="header_image" src="/public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
+            <img class="header_image img-fluid" src="./public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
         </a>
     </div>
 
@@ -79,7 +79,7 @@
         Public notes
     </div>
     <div class="write_a_new_note_ahref">
-        <a href="#write_a_new_note_id">Write a new note</a>
+        <a onclick="writeANewNote_openCollapse()" href="#write_a_new_note_id">Write a new note</a>
     </div>
     <?php require 'app/notes/render-public-notes.php'; ?>
     <hr>
@@ -88,7 +88,7 @@
         <div class="card">
             <div class="card-header" id="headingTwo">
                 <div class="mb-0">
-                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <button onclick="scrollIntoView_btnSubmitNote()" id="collapse_button" class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         <div class="write_a_new_note" id="write_a_new_note_id">
                             Write a new note
                         </div>
@@ -116,7 +116,7 @@
                                     </div>
                                 </small>
                             </div>
-                            <button class="btn btn-outline-primary btn-block" type="submit">Submit</button>
+                            <button id="btn_submitNote" class="btn btn-outline-primary btn-block" type="submit">Submit</button>
                         </form>
                         <br>
                     </div>

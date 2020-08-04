@@ -28,7 +28,7 @@
 <body>
 
     <div class="header">
-        <img class="header_image" src="/public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
+        <img class="header_image img-fluid" src="../../public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">

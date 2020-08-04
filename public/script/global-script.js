@@ -6,3 +6,13 @@ function copy_text_to_clipboard(text_to_copy){
     document.execCommand("copy");
     document.body.removeChild(dummy);
 }
+
+function writeANewNote_openCollapse(){
+    document.getElementById('collapse_button').click();
+}
+
+function scrollIntoView_btnSubmitNote(){
+    setTimeout(() => {
+        document.getElementById('btn_submitNote').scrollIntoView();    
+    }, 200);
+}

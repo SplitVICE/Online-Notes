@@ -28,7 +28,7 @@
 
     <body>
         <div class="header">
-            <h5 class="site_title">Online notes - Alpha 1.2.0</h5>
+            <h5 class="">Online notes - Alpha 1.2.0</h5>
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">

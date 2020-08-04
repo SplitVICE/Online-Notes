@@ -25,8 +25,8 @@
 <body>
 
     <div class="header">
-        <a href="/">
-            <img class="header_image" src="/public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
+        <a href="../">
+            <img class="header_image img-fluid" src="../public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
         </a>
     </div>
 
