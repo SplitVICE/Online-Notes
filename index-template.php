@@ -42,8 +42,8 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Public notes</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="./private-notes/">Private notes<span class="sr-only">(current)</span></a>
-                </li>
+                        <a class="nav-link" href="./private-notes/">Private notes<span class="sr-only">(current)</span></a>
+                    </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="./faq/">FAQ<span class="sr-only">(current)</span></a>
                 </li>
@@ -54,35 +54,7 @@
         </div>
     </nav>
 
-    <div class="container">
-        <?php
-        if ($_ENV['onlinenotes_admin_password'] != "No password set") {
-            echo '
-                <div class="title_big">
-                    Admin login
-                </div>
-
-                <div class="subtitle">
-                    Please login
-                </div>
-                
-                <form action="./authentication-logic.php" method="POST">
-                    <label for="">Enter admin password to continue</label>
-                    <br>
-                    <input type="password" name="password-input" id="password-input">
-                    <button type="submit">Submit</button>
-                </form>
-                ';
-        } else {
-            echo '
-                <div class=title>
-                    Please, set admin password at the environment variables.
-                </div>
-                ';
-        }
-        ?>
-    </div>
-
+    
     <footer>
         <div class="container">
             <a target="_blank" href="https://github.com/JustVice/Online-Notes">

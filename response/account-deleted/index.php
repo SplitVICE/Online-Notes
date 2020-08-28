@@ -1,4 +1,3 @@
-<?php require "../memory.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Online notes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/ico" href="../public/img/favicon.ico">
+    <link rel="shortcut icon" type="image/ico" href="../../public/img/favicon.ico">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -19,15 +18,16 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
     <!-- Scripts and styles -->
-    <script src="../public/script/global-script.js"></script>
-    <link rel="stylesheet" href="../public/styles/style.css">
+    <script src="../../public/script/global-script.js"></script>
+    <link rel="stylesheet" href="../../public/styles/style.css">
+    <link rel="stylesheet" href="../../public/styles/white-background.css">
 </head>
 
 <body>
 
     <div class="header">
         <a href="./">
-            <img class="header_image img-fluid" src="../public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
+            <img class="header_image img-fluid" src="../../public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
         </a>
     </div>
 
@@ -55,32 +55,18 @@
     </nav>
 
     <div class="container">
-        <?php
-        if ($_ENV['onlinenotes_admin_password'] != "No password set") {
-            echo '
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="title_big">
-                    Admin login
+                    Your account has been successfully deleted.
                 </div>
 
-                <div class="subtitle">
-                    Please login
+                <div>
+                    <a href="../../">Back to public notes.</a>
                 </div>
-                
-                <form action="./authentication-logic.php" method="POST">
-                    <label for="">Enter admin password to continue</label>
-                    <br>
-                    <input type="password" name="password-input" id="password-input">
-                    <button type="submit">Submit</button>
-                </form>
-                ';
-        } else {
-            echo '
-                <div class=title>
-                    Please, set admin password at the environment variables.
-                </div>
-                ';
-        }
-        ?>
+
+            </div>
+        </div>
     </div>
 
     <footer>
