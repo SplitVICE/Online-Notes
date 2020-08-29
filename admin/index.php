@@ -15,12 +15,16 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
     <!-- Fontawesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
     <!-- Scripts and styles -->
     <script src="../public/script/global-script.js"></script>
     <link rel="stylesheet" href="../public/styles/style.css">
+    <link rel="stylesheet" href="../public/styles/white-background.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -39,12 +43,12 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Public notes</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="../">Public notes<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                        <a class="nav-link" href="./private-notes/">Private notes<span class="sr-only">(current)</span></a>
-                    </li>
+                    <a class="nav-link" href="../private-notes/">Private notes<span class="sr-only">(current)</span></a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="./faq/">FAQ<span class="sr-only">(current)</span></a>
                 </li>
@@ -55,16 +59,28 @@
         </div>
     </nav>
 
-    <div class="custom_container">
-        <a href="./logout.php">Admin log out</a>
+    <br>
+    <div class="container border shadow-sm p-3 mb-5 bg-white rounded">
+
+        <ul class="nav nav-pills nav-fill border shadow-sm p-3 bg-white rounded">
+            <li class="nav-item">
+                <a class="nav-link active" href="#/">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#/">Public notes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#/">Private notes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#/">App settings</a>
+            </li>
+        </ul>
+
         <br>
-        <br>
-        <b>Notice:</b>
-        <p>
-            Delete buttons do not ask if you are sure to delete the record.
-            <br>
-            Records will be <b>automatically deleted if "delete" button is pressed.</b>
-        </p>
+
+        <button type="button" class="btn btn-primary" onclick="adminLogout()">Admin logout</button>
+
         <?php
         if (isset($_SESSION['admin_logged_in'])) {
             if ($_SESSION['admin_logged_in']) {
@@ -113,8 +129,14 @@
                 }
                 echo "<br>";
                 echo "<br>";
-                echo "<h1>Accounts record</h1>";
+                echo '
+                    <div id="userManagementPanel">
+                    <div class="alert alert-secondary" role="alert">
+                        User management panel
+                    </div>
+                    ';
                 require "./render_accounts_list.php";
+                echo '</div>';
             } else {
                 $url = "./authentication.php";
                 header('Location: ' . $url);
@@ -163,6 +185,7 @@
             </div>
         </div>
     </footer>
+    <script src="./script.js"></script>
 </body>
 
 </html>

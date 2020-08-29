@@ -4,5 +4,5 @@ require "../memory.php";
 
 $_SESSION['admin_logged_in'] = false;
 
-$url = "/";
+$url = "../";
 header('Location: ' . $url);
