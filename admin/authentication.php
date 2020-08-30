@@ -21,6 +21,7 @@
     <!-- Scripts and styles -->
     <script src="../public/script/global-script.js"></script>
     <link rel="stylesheet" href="../public/styles/style.css">
+    <link rel="stylesheet" href="../public/styles/white-background.css">
 </head>
 
 <body>
@@ -81,6 +82,7 @@
                 ';
         }
         ?>
+        <br>
     </div>
 
     <footer>
@@ -100,8 +102,6 @@
             </div>
         </div>
     </footer>
-
-    <script src="./public/script/public-notes-index.js"></script>
 </body>
 
 </html>

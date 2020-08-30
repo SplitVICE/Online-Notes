@@ -1,4 +1,20 @@
-<?php require "../memory.php"; ?>
+<?php require "../memory.php";
+
+if (isset($_SESSION['admin_logged_in'])) {
+    if ($_SESSION['admin_logged_in']) {
+    } else {
+        $_SESSION['admin_logged_in'] = false;
+        $url = "./authentication.php";
+        header('Location: ' . $url);
+    }
+} else {
+    $_SESSION['admin_logged_in'] = false;
+    $url = "./authentication.php";
+    header('Location: ' . $url);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +56,6 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
@@ -60,92 +75,85 @@
     </nav>
 
     <br>
+
+
     <div class="container border shadow-sm p-3 mb-5 bg-white rounded">
 
         <ul class="nav nav-pills nav-fill border shadow-sm p-3 bg-white rounded">
             <li class="nav-item">
-                <a class="nav-link active" href="#/">Users</a>
+                <a id="btnUsers" class="nav-link active" href="#/" onclick="usersDisplayToggle()">Users</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#/">Public notes</a>
+                <a id="btnPublicNotes" class="nav-link" href="#/" onclick="publicNotesDisplay()">Public notes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#/">Private notes</a>
+                <a id="btnPrivateNotes" class="nav-link" href="#/" onclick="privateNotesDisplay()">Private notes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#/">App settings</a>
+                <a id="btnAppSettings" class="nav-link" href="#/" onclick="addSettingsDisplay()">App settings</a>
+            </li>
+            <li>
+                <button type="button" class="btn btn-dark" onclick="adminLogout()">Admin logout</button>
             </li>
         </ul>
 
-        <br>
-
-        <button type="button" class="btn btn-primary" onclick="adminLogout()">Admin logout</button>
-
         <?php
-        if (isset($_SESSION['admin_logged_in'])) {
-            if ($_SESSION['admin_logged_in']) {
-                require "../app/database/read.php";
-                $notes_array = return_all_notes_in_an_array();
-                echo "<h1>Notes record</h1>";
+        require "../app/database/read.php";
+        $notes_array = return_all_notes_in_an_array();
+        if ($notes_array) { // There are public or private notes.
+            $array_amount_of_public_and_private_notes =
+                calculate_amount_of_private_and_public_notes($notes_array);
+            echo "<h3>Amount of notes stored</h3>";
+            echo "Number of notes stored: " . count($notes_array);
+            echo "<br>";
+            echo "Number of public notes stored: ";
+            echo $array_amount_of_public_and_private_notes['public_notes_amount'];
+            echo "<br>";
+            echo "Number of private notes stored: ";
+            echo $array_amount_of_public_and_private_notes['private_notes_amount'];
+            echo "<br>";
+            echo "<br>";
+            echo "<h3>Notes content</h3>";
+            for ($i = 0; $i < count($notes_array); $i++) {
+                echo "<div class='note_content_box'>";
+                echo "Note ID: " . $notes_array[$i]['ID'];
                 echo "<br>";
-                if ($notes_array) {
-                    $array_amount_of_public_and_private_notes =
-                        calculate_amount_of_private_and_public_notes($notes_array);
-                    echo "<h3>Amount of notes stored</h3>";
-                    echo "Number of notes stored: " . count($notes_array);
-                    echo "<br>";
-                    echo "Number of public notes stored: ";
-                    echo $array_amount_of_public_and_private_notes['public_notes_amount'];
-                    echo "<br>";
-                    echo "Number of private notes stored: ";
-                    echo $array_amount_of_public_and_private_notes['private_notes_amount'];
-                    echo "<br>";
-                    echo "<br>";
-                    echo "<h3>Notes content</h3>";
-                    for ($i = 0; $i < count($notes_array); $i++) {
-                        echo "<div class='note_content_box'>";
-                        echo "Note ID: " . $notes_array[$i]['ID'];
-                        echo "<br>";
-                        echo "Owner ID: " . $notes_array[$i]['owner_id'];
-                        echo "<br>";
-                        echo "Title:<br>" . $notes_array[$i]['title'];
-                        echo "<br>";
-                        echo "Description:<br>" . nl2br($notes_array[$i]['description']);
-                        echo "<br><br>";
-                        echo "Archived: " . $notes_array[$i]['archived'];
-                        echo "<br>";
-                        echo "In Trash Can: " . $notes_array[$i]['in_trash_can'];
-                        echo "<br>";
-                        echo "<a href='./delete-note.php?note_id=" . $notes_array[$i]["ID"] . "'>Delete this note</a>";
-                        echo "<br>";
-                        echo "<br>";
-                        echo "</div>";
-                    }
-                    echo "<br>";
-                    echo "<h3>Options</h3>";
-                    echo "<a href='./delete-all-public-notes.php'>Delete all public notes</a>";
-                } else {
-                    echo "No public or private notes stored";
-                }
+                echo "Owner ID: " . $notes_array[$i]['owner_id'];
+                echo "<br>";
+                echo "Title:<br>" . $notes_array[$i]['title'];
+                echo "<br>";
+                echo "Description:<br>" . nl2br($notes_array[$i]['description']);
+                echo "<br><br>";
+                echo "Archived: " . $notes_array[$i]['archived'];
+                echo "<br>";
+                echo "In Trash Can: " . $notes_array[$i]['in_trash_can'];
+                echo "<br>";
+                echo "<a href='./delete-note.php?note_id=" . $notes_array[$i]["ID"] . "'>Delete this note</a>";
                 echo "<br>";
                 echo "<br>";
-                echo '
-                    <div id="userManagementPanel">
-                    <div class="alert alert-secondary" role="alert">
-                        User management panel
-                    </div>
-                    ';
-                require "./render_accounts_list.php";
-                echo '</div>';
-            } else {
-                $url = "./authentication.php";
-                header('Location: ' . $url);
+                echo "</div>";
             }
+            echo "<br>";
+            echo "<h3>Options</h3>";
+            echo "<a href='./delete-all-public-notes.php'>Delete all public notes</a>";
         } else {
-            $_SESSION['admin_logged_in'] = false;
-            $url = "./authentication.php";
-            header('Location: ' . $url);
+            echo '
+                        <div id=publicNotesManagementPanel>
+                            No public notes stored.
+                        </div>
+                        <div id=privateNotesManagementPanel>
+                            No private notes stored.
+                        </div>
+                    ';
         }
+        echo '
+                        <div id="userManagementPanel">
+                        <div class="alert alert-secondary" role="alert">
+                            User management panel
+                        </div>
+                        ';
+        require "./render_accounts_list.php";
+        echo '</div>';
 
         // Returns an array with the amount of public and private notes
         // inside of a given array of notes.
@@ -166,6 +174,7 @@
             );
         }
         ?>
+
     </div>
 
     <footer>
@@ -185,7 +194,12 @@
             </div>
         </div>
     </footer>
+
     <script src="./script.js"></script>
+    <script src="./hideAndShow.js"></script>
+    <script>
+        usersDisplayToggle();
+    </script>
 </body>
 
 </html>
