@@ -76,7 +76,6 @@ if (isset($_SESSION['admin_logged_in'])) {
 
     <br>
 
-
     <div class="container border shadow-sm p-3 mb-5 bg-white rounded">
 
         <ul class="nav nav-pills nav-fill border shadow-sm p-3 bg-white rounded">
@@ -100,8 +99,9 @@ if (isset($_SESSION['admin_logged_in'])) {
         <?php
         require "../app/database/read.php";
         $notes_array = return_all_notes_in_an_array();
-        if ($notes_array) { // There are public or private notes.
-            $array_amount_of_public_and_private_notes =
+        // There are public or private notes.
+        if ($notes_array) {
+            /* $array_amount_of_public_and_private_notes =
                 calculate_amount_of_private_and_public_notes($notes_array);
             echo "<h3>Amount of notes stored</h3>";
             echo "Number of notes stored: " . count($notes_array);
@@ -135,7 +135,7 @@ if (isset($_SESSION['admin_logged_in'])) {
             }
             echo "<br>";
             echo "<h3>Options</h3>";
-            echo "<a href='./delete-all-public-notes.php'>Delete all public notes</a>";
+            echo "<a href='./delete-all-public-notes.php'>Delete all public notes</a>"; */
         } else {
             echo '
                         <div id=publicNotesManagementPanel>
@@ -154,25 +154,6 @@ if (isset($_SESSION['admin_logged_in'])) {
                         ';
         require "./render_accounts_list.php";
         echo '</div>';
-
-        // Returns an array with the amount of public and private notes
-        // inside of a given array of notes.
-        function calculate_amount_of_private_and_public_notes($notes_array)
-        {
-            $public_notes_counter = 0;
-            $private_notes_counter = 0;
-            for ($i = 0; $i < count($notes_array); $i++) {
-                $owner_id = $notes_array[$i]['owner_id'];
-                if ($owner_id == 'public') {
-                    $public_notes_counter++;
-                } else {
-                    $private_notes_counter++;
-                }
-            }
-            return array(
-                "public_notes_amount" => $public_notes_counter, "private_notes_amount" => $private_notes_counter
-            );
-        }
         ?>
 
     </div>

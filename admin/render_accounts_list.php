@@ -9,6 +9,7 @@ if ($accounts_array) {
             <tr>
                 <th>ID</th>
                 <th>Username</th>
+                <th>Private notes</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -19,9 +20,13 @@ if ($accounts_array) {
             <tr>
                 <th scope="row">' . $accounts_array[$i]['ID'] . '</th>
                 <td>' . $accounts_array[$i]['username'] . '</td>
-                <td><a href="#/" onclick="deleteUser(' . $accounts_array[$i]['ID'] . ')">Delete this account</a></td>
-            </tr>
-        ';
+                <td>' . $accounts_array[$i]['privateNotesAmount'] . '</td>
+                <td>
+                <a class="btn btn-danger btn-sm" href="#/" onclick="deleteUser(' . $accounts_array[$i]['ID'] . ')">Delete this account</a>
+                <a class="btn btn-danger btn-sm" href="#/" onclick="deleteUser(' . $accounts_array[$i]['ID'] . ')">Delete all private notes</a>
+                </td>
+            </tr>'
+        ;
     }
     echo '
             </tbody>

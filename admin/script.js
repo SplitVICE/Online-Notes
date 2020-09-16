@@ -1,23 +1,44 @@
-function adminLogout(){
-    location.href = "./logout.php";
+function adminLogout() {
+  location.href = "./logout.php";
 }
 
-function deleteUser(id, username){
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.value) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }
-      })
+function deleteUser(id) {
+  Swal.fire({
+    title: `Delete account`,
+    text: `You are about to delete an account and all its related notes. It won't be possible to revert. Are you sure?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Delete account.'
+  }).then((result) => {
+    if (result.value) {
+      Swal.fire(
+        'Done',
+        'The account has been deleted.',
+        'success'
+      )
+    }
+  })
 }
+
+function deleteAllPrivateNotes(id) {
+  Swal.fire({
+    title: `Delete account`,
+    text: `You are about to delete an account and all its related notes. It won't be possible to revert. Are you sure?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Delete account.'
+  }).then((result) => {
+    if (result.value) {
+      Swal.fire(
+        'Done',
+        'The account has been deleted.',
+        'success'
+      )
+    }
+  })
+}
+

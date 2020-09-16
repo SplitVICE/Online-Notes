@@ -309,7 +309,7 @@ function fetch_public_notes_for_api()
             $notes_array[$i] = $row;
         }
     }
-    
+
     return $notes_array;
 }
 
@@ -318,6 +318,11 @@ function fetch_public_notes_for_api()
 // Private notes are decrypted.
 function return_all_notes_in_an_array()
 {
+    // Reverse array explanation: when query to all notes is done, this
+    // array will come with the latest note as the last one. So, the code
+    // will reverse the array to show the latest note stored as the first one
+    // on top of the array.
+
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -339,24 +344,22 @@ function return_all_notes_in_an_array()
 
         require "../app/tasks.php";
 
+        // Inverted array. 
         $notes_temporal_array = array();
-        $notes_array_result = array();
-        $test_results = false;
+        // Will contain the array at the right side and the private notes decrypted.
+        // Will be the value returned if notes are stored.
+        $notes_array_result = array(); 
 
+        // Filling $notes_temporal_array with the MySQL query.
         for ($i = 0; $row = $notes_sql_result->fetch_assoc(); $i++) {
             $notes_temporal_array[$i] = $row;
-            if ($test_results) {
-                echo "Row content at index " . $i . "= " . $row['title'];
-                echo "<br>";
-                echo "notes_temporal_array content at index " . $i . "= " . $notes_temporal_array[$i]['title'];
-                echo "<br>";
-                echo "<br>";
-            }
         }
-
         $conn->close();
 
+        // This counter will be used to reverse the array to the right side.
         $notes_temporal_array_length = count($notes_temporal_array);
+
+        // Temporal variables for private notes.
         $ID;
         $owner_id;
         $title;
@@ -364,19 +367,26 @@ function return_all_notes_in_an_array()
         $archived;
         $in_trash_can;
 
+        // For loop that reverses the array using $notes_temporal_array_length -1.
+        // Also decrypts the private notes.
         for ($j = 0; $j < count($notes_temporal_array); $j++) {
             $ID = $notes_temporal_array[$notes_temporal_array_length - 1]['ID'];
             $owner_id = $notes_temporal_array[$notes_temporal_array_length - 1]['owner_id'];
+
+            // If private note, the note gets decrypted.
             if ($owner_id != 'public') {
                 $title = AES128_decrypt($notes_temporal_array[$notes_temporal_array_length - 1]['title']);
                 $description = AES128_decrypt($notes_temporal_array[$notes_temporal_array_length - 1]['description']);
-            } else {
+            } else { // If public note, the value remains the same.
                 $title = $notes_temporal_array[$notes_temporal_array_length - 1]['title'];
                 $description = $notes_temporal_array[$notes_temporal_array_length - 1]['description'];
             }
+
+            // These last variables are not encrypted.
             $archived = $notes_temporal_array[$notes_temporal_array_length - 1]['archived'];
             $in_trash_can = $notes_temporal_array[$notes_temporal_array_length - 1]['in_trash_can'];
 
+            // New registry on $notes_array_result array is made.
             $notes_array_result[$j]['ID'] = $ID;
             $notes_array_result[$j]['owner_id'] = $owner_id;
             $notes_array_result[$j]['title'] = $title;
@@ -384,29 +394,16 @@ function return_all_notes_in_an_array()
             $notes_array_result[$j]['archived'] = $archived;
             $notes_array_result[$j]['in_trash_can'] = $in_trash_can;
 
-            if ($test_results) {
-                echo "notes_array_result length: " . count($notes_array_result);
-                echo "<br><br>";
-            }
+            // Length of the original inverted array counter is diminished.
             $notes_temporal_array_length--;
         }
-
-        if ($test_results) {
-            echo "Entering notes_array_result";
-            echo "<br>";
-            for ($n = 0; $n < count($notes_array_result); $n++) {
-                echo "notes_array_result index " . $n . " value: <br>";
-                echo $notes_array_result[$n]['ID'];
-                echo "<br>";
-            }
-        }
-
+        // Returns public notes, private notes decrypted, and notes at the right side.
         return $notes_array_result;
     } else {
+        // If no public or private notes stored, null is returned.
         return null;
     }
 }
-
 
 // Returns an array with all the accounts information stored.
 // Returns null if there are not any account.
@@ -435,6 +432,8 @@ function return_all_accounts_in_an_array()
 
         for ($i = 0; $row = $accounts_sql_result->fetch_assoc(); $i++) {
             $accounts_array[$i] = $row;
+            $accounts_array[$i]["privateNotesAmount"] =
+                returnAmountOfPrivateNotesAssociatedWithUser($row["ID"]);
         }
 
         $conn->close();
@@ -443,4 +442,28 @@ function return_all_accounts_in_an_array()
     } else {
         return null;
     }
+}
+
+// Returns int number with the number of private notes an user has created.
+// Required parameter: User's id. In other words, returns the number of private
+// notes an user is owner of.
+// If any note found, returns 0. 
+function returnAmountOfPrivateNotesAssociatedWithUser($user_id)
+{
+    require "../memory.php";
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT * FROM NOTE WHERE owner_id = '" . $user_id . "'";
+    $private_notes_result = $conn->query($sql);
+    $conn->close();
+    return $private_notes_result->num_rows; // Returns the number of parameters in array.
 }

@@ -76,3 +76,23 @@ function sha512_compare($salt_input, $password_input, $database_password)
     $password_salted_and_hashed = sha512_hashing($password_ingredients);
     return $password_salted_and_hashed == $database_password;
 }
+
+// Returns an array with the amount of public and private notes
+// inside of a given array of notes.
+// Requires an array of notes.
+function calculate_amount_of_private_and_public_notes($notes_array)
+{
+    $public_notes_counter = 0;
+    $private_notes_counter = 0;
+    for ($i = 0; $i < count($notes_array); $i++) {
+        $owner_id = $notes_array[$i]['owner_id'];
+        if ($owner_id == 'public') {
+            $public_notes_counter++;
+        } else {
+            $private_notes_counter++;
+        }
+    }
+    return array(
+        "public_notes_amount" => $public_notes_counter, "private_notes_amount" => $private_notes_counter
+    );
+}
