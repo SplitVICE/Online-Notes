@@ -467,3 +467,42 @@ function returnAmountOfPrivateNotesAssociatedWithUser($user_id)
     $conn->close();
     return $private_notes_result->num_rows; // Returns the number of parameters in array.
 }
+
+// Returns string equivalent with username stored into the database by the ID.
+function bring_username_by_its_id($userId){
+    require "../memory.php";
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $sql_query = "SELECT * FROM USER WHERE ID = ?";
+
+    if ($stmt = $conn->prepare($sql_query)) {
+
+        $stmt->bind_param("s", $userId);
+
+        $stmt->execute();
+
+        $stmt->bind_result($ID, $username, $password, $salt);
+
+        $array = array();
+        if ($stmt->fetch()) {
+            $array = array('ID' => $ID, 'username' => $username, 'password' => $password, 'salt' => $salt);
+        } else {
+            $array = array('ID' => 'no record found');
+        }
+
+        $stmt->close();
+
+        $conn->close();
+
+        return $array[0]["username"];
+    }
+}

@@ -1,12 +1,12 @@
 <?php
+// Deletes all private notes from an user ID passed.
 
 require "../memory.php";
 require "../app/database/delete.php";
 
 if ($_SESSION['admin_logged_in'] == true) {
-    $user_to_delete_id = $_GET['account_id'];
-    delete_user($user_to_delete_id);
-    delete_associated_notes($user_to_delete_id);
+    $notesOwnerIDToDelete = $_GET['account_id'];
+    delete_associated_notes($notesOwnerIDToDelete);
     $url = "./index.php";
     header('Location: ' . $url);
 } else {

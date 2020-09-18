@@ -174,3 +174,34 @@ function delete_all_public_notes(){
 
     $conn->close();
 }
+
+// Function that deletes a public note by the note's ID.
+// Does the same as function delete_public_note but this
+// will redirect to admin route.
+function delete_public_note_admin($note_id)
+{
+    require "../memory.php";
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    if ($stmt = $conn->prepare("DELETE FROM NOTE WHERE ID = ? AND owner_id = 'public';")) {
+        $stmt->bind_param("i", $note_id);
+
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    $conn->close();
+
+    // User is redirected to project root route.
+    $url = "../admin/index.php";
+    header('Location: ' . $url);
+}

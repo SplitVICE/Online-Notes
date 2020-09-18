@@ -92,7 +92,8 @@ function calculate_amount_of_private_and_public_notes($notes_array)
             $private_notes_counter++;
         }
     }
-    return array(
+    $returnArray = array(
         "public_notes_amount" => $public_notes_counter, "private_notes_amount" => $private_notes_counter
     );
+    return $returnArray;
 }

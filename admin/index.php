@@ -98,62 +98,62 @@ if (isset($_SESSION['admin_logged_in'])) {
 
         <?php
         require "../app/database/read.php";
-        $notes_array = return_all_notes_in_an_array();
+        $array_notes = return_all_notes_in_an_array();
         // There are public or private notes.
-        if ($notes_array) {
-            /* $array_amount_of_public_and_private_notes =
-                calculate_amount_of_private_and_public_notes($notes_array);
-            echo "<h3>Amount of notes stored</h3>";
-            echo "Number of notes stored: " . count($notes_array);
-            echo "<br>";
-            echo "Number of public notes stored: ";
-            echo $array_amount_of_public_and_private_notes['public_notes_amount'];
-            echo "<br>";
-            echo "Number of private notes stored: ";
-            echo $array_amount_of_public_and_private_notes['private_notes_amount'];
-            echo "<br>";
-            echo "<br>";
-            echo "<h3>Notes content</h3>";
-            for ($i = 0; $i < count($notes_array); $i++) {
-                echo "<div class='note_content_box'>";
-                echo "Note ID: " . $notes_array[$i]['ID'];
-                echo "<br>";
-                echo "Owner ID: " . $notes_array[$i]['owner_id'];
-                echo "<br>";
-                echo "Title:<br>" . $notes_array[$i]['title'];
-                echo "<br>";
-                echo "Description:<br>" . nl2br($notes_array[$i]['description']);
-                echo "<br><br>";
-                echo "Archived: " . $notes_array[$i]['archived'];
-                echo "<br>";
-                echo "In Trash Can: " . $notes_array[$i]['in_trash_can'];
-                echo "<br>";
-                echo "<a href='./delete-note.php?note_id=" . $notes_array[$i]["ID"] . "'>Delete this note</a>";
-                echo "<br>";
-                echo "<br>";
-                echo "</div>";
+        if ($array_notes) {
+
+            // Calculates the amount of public and private notes in the array.
+            $array_amount_of_public_and_private_notes =
+                calculate_amount_of_private_and_public_notes($array_notes);
+
+            // If there are public notes, render public notes table.
+            if ($array_amount_of_public_and_private_notes["public_notes_amount"] > 0) {
+                echo '
+                <div id=publicNotesManagementPanel>';
+                require "./render-public-notes.php";
+                render_public_notes($array_notes);
+                echo "</div>";;
+            } else { // No public notes. Render no public notes stored.
+                echo '
+            <div id=publicNotesManagementPanel>
+                No public notes stored.
+            </div>';
             }
-            echo "<br>";
-            echo "<h3>Options</h3>";
-            echo "<a href='./delete-all-public-notes.php'>Delete all public notes</a>"; */
-        } else {
+
+            // If there are private notes, render private notes table.
+            if ($array_amount_of_public_and_private_notes["private_notes_amount"] > 0) {
+                echo '
+                <div id=privateNotesManagementPanel>
+                    No private notes stored.
+                </div>
+            ';
+            } else { // No private notes. Render no private notes stored.
+                echo '
+                <div id=privateNotesManagementPanel>
+                    No private notes stored.
+                </div>
+            ';
+            }
+        } else { // No public nor private notes.
             echo '
-                        <div id=publicNotesManagementPanel>
-                            No public notes stored.
-                        </div>
-                        <div id=privateNotesManagementPanel>
-                            No private notes stored.
-                        </div>
-                    ';
+            <div id=publicNotesManagementPanel>
+                No public notes stored.
+            </div>
+            <div id=privateNotesManagementPanel>
+                No private notes stored.
+            </div>
+        ';
         }
         echo '
-                        <div id="userManagementPanel">
-                        <div class="alert alert-secondary" role="alert">
-                            User management panel
-                        </div>
-                        ';
+        <div id="userManagementPanel">
+            <div class="alert alert-secondary" role="alert">
+                User management panel
+            </div>
+            ';
+        // Renders users table. If no users, no users stored will be shown.
         require "./render_accounts_list.php";
-        echo '</div>';
+        echo
+            '</div>';
         ?>
 
     </div>

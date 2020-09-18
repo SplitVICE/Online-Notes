@@ -70,7 +70,7 @@
                 <form action="./authentication-logic.php" method="POST">
                     <label for="">Enter admin password to continue</label>
                     <br>
-                    <input type="password" name="password-input" id="password-input">
+                    <input type="password" name="password-input" id="password-input autofocus">
                     <button type="submit">Submit</button>
                 </form>
                 ';
