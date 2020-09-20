@@ -1,8 +1,5 @@
 <?php
 
-require "../app/database/read.php";
-require "../app/tasks.php";
-
 $public_notes_result = fetch_private_notes_for_private_page($_SESSION['user_id']);
 $notes_array = array();
 

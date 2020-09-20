@@ -506,3 +506,60 @@ function bring_username_by_its_id($userId){
         return $array[0]["username"];
     }
 }
+
+// bring_sessionToken_info_by_sessionToken_value function helper.
+// Returns SESSION information by COOKIE token value.
+// Returns null if either match was not found.
+function bring_user_data_by_cookie_sessionToken(){
+    if(isset($_COOKIE["sessionToken"])){
+        $sessionToken_array = bring_sessionToken_info_by_sessionToken_value();
+        if($sessionToken_array["ID"] != "no record found"){
+            return $sessionToken_array;
+        }
+    }
+    return null;
+}
+
+// Brings SESSION information by COOKIE set on client browser.
+function bring_sessionToken_info_by_sessionToken_value(){
+    $sessionToken_value = $_COOKIE["sessionToken"];
+    
+    require "../app/tasks.php";
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $sql_query = "SELECT * FROM SESSION WHERE token = ?";
+
+    if ($stmt = $conn->prepare($sql_query)) {
+
+        $stmt->bind_param("s", $sessionToken_value);
+
+        $stmt->execute();
+
+        $stmt->bind_result($ID, $user_id, $user_username, $token);
+
+        $array = array();
+        if ($stmt->fetch()) {
+            $array = array('ID' => $ID
+            , 'user_id' => AES128_decrypt($user_id)
+            , 'user_username' => AES128_decrypt($user_username)
+            , 'token' => $token);
+        } else {
+            $array = array('ID' => 'no record found');
+        }
+
+        $stmt->close();
+
+        $conn->close();
+
+        return $array;
+    }
+}

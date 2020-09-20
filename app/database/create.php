@@ -35,16 +35,46 @@ function register_a_new_user($username, $password, $salt)
     // store it's ID given by the database into SESSION variables.
     $user_data = bring_user_data_by_username($username);
 
-    // User is established as "logged in" automatically when they create an account.
-    // User's username and database ID are also stored in SESSION variables.
-    $_SESSION['user_logged_in'] = true;
-    $_SESSION['user_id'] = $user_data['ID'];
-    $_SESSION['user_username'] = $username;
+    // Creates a new session statement at the database. Sets cookie to client.
+    register_and_set_session_cookie($user_data);
+}
 
-    // User is redirected to route private-notes so that they can immediately use 
-    // their new account.
-    $url = "../private-notes";
-    header('Location: ' . $url);
+// Creates a new session statement at the database. Sets cookie to client.
+function register_and_set_session_cookie($user_data){
+    $token = generateSessionToken();
+    register_new_session_token($token, $user_data["ID"], $user_data["username"]);
+
+    // Cookie is set to client's computer. Token is AES128 encrypted.
+    setcookie("sessionToken", $token, time() + (10 * 365 * 24 * 60 * 60), "/");   
+}
+
+// Creates a session info. Info is AES128 encrypted.
+function register_new_session_token($token, $user_id, $username){
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $user_id_encrypted = AES128_encrypt($user_id);
+    $username_encrypted = AES128_encrypt($username);
+
+    if ($stmt = $conn->prepare("INSERT INTO SESSION (user_id, user_username, token)
+                                    VALUES(?,?,?)")) {
+        $stmt->bind_param("sss"
+        , $user_id_encrypted
+        , $username_encrypted
+        , $token);
+
+        $stmt->execute();
+        $stmt->close();
+    }
+    $conn->close();
 }
 
 // Function that inserts a new public note into the database.
@@ -85,7 +115,8 @@ function insert_private_note($note_title, $note_description)
     // It is required to read user's ID to save the variable into
     // the database.
     // User's ID will determine who's the owner of this private note.
-    require "../../memory.php";
+    require "../database/read.php";
+    $user_info = bring_user_data_by_cookie_sessionToken();
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -105,7 +136,7 @@ function insert_private_note($note_title, $note_description)
 
     if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
                                     VALUES(?, ?, ?, false, false)")) {
-        $stmt->bind_param("sss", $_SESSION["user_id"], $note_title_encrypted, $note_description_encrypted);
+        $stmt->bind_param("sss", $user_info["user_id"], $note_title_encrypted, $note_description_encrypted);
 
         $stmt->execute();
         $stmt->close();
@@ -223,9 +254,12 @@ function insert_private_note_api($note_title, $note_description, $user_id)
 
     if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
                                     VALUES(?, ?, ?, false, false)")) {
-        $stmt->bind_param("sss", $user_id
-        , $note_title_encrypted
-        , $note_description_encrypted);
+        $stmt->bind_param(
+            "sss",
+            $user_id,
+            $note_title_encrypted,
+            $note_description_encrypted
+        );
 
         $stmt->execute();
         $stmt->close();
@@ -264,9 +298,12 @@ function insert_private_note_rest_api($note_title, $note_description, $user_id)
 
     if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
                                     VALUES(?, ?, ?, false, false)")) {
-        $stmt->bind_param("sss", $user_id
-        , $note_title_encrypted
-        , $note_description_encrypted);
+        $stmt->bind_param(
+            "sss",
+            $user_id,
+            $note_title_encrypted,
+            $note_description_encrypted
+        );
 
         $stmt->execute();
         $stmt->close();

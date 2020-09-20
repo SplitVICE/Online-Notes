@@ -2,9 +2,14 @@
 
 require "../memory.php";
 
-if (isset($_SESSION['user_logged_in'])) {
-    if (!$_SESSION['user_logged_in']) {
-        header("Location: ../login?error=notLoggedIn");
+if (isset($_COOKIE['sessionToken'])) {
+    // do nothing
+    require("../app/database/read.php");
+    $user_info = bring_user_data_by_cookie_sessionToken();
+    if($user_info["ID"] != "no record found"){
+
+    }else{
+        header("Location: ../login?error=notLoggedIn");    
     }
 } else {
     header("Location: ../login?error=notLoggedIn");
@@ -63,7 +68,7 @@ if (isset($_SESSION['user_logged_in'])) {
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php
-                        echo substr($_SESSION['user_username'], 0, 20)
+                        echo substr($user_info["ID"], 0, 20)
                         ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">

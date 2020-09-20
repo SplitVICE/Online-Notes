@@ -19,3 +19,11 @@ CREATE TABLE USER (
 	salt varchar(250),
 	PRIMARY KEY (ID)
 );
+
+CREATE TABLE SESSION(
+	ID int NOT NULL AUTO_INCREMENT,
+	user_id varchar(250),
+	user_username varchar(250),
+	token varchar(250),
+	PRIMARY KEY (ID)
+);

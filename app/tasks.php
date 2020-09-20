@@ -97,3 +97,9 @@ function calculate_amount_of_private_and_public_notes($notes_array)
     );
     return $returnArray;
 }
+
+// Generates a random hash.
+function generateSessionToken()
+{
+    return bin2hex(random_bytes(34)); 
+}

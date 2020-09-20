@@ -1,6 +1,8 @@
 <?php
-if (empty($_POST['username_input']) || 
-    empty($_POST['password_input'])) {
+if (
+    empty($_POST['username_input']) ||
+    empty($_POST['password_input'])
+) {
     header("Location: ../../register/index.php?error=emptyFields");
 } else {
 
@@ -14,7 +16,7 @@ if (empty($_POST['username_input']) ||
 
     $username_check = check_username_disponibility($username);
 
-    if(!$username_check){
+    if (!$username_check) {
         if ($password == $password_repeat) {
 
             $password_data = create_hashed_and_salted_password($password);
@@ -24,10 +26,15 @@ if (empty($_POST['username_input']) ||
                 $password_data['password_hashed'],
                 $password_data['salt']
             );
-        }else{
-            header("Location: ../../register/index.php?error=passwordsDoNotMatch");
+
+            // User is redirected to route private-notes so that they can immediately use 
+            // their new account.
+            $url = "../private-notes";
+            header('Location: ' . $url);
+        } else {
+            header("Location: ./index.php?error=passwordsDoNotMatch");
         }
-    }else{
-        header("Location: ../../register/index.php?error=usernameTaken");
+    } else {
+        header("Location: ./index.php?error=usernameTaken");
     }
 }
