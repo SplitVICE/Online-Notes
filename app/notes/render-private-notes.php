@@ -1,6 +1,10 @@
 <?php
 
-$public_notes_result = fetch_private_notes_for_private_page($_SESSION['user_id']);
+require "../memory.php";
+
+$token_info = bring_sessionToken_info_by_sessionToken_value();
+
+$public_notes_result = fetch_private_notes_for_private_page($token_info['user_id']);
 $notes_array = array();
 
 if ($public_notes_result->num_rows > 0) {

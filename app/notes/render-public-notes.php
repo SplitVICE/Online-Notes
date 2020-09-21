@@ -1,7 +1,5 @@
 <?php
 
-require "app/database/read.php";
-
 $public_notes_result = fetch_public_notes_for_home_page();
 $notes_array = array();
 

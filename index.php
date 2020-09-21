@@ -1,4 +1,11 @@
-<?php require __DIR__ . "/memory.php";?>
+<?php
+require "./memory.php";
+require "./app/tasks.php";
+require "./app/database/read.php";
+require "./app/database/create.php";
+require "./app/database/delete.php";
+require "./app/database/update.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,7 +55,7 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Public notes</a>
                 </li>
                 <?php
-                if (!$_SESSION['user_logged_in']) {
+                if (!isset($_COOKIE['sessionToken'])) {
                     echo '
                     <li class="nav-item active">
                         <a class="nav-link" href="./login/">Login<span class="sr-only">(current)</span></a>
@@ -81,7 +88,7 @@
     <div class="write_a_new_note_ahref">
         <a onclick="writeANewNote_openCollapse()" href="#write_a_new_note_id">Write a new note</a>
     </div>
-    <?php require 'app/notes/render-public-notes.php'; ?>
+    <?php require './app/notes/render-public-notes.php'; ?>
     <hr>
 
     <div class="accordion" id="accordionExample">

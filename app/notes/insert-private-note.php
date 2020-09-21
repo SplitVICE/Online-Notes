@@ -1,6 +1,11 @@
 <?php
 
-require '../database/create.php';
+require "../../memory.php";
+require "../tasks.php";
+require "../database/read.php";
+require "../database/create.php";
+require "../database/delete.php";
+require "../database/update.php";
 
 $note_title = $_GET['note_title'];
 $note_description = $_GET['note_description'];

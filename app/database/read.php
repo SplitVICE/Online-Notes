@@ -6,7 +6,6 @@
 // Go to route app/notes/render-private-notes.php to see this function being used.
 function fetch_private_notes_for_private_page($username_id)
 {
-    require "../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -29,7 +28,6 @@ function fetch_private_notes_for_private_page($username_id)
 // username has not been taken.
 function check_username_disponibility($username)
 {
-    require "../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -69,7 +67,6 @@ function check_username_disponibility($username)
 // login/login-user.php .
 function bring_user_data_by_username($username)
 {
-    require "../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -110,7 +107,6 @@ function bring_user_data_by_username($username)
 // user's password.
 function bring_user_data_by_username_changePasswordCheck($username)
 {
-    require "../../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -157,8 +153,6 @@ function bring_user_data_by_username_changePasswordCheck($username)
 // with key parameter called "ID".
 function check_credentials_return_id_api($username_input, $password_input)
 {
-    require "../../app/tasks.php";
-    require "../../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -214,8 +208,6 @@ function check_credentials_return_id_api($username_input, $password_input)
 // with key parameter called "ID".
 function check_credentials_return_id_rest_api($username_input, $password_input)
 {
-    require "../../../app/tasks.php";
-    require "../../../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -342,8 +334,6 @@ function return_all_notes_in_an_array()
     // null is returned.
     if ($notes_sql_result->num_rows > 0) {
 
-        require "../app/tasks.php";
-
         // Inverted array. 
         $notes_temporal_array = array();
         // Will contain the array at the right side and the private notes decrypted.
@@ -450,7 +440,6 @@ function return_all_accounts_in_an_array()
 // If any note found, returns 0. 
 function returnAmountOfPrivateNotesAssociatedWithUser($user_id)
 {
-    require "../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -470,7 +459,6 @@ function returnAmountOfPrivateNotesAssociatedWithUser($user_id)
 
 // Returns string equivalent with username stored into the database by the ID.
 function bring_username_by_its_id($userId){
-    require "../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -524,7 +512,6 @@ function bring_user_data_by_cookie_sessionToken(){
 function bring_sessionToken_info_by_sessionToken_value(){
     $sessionToken_value = $_COOKIE["sessionToken"];
     
-    require "../app/tasks.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],

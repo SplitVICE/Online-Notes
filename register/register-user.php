@@ -1,15 +1,17 @@
 <?php
+require "../memory.php";
+require "../app/tasks.php";
+require "../app/database/read.php";
+require "../app/database/create.php";
+require "../app/database/delete.php";
+require "../app/database/update.php";
+
 if (
     empty($_POST['username_input']) ||
     empty($_POST['password_input'])
 ) {
     header("Location: ../../register/index.php?error=emptyFields");
 } else {
-
-    require "../app/tasks.php";
-    require "../app/database/create.php";
-    require "../app/database/read.php";
-
     $username = $_POST["username_input"];
     $password = $_POST["password_input"];
     $password_repeat = $_POST["password_input_repeat"];

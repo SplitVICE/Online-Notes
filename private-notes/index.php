@@ -1,10 +1,13 @@
 <?php
 
 require "../memory.php";
+require "../app/tasks.php";
+require "../app/database/read.php";
+require "../app/database/create.php";
+require "../app/database/delete.php";
+require "../app/database/update.php";
 
 if (isset($_COOKIE['sessionToken'])) {
-    // do nothing
-    require("../app/database/read.php");
     $user_info = bring_user_data_by_cookie_sessionToken();
     if($user_info["ID"] != "no record found"){
 
@@ -68,7 +71,7 @@ if (isset($_COOKIE['sessionToken'])) {
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php
-                        echo substr($user_info["ID"], 0, 20)
+                        echo substr($user_info["user_username"], 0, 20)
                         ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -158,6 +161,7 @@ if (isset($_COOKIE['sessionToken'])) {
             </div>
         </div>
     </footer>
+    
     <script src="../public/script/private-notes-index.js"></script>
 </body>
 

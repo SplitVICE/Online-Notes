@@ -34,11 +34,12 @@ function delete_public_note($note_id)
 // Function that deletes a private note.
 function delete_private_note($note_id)
 {
-    require "../../memory.php";
-
     // If user is not logged in, they will be automatically redirected to project root route.
-    if (isset($_SESSION['user_logged_in'])) {
-        require "../../memory.php";
+    if (isset($_COOKIE['sessionToken'])) {
+
+        // Brings token data stored.
+        $user_data = bring_sessionToken_info_by_sessionToken_value();
+
         $conn = new mysqli(
             $_ENV['onlinenotes_database_server_name'],
             $_ENV['onlinenotes_database_username'],
@@ -53,7 +54,7 @@ function delete_private_note($note_id)
         // The note is deleted by their associated owner's ID. This ID is stored inside 
         // SESSION variables. This prevents malicious actions on deleting private notes.
         if ($stmt = $conn->prepare("DELETE FROM NOTE WHERE ID = ? AND owner_id = ?;")) {
-            $stmt->bind_param("is", $note_id, $_SESSION['user_id']);
+            $stmt->bind_param("is", $note_id, $user_data['user_id']);
 
             $stmt->execute();
             $stmt->close();

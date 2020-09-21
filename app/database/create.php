@@ -10,7 +10,6 @@
 // The process to build the hashed password can be found at app/tasks.php
 function register_a_new_user($username, $password, $salt)
 {
-    require "../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -115,7 +114,6 @@ function insert_private_note($note_title, $note_description)
     // It is required to read user's ID to save the variable into
     // the database.
     // User's ID will determine who's the owner of this private note.
-    require "../database/read.php";
     $user_info = bring_user_data_by_cookie_sessionToken();
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
@@ -127,8 +125,6 @@ function insert_private_note($note_title, $note_description)
     if ($conn->connect_error) {
         die("Database connection failed: " . $conn->connect_error);
     }
-
-    require "../tasks.php";
 
     // The note data get encrypted to be stored encrypted into the database.
     $note_title_encrypted = AES128_encrypt($note_title);
