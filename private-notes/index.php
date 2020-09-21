@@ -9,10 +9,10 @@ require "../app/database/update.php";
 
 if (isset($_COOKIE['sessionToken'])) {
     $user_info = bring_user_data_by_cookie_sessionToken();
-    if($user_info["ID"] != "no record found"){
-
-    }else{
-        header("Location: ../login?error=notLoggedIn");    
+    if ($user_info["ID"] != "no record found" || isset($user_info)) {
+        //header("Location: ./user-log-out.php");
+    } else {
+        header("Location: ../login?error=notLoggedIn");
     }
 } else {
     header("Location: ../login?error=notLoggedIn");
@@ -79,6 +79,7 @@ if (isset($_COOKIE['sessionToken'])) {
                         <a class="dropdown-item" href="./change-password/">Change password</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" onclick="deleteUserAccount()">Delete my account</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">Options</a>
                     </div>
                 </li>
                 <li class="nav-item active">
@@ -144,6 +145,31 @@ if (isset($_COOKIE['sessionToken'])) {
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Options</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="shadow p-3 mb-5 bg-white rounded alert alert-secondary">
+                        <a href="./close-all-sessions.php">Close all sessions.</a> 
+                        <hr>
+                        Close all sessions. All your sessions will be closed. Included this one.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <a target="_blank" href="https://github.com/JustVice/Online-Notes">
@@ -161,7 +187,7 @@ if (isset($_COOKIE['sessionToken'])) {
             </div>
         </div>
     </footer>
-    
+
     <script src="../public/script/private-notes-index.js"></script>
 </body>
 

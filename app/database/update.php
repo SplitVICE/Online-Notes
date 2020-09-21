@@ -7,6 +7,9 @@ function update_user_password($new_password, $new_salt)
     $query_status = true;
 
     require "../../memory.php";
+
+    $user_data = bring_user_data_by_cookie_sessionToken();
+
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -19,7 +22,7 @@ function update_user_password($new_password, $new_salt)
     }
 
     if ($stmt = $conn->prepare("UPDATE USER SET password = ?, salt = ? WHERE ID = ?")) {
-        $stmt->bind_param("sss", $new_password, $new_salt, $_SESSION['user_id']);
+        $stmt->bind_param("sss", $new_password, $new_salt, $user_data["user_id"]);
 
         $stmt->execute();
         $stmt->close();

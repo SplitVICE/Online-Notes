@@ -103,46 +103,6 @@ function bring_user_data_by_username($username)
     }
 }
 
-// Same function as bring_user_data_by_username but used to change
-// user's password.
-function bring_user_data_by_username_changePasswordCheck($username)
-{
-    $conn = new mysqli(
-        $_ENV['onlinenotes_database_server_name'],
-        $_ENV['onlinenotes_database_username'],
-        $_ENV['onlinenotes_database_password'],
-        $_ENV['onlinenotes_database_name']
-    );
-
-    if ($conn->connect_error) {
-        die("Database connection failed: " . $conn->connect_error);
-    }
-
-    $sql_query = "SELECT * FROM USER WHERE username = ?";
-
-    if ($stmt = $conn->prepare($sql_query)) {
-
-        $stmt->bind_param("s", $username);
-
-        $stmt->execute();
-
-        $stmt->bind_result($ID, $username, $password, $salt);
-
-        $array = array();
-        if ($stmt->fetch()) {
-            $array = array('ID' => $ID, 'username' => $username, 'password' => $password, 'salt' => $salt);
-        } else {
-            $array = array('ID' => 'no record found');
-        }
-
-        $stmt->close();
-
-        $conn->close();
-
-        return $array;
-    }
-}
-
 // This function returns the ID associated with an user account.
 // Required variables: username and password.
 // This function is only used when an user wants to create a new private

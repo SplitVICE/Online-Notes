@@ -65,7 +65,7 @@
                 <br>
                 <form action="login-user.php" method="POST">
                     <div class="form-group">
-                        <input placeholder="Username" class="form-control" type="text" name="username_input" id="username_input_id" required>
+                        <input placeholder="Username" class="form-control" type="text" name="username_input" id="username_input_id" required autofocus>
                     </div>
                     <div class="form-group">
                         <input placeholder="Password" class="form-control" type="password" name="password_input" id="" required>
@@ -123,8 +123,6 @@
             </div>
         </div>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 
 </html>

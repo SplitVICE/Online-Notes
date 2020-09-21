@@ -1,10 +1,12 @@
 <?php
 
+require "../app/database/delete.php";
 require "../memory.php";
+require "../app/tasks.php";
 
-$_SESSION['user_logged_in'] = false;
-$_SESSION['user_id'] = "n/a";
-$_SESSION['user_username'] = "n/a";
+delete_session_register_by_user_logout();
+
+setcookie("sessionToken", "", time() - 3600, "/");
 
 $url = "../";
 header('Location: ' . $url);

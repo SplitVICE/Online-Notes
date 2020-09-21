@@ -39,6 +39,7 @@ function register_a_new_user($username, $password, $salt)
 }
 
 // Creates a new session statement at the database. Sets cookie to client.
+// Receives array with user info.
 function register_and_set_session_cookie($user_data){
     $token = generateSessionToken();
     register_new_session_token($token, $user_data["ID"], $user_data["username"]);

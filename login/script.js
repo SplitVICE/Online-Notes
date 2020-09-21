@@ -1,1 +1,0 @@
-document.getElementById('username_input_id').focus();

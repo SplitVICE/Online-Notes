@@ -1,3 +1,8 @@
+<?php 
+require ("../../app/tasks.php");
+require ("../../memory.php");
+require "../../app/database/read.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,8 +71,8 @@
                     <div>
                         Logged in as:
                         <?php
-                        require "../../memory.php";
-                        echo substr($_SESSION['user_username'], 0, 20)
+                        $user_data = bring_user_data_by_cookie_sessionToken();
+                        echo $user_data["user_username"];
                         ?>
                     </div>
                 </div>

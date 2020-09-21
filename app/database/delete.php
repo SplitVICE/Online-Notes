@@ -72,7 +72,6 @@ function delete_private_note($note_id)
 // Function that deletes an user account stored into the database.
 function delete_user($user_id)
 {
-    require "../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -101,7 +100,6 @@ function delete_user($user_id)
 // ownership.
 function delete_associated_notes($user_id)
 {
-    require "../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -205,4 +203,61 @@ function delete_public_note_admin($note_id)
     // User is redirected to project root route.
     $url = "../admin/index.php";
     header('Location: ' . $url);
+}
+
+// Deletes all sessions by user request.
+function delete_all_sessions_user_request_or_account_delete(){
+    // Brings data stored at session.
+    $user_data = bring_user_data_by_cookie_sessionToken();
+
+    // Encrypts the data so can be referenced at session table.
+    $user_data_userId_encrypted = AES128_encrypt($user_data["user_id"]);
+    $user_data_userUsername_encrypted = AES128_encrypt($user_data["user_username"]);
+
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    if ($stmt = $conn->prepare("DELETE FROM SESSION WHERE user_id = ? AND user_username = ?")) {
+        $stmt->bind_param("ss"
+        , $user_data_userId_encrypted
+        , $user_data_userUsername_encrypted);
+
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    $conn->close();
+}
+
+function delete_session_register_by_user_logout(){
+    $token = $_COOKIE["sessionToken"];
+
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    if ($stmt = $conn->prepare("DELETE FROM SESSION WHERE token = ?")) {
+        $stmt->bind_param("s"
+        , $token);
+
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    $conn->close();
 }
