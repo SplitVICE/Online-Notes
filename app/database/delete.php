@@ -205,7 +205,7 @@ function delete_public_note_admin($note_id)
     header('Location: ' . $url);
 }
 
-// Deletes all sessions by user request.
+// Deletes all sessions by user request. Also works if user deleted their account.
 function delete_all_sessions_user_request_or_account_delete(){
     // Brings data stored at session.
     $user_data = bring_user_data_by_cookie_sessionToken();
@@ -235,6 +235,10 @@ function delete_all_sessions_user_request_or_account_delete(){
     }
 
     $conn->close();
+
+    if(isset($_COOKIE["sessionToken"])){
+        delete_cookie_sessionToken();
+    }
 }
 
 function delete_session_register_by_user_logout(){

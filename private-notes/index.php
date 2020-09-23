@@ -9,12 +9,15 @@ require "../app/database/update.php";
 
 if (isset($_COOKIE['sessionToken'])) {
     $user_info = bring_user_data_by_cookie_sessionToken();
-    if ($user_info["ID"] != "no record found" || isset($user_info)) {
-        //header("Location: ./user-log-out.php");
+    // Makes sure there is a record found
+    if (isset($user_info)) {
+        // Session exists and all correct.
     } else {
+        delete_cookie_sessionToken();
         header("Location: ../login?error=notLoggedIn");
     }
 } else {
+    delete_cookie_sessionToken();
     header("Location: ../login?error=notLoggedIn");
 }
 
@@ -78,7 +81,6 @@ if (isset($_COOKIE['sessionToken'])) {
                         <a class="dropdown-item" href="./user-log-out.php">Log out</a>
                         <a class="dropdown-item" href="./change-password/">Change password</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" onclick="deleteUserAccount()">Delete my account</a>
                         <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">Options</a>
                     </div>
                 </li>
@@ -145,7 +147,7 @@ if (isset($_COOKIE['sessionToken'])) {
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modals -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -157,14 +159,55 @@ if (isset($_COOKIE['sessionToken'])) {
                 </div>
                 <div class="modal-body">
                     <div class="shadow p-3 mb-5 bg-white rounded alert alert-secondary">
-                        <a href="./close-all-sessions.php">Close all sessions.</a> 
+                        <a href="./close-all-sessions.php">
+                            <button type="button" class="btn btn-primary">Close all sessions</button>
+                        </a>
                         <hr>
-                        Close all sessions. All your sessions will be closed. Included this one.
+                        All your sessions will be closed. This means that if you left your private notes session
+                        (login) open onto another computer, it will automatically be closed. Note: this session
+                        will be closed too.
+                    </div>
+                    <div class="shadow p-3 mb-5 bg-white rounded alert alert-secondary">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteAccount">Delete my account</button>
+                        <hr>
+                        Delete you account and all associated notes. None of the info will be kept into our databases.
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <div class="h1">Delete account</div>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="h4">Your account will be permanently deleted if your procedure.</div>
+                    <div class="h4">
+                        Your username will be released and all associated notes
+                        will be deleted.
+                    </div>
+                    <br>
+                    <div class="h4">
+                        Are you sure?
+                    </div>
+                    <br>
+                    To confirm this action please write "Delete" on the next text field and click "Delete my account" button.
+                    <input type="text" name="" id="deleteAccount_textField">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteUserAccount()">Delete my account</button>
                 </div>
             </div>
         </div>

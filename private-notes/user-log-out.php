@@ -6,7 +6,7 @@ require "../app/tasks.php";
 
 delete_session_register_by_user_logout();
 
-setcookie("sessionToken", "", time() - 3600, "/");
+delete_cookie_sessionToken();
 
 $url = "../";
 header('Location: ' . $url);

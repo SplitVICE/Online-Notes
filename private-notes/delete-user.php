@@ -11,7 +11,7 @@ delete_user($user_data["user_id"]);
 delete_associated_notes($user_data["user_id"]);
 delete_all_sessions_user_request_or_account_delete();
 
-setcookie("sessionToken", "", time() - 3600, "/");
+delete_cookie_sessionToken();
 
 $url = "../response/account-deleted/";
 header('Location: ' . $url);

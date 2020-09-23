@@ -38,8 +38,8 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Public notes</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="./private-notes/">Public notes<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="./private-notes/">Private notes<span class="sr-only">(current)</span></a>
@@ -57,6 +57,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <br>
                 <div class="title_big">
                     Your account has been successfully deleted.
                 </div>
@@ -64,7 +65,7 @@
                 <div>
                     <a href="../../">Back to public notes.</a>
                 </div>
-
+                <br>
             </div>
         </div>
     </div>

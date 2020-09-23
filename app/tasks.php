@@ -103,3 +103,7 @@ function generateSessionToken()
 {
     return bin2hex(random_bytes(34)); 
 }
+
+function delete_cookie_sessionToken(){
+    setcookie("sessionToken", "", time() - 3600, "/");
+}

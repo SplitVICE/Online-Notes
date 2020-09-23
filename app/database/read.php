@@ -298,7 +298,7 @@ function return_all_notes_in_an_array()
         $notes_temporal_array = array();
         // Will contain the array at the right side and the private notes decrypted.
         // Will be the value returned if notes are stored.
-        $notes_array_result = array(); 
+        $notes_array_result = array();
 
         // Filling $notes_temporal_array with the MySQL query.
         for ($i = 0; $row = $notes_sql_result->fetch_assoc(); $i++) {
@@ -418,7 +418,8 @@ function returnAmountOfPrivateNotesAssociatedWithUser($user_id)
 }
 
 // Returns string equivalent with username stored into the database by the ID.
-function bring_username_by_its_id($userId){
+function bring_username_by_its_id($userId)
+{
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -457,11 +458,15 @@ function bring_username_by_its_id($userId){
 
 // bring_sessionToken_info_by_sessionToken_value function helper.
 // Returns SESSION information by COOKIE token value.
-// Returns null if either match was not found.
-function bring_user_data_by_cookie_sessionToken(){
-    if(isset($_COOKIE["sessionToken"])){
+// Returns null if session token does not exist in the database.
+function bring_user_data_by_cookie_sessionToken()
+{
+    if (isset($_COOKIE["sessionToken"])) {
         $sessionToken_array = bring_sessionToken_info_by_sessionToken_value();
-        if($sessionToken_array["ID"] != "no record found"){
+        if (isset($sessionToken_array)) {
+            if ($sessionToken_array["ID"] == "no record found") {
+                return null;
+            }
             return $sessionToken_array;
         }
     }
@@ -469,9 +474,10 @@ function bring_user_data_by_cookie_sessionToken(){
 }
 
 // Brings SESSION information by COOKIE set on client browser.
-function bring_sessionToken_info_by_sessionToken_value(){
+function bring_sessionToken_info_by_sessionToken_value()
+{
     $sessionToken_value = $_COOKIE["sessionToken"];
-    
+
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -495,10 +501,9 @@ function bring_sessionToken_info_by_sessionToken_value(){
 
         $array = array();
         if ($stmt->fetch()) {
-            $array = array('ID' => $ID
-            , 'user_id' => AES128_decrypt($user_id)
-            , 'user_username' => AES128_decrypt($user_username)
-            , 'token' => $token);
+            $array = array(
+                'ID' => $ID, 'user_id' => AES128_decrypt($user_id), 'user_username' => AES128_decrypt($user_username), 'token' => $token
+            );
         } else {
             $array = array('ID' => 'no record found');
         }
