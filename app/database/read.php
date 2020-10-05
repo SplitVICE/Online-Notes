@@ -435,7 +435,7 @@ function bring_username_by_its_id($userId)
 
     if ($stmt = $conn->prepare($sql_query)) {
 
-        $stmt->bind_param("s", $userId);
+        $stmt->bind_param("i", $userId);
 
         $stmt->execute();
 
@@ -443,7 +443,7 @@ function bring_username_by_its_id($userId)
 
         $array = array();
         if ($stmt->fetch()) {
-            $array = array('ID' => $ID, 'username' => $username, 'password' => $password, 'salt' => $salt);
+            $array = array('username' => $username);
         } else {
             $array = array('ID' => 'no record found');
         }
@@ -452,7 +452,13 @@ function bring_username_by_its_id($userId)
 
         $conn->close();
 
-        return $array[0]["username"];
+        if (isset($array)) {
+            foreach ($array as $value) {
+                return $value;
+              }
+        } else {
+            return "Error 500.";
+        }
     }
 }
 

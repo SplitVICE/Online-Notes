@@ -17,7 +17,7 @@ function render_private_notes($notes_array){
         ';
     for ($i = 0; $i < count($notes_array); $i++) {
         if($notes_array[$i]["owner_id"] != "public"){
-            $username = bring_username_by_its_id($notes_array[$i]["owner_id"]);
+            $username = bring_username_by_its_id(42);
             echo '
                 <tr>
                     <th scope="row">' . $notes_array[$i]['ID'] . '</th>
