@@ -9,7 +9,7 @@ if ($accounts_array) {
             <tr>
                 <th>ID</th>
                 <th>Username</th>
-                <th>Private notes</th>
+                <th>Private notes number</th>
                 <th>Actions</th>
             </tr>
             </thead>

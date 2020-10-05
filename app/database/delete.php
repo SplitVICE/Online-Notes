@@ -124,7 +124,6 @@ function delete_associated_notes($user_id)
 // Deletes a note in admin mode. Admins can delete any note.
 function delete_note_admin($note_id)
 {
-    require "../memory.php";
     if ($_SESSION['admin_logged_in']) {
         $conn = new mysqli(
             $_ENV['onlinenotes_database_server_name'],
@@ -241,6 +240,7 @@ function delete_all_sessions_user_request_or_account_delete(){
     }
 }
 
+// Closes the session the current user has to persist session.
 function delete_session_register_by_user_logout(){
     $token = $_COOKIE["sessionToken"];
 
@@ -258,6 +258,33 @@ function delete_session_register_by_user_logout(){
     if ($stmt = $conn->prepare("DELETE FROM SESSION WHERE token = ?")) {
         $stmt->bind_param("s"
         , $token);
+
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    $conn->close();
+}
+
+// Closes all the sessions that are associated with the ID given.
+// This function is used when an user is deleted from the admin dashboard.
+function delete_user_sessions_admin($user_id){
+    // Encrypts the data so can be referenced at session table.
+    $user_data_userId_encrypted = AES128_encrypt($user_id);
+
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    if ($stmt = $conn->prepare("DELETE FROM SESSION WHERE user_id = ?")) {
+        $stmt->bind_param("s", $user_data_userId_encrypted);
 
         $stmt->execute();
         $stmt->close();

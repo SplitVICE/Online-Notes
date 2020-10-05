@@ -8,6 +8,7 @@
 const userManagementPanel = document.getElementById("userManagementPanel")
 const publicNotesManagementPanel = document.getElementById("publicNotesManagementPanel")
 const privateNotesManagementPanel = document.getElementById("privateNotesManagementPanel")
+const appSettingsManagementPanel = document.getElementById("appSettingsManagementPanel")
 //const userManagementPanel = document.getElementById("userManagementPanel")
 
 /**
@@ -25,6 +26,7 @@ function usersDisplayToggle() {
     userManagementPanel.style.display = "inline";
     publicNotesManagementPanel.style.display = "none";
     privateNotesManagementPanel.style.display = "none";
+    appSettingsManagementPanel.style.display = "none";
     usersBtnGainFocus();
 }
 
@@ -32,6 +34,7 @@ function publicNotesDisplay() {
     userManagementPanel.style.display = "none";
     publicNotesManagementPanel.style.display = "inline";
     privateNotesManagementPanel.style.display = "none";
+    appSettingsManagementPanel.style.display = "none";
     publicNotesBtnGainFocus();
 }
 
@@ -39,10 +42,15 @@ function privateNotesDisplay() {
     userManagementPanel.style.display = "none";
     publicNotesManagementPanel.style.display = "none";
     privateNotesManagementPanel.style.display = "inline";
+    appSettingsManagementPanel.style.display = "none";
     privateNotesBtnGainFocus();
 }
 
 function addSettingsDisplay() {
+    userManagementPanel.style.display = "none";
+    publicNotesManagementPanel.style.display = "none";
+    privateNotesManagementPanel.style.display = "none";
+    appSettingsManagementPanel.style.display = "inline";
     appSettingsBtnGainFocus();
 }
 
