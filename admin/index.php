@@ -1,4 +1,7 @@
-<?php require "../memory.php";
+<?php 
+require "../memory.php";
+require "../app/database/read.php";
+require "../app/tasks.php";
 
 if (isset($_SESSION['admin_logged_in'])) {
     if ($_SESSION['admin_logged_in']) {
@@ -97,7 +100,6 @@ if (isset($_SESSION['admin_logged_in'])) {
         </ul>
 
         <?php
-        require "../app/database/read.php";
         $array_notes = return_all_notes_in_an_array();
         // There are public or private notes.
         if ($array_notes) {
@@ -112,7 +114,7 @@ if (isset($_SESSION['admin_logged_in'])) {
                 <div id=publicNotesManagementPanel>';
                 require "./render-public-notes.php";
                 render_public_notes($array_notes);
-                echo "</div>";;
+                echo "</div>";
             } else { // No public notes. Render no public notes stored.
                 echo '
             <div id=publicNotesManagementPanel>
@@ -123,10 +125,10 @@ if (isset($_SESSION['admin_logged_in'])) {
             // If there are private notes, render private notes table.
             if ($array_amount_of_public_and_private_notes["private_notes_amount"] > 0) {
                 echo '
-                <div id=privateNotesManagementPanel>
-                    No private notes stored.
-                </div>
-            ';
+                <div id=privateNotesManagementPanel>';
+                require "./render-private-notes.php";
+                render_private_notes($array_notes);
+                echo "</div>";
             } else { // No private notes. Render no private notes stored.
                 echo '
                 <div id=privateNotesManagementPanel>

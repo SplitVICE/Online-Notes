@@ -417,7 +417,7 @@ function returnAmountOfPrivateNotesAssociatedWithUser($user_id)
     return $private_notes_result->num_rows; // Returns the number of parameters in array.
 }
 
-// Returns string equivalent with username stored into the database by the ID.
+// Returns user's username by passing an ID.
 function bring_username_by_its_id($userId)
 {
     $conn = new mysqli(
