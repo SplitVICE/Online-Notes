@@ -2,6 +2,7 @@ CREATE DATABASE online_notes;
 
 USE online_notes;
 
+-- Table which holds notes.
 CREATE TABLE NOTE (
     ID int NOT NULL AUTO_INCREMENT,
 	owner_id LONGTEXT,
@@ -12,6 +13,7 @@ CREATE TABLE NOTE (
 	PRIMARY KEY (ID)
 );
 
+-- Users info table.
 CREATE TABLE USER (
 	ID int NOT NULL AUTO_INCREMENT,
 	username varchar(250),
@@ -20,10 +22,20 @@ CREATE TABLE USER (
 	PRIMARY KEY (ID)
 );
 
+-- Session tokens to persist user's sessions.
 CREATE TABLE SESSION(
 	ID int NOT NULL AUTO_INCREMENT,
 	user_id varchar(250),
 	user_username varchar(250),
+	token varchar(250),
+	PRIMARY KEY (ID)
+);
+
+-- API connection token to use an user credentials
+-- with API. Just to store and to read notes.
+CREATE TABLE API_CONNECTION_TOKEN(
+	ID int NOT NULL AUTO_INCREMENT,
+	user_id varchar(250),
 	token varchar(250),
 	PRIMARY KEY (ID)
 );

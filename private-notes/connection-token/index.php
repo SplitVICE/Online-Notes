@@ -1,11 +1,10 @@
 <?php
 
-require "../memory.php";
-require "../app/tasks.php";
-require "../app/database/read.php";
-require "../app/database/create.php";
-require "../app/database/delete.php";
-require "../app/database/update.php";
+require "../../memory.php";
+require "../../app/tasks.php";
+require "../../app/database/read.php";
+require "../../app/database/create.php";
+require "../../app/database/delete.php";
 
 if (isset($_COOKIE['sessionToken'])) {
     $user_info = bring_user_data_by_cookie_sessionToken();
@@ -45,19 +44,20 @@ if (isset($_COOKIE['sessionToken'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <!-- Scripts and styles -->
-    <script src="../public/script/global-script.js"></script>
-    <script src="../public/script/description-characters-counter.js"></script>
-    <script src="../public/script/sweetalert-functions.js"></script>
-    <script src="../public/script/copy-notes-info.js"></script>
-    <link rel="stylesheet" href="../public/styles/style.css">
-    <link rel="stylesheet" href="../public/styles/private-notes.css">
+    <script src="../../public/script/global-script.js"></script>
+    <script src="../../public/script/description-characters-counter.js"></script>
+    <script src="../../public/script/sweetalert-functions.js"></script>
+    <script src="../../public/script/copy-notes-info.js"></script>
+    <link rel="stylesheet" href="../../public/styles/style.css">
+    <link rel="stylesheet" href="../../public/styles/private-notes.css">
+    <link rel="stylesheet" href="../../public/styles/white-background.css">
 </head>
 
 <body>
 
     <div class="header">
         <a href="/">
-            <img class="header_image img-fluid" src="../public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
+            <img class="header_image img-fluid" src="../../public/img/online-notes-logo-plus-letters-side.png" alt="Missing image!">
         </a>
     </div>
 
@@ -69,7 +69,10 @@ if (isset($_COOKIE['sessionToken'])) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="../" tabindex="-1" aria-disabled="true">Public notes<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="../../" tabindex="-1" aria-disabled="true">Public notes<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="../" tabindex="-1" aria-disabled="true">Private notes<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -94,57 +97,13 @@ if (isset($_COOKIE['sessionToken'])) {
         </div>
     </nav>
 
-    <div class="store_notes">
-        Private notes
-    </div>
-    <div class="write_a_new_note_ahref">
-        <a onclick="writeANewNote_openCollapse()" href="#write_a_new_note_id">Write a new note</a>
-    </div>
-    <?php require '../app/notes/render-private-notes.php'; ?>
-    <hr>
-
-    <div class="accordion" id="accordionExample">
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-                <div class="mb-0">
-                    <button onclick="scrollIntoView_btnSubmitNote()" id="collapse_button" class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        <div class="write_a_new_note" id="write_a_new_note_id">
-                            Write a new note
-                        </div>
-                        <small class="form-text text-muted center">Click here to write a new note</small>
-                    </button>
-                </div>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div class="card-body">
-                    <div class="container">
-                        <form action="../app/notes/insert-private-note.php" method="GET">
-
-                            <div class="form-group">
-                                <input placeholder="Note's title" type="text" name="note_title" id="note_title" class="form-control">
-                                <small class="form-text text-muted">Note's title is optional</small>
-                            </div>
-
-                            <div class="form-group">
-                                <textarea class="form-control" required onkeyup="characters_counter()" name="note_description" id="note_description" cols="90" rows="11" placeholder="Note's description.&#13;&#10;Come here again anytime to see your note.&#13;&#10;You and anyone else can delete notes at any time.&#13;&#10;&#13;&#10;Do not store sensitive information.&#13;&#10;&#13;&#10;Create a free account to store private notes.&#13;&#10;Read FAQ for more info." required></textarea>
-                                <small id="emailHelp" class="form-text text-muted">
-                                    <div id="characters_left">
-                                        Characters left:
-                                        <spanclass="amount_of_characters">
-                                            1980
-                                            </span>
-                                    </div>
-                                </small>
-                            </div>
-
-                            <button id="btn_submitNote" class="btn btn-outline-primary btn-block" type="submit">Submit</button>
-                        </form>
-                        <br>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+    <div class="container">
+        <br>
+        <div class="h1">API connection token</div>
+        <p>API connection tokens can be used to publish and read notes of this account ownership.</p>
+        <p>This is an IT developers functionality. Read <a href="#">API</a> page to learn more about API connection token.</p>
+        <hr>
+        <p>This is a work in progress.</p>
     </div>
 
     <!-- Modals -->

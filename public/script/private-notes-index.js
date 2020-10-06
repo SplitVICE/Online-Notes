@@ -24,3 +24,6 @@ function deleteUserAccount() {
     }
 }
 
+function openConnectionTokenPage(){
+    location.href = "./connection-token";
+}

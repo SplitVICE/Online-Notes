@@ -194,7 +194,6 @@ function insert_public_note_api($note_title, $note_description)
 // Required variables: too descriptive.
 function insert_public_note_rest_api($note_title, $note_description)
 {
-    require "../../../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],

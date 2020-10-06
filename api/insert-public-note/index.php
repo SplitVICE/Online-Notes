@@ -1,36 +1,45 @@
 <?php
 
-$response = array();
+//Route: onlinenotes.ml/api/insert-public-note/index.php
+//JSON template:
+/*
+{
+    "title":"REST API NOTE",
+    "description":"This public note was registered from API REST"
+}
+*/
 
-if (isset($_GET['note-description'])) {
+// Headers
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-    $note_title = "";
-    $note_description = $_GET['note-description'];
+$data = json_decode(file_get_contents("php://input")); //Gets data from request JSON.
 
-    if (!isset($_GET['note-title'])) {
-        $note_title = "Untitled note";
-    } else {
-        if ($_GET['note-title'] != "") {
-            $note_title = $_GET['note-title'];
-        } else {
-            $note_title = "Untitled note";
-        }
+$title = $data->title;
+$description = $data->description;
+
+if ($description != "") {
+
+    if($title == ""){ // If title not given, "Untitled note" is given as title.
+        $title = "Untitled note";
     }
 
     require "../../app/database/create.php";
+    require "../../memory.php";
 
-    if(insert_public_note_api($note_title, $note_description)){
-        $response['status'] = "success";
-        $response['description'] = "note has been saved";
-        echo $json_string = json_encode($response, JSON_PRETTY_PRINT);
-    }else{
-        $response['status'] = "failed";
-        $response['description'] = "internal database error";
-        echo $json_string = json_encode($response, JSON_PRETTY_PRINT);
+    if (insert_public_note_rest_api($title, $description)) {//Note has been saved.
+        echo json_encode( 
+            array("status" => "success", "description" => "note has been saved")
+        );
+    } else { // Error: internal database error.
+        echo json_encode(
+            array("status" => "failed", "description" => "Error 500")
+        );
     }
-    
-} else {
-    $response['status'] = "failed";
-    $response['description'] = "note description not given";
-    echo $json_string = json_encode($response, JSON_PRETTY_PRINT);
+} else { // Error: description not given.
+    echo json_encode(
+        array("status" => "failed", "description" => "note description not given")
+    );
 }
