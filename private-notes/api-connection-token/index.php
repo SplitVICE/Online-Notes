@@ -99,11 +99,44 @@ if (isset($_COOKIE['sessionToken'])) {
 
     <div class="container">
         <br>
-        <div class="h1">API connection token</div>
-        <p>API connection tokens can be used to publish and read notes of this account ownership.</p>
-        <p>This is an IT developers functionality. Read <a href="#">API</a> page to learn more about API connection token.</p>
+        <div class="h1">API Connection Token</div>
+        <p>API Connection Tokens can be used to publish and read private notes of this account ownership.</p>
+        <p>This is an IT developers functionality. Read <a href="#">API</a> page to learn more about API Connection Tokens and how to use them.</p>
         <hr>
-        <p>This is a work in progress.</p>
+        <?php 
+        
+        $result =  bring_api_connection_token_by_user_cookie_info();
+        if(isset($result["user_id"])){
+            echo '
+                <div class=tokenExists>
+                    <p class="h5">This account currently has an active API Connection Token.</p>
+                    <hr>
+                    <button id="btn_toggleApiVisible" class="btn btn-primary" type="button" onClick="apiConnectionToken_toggleVisible()">Show API Connection Token</button>
+                    <button class="btn btn-danger" type="button" onClick="delete_apiConnectionToken()">Delete API Connection Token</button>
+                    <br>
+                    <br>
+                    <div id="apiConnectionTokenHidden" class="alert alert-primary">
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    </div>
+                    <div id="apiConnectionToken" class="alert alert-primary">
+                        ' . $result["token"] . '
+                    </div>
+                    <br>
+                    <br>
+                </div>
+            ';
+        }else{
+            echo '
+            <div class="tokenDoesNotExist">
+                <p>This account does not have an active API Connection Token.</p>
+                <p>
+                    Create a new API Connection Token clicking <a href="./create-api-connection-token.php">here.</a>
+                </p>
+            </div>
+            ';
+        }
+        
+        ?>
     </div>
 
     <!-- Modals -->
@@ -195,7 +228,7 @@ if (isset($_COOKIE['sessionToken'])) {
         </div>
     </footer>
 
-    <script src="../public/script/private-notes-index.js"></script>
+    <script src="index.js"></script>
 </body>
 
 </html>

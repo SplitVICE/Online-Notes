@@ -148,7 +148,8 @@ function delete_note_admin($note_id)
 }
 
 // Deletes all the public notes stored in the database.
-function delete_all_public_notes(){
+function delete_all_public_notes()
+{
     require "../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
@@ -205,7 +206,8 @@ function delete_public_note_admin($note_id)
 }
 
 // Deletes all sessions by user request. Also works if user deleted their account.
-function delete_all_sessions_user_request_or_account_delete(){
+function delete_all_sessions_user_request_or_account_delete()
+{
     // Brings data stored at session.
     $user_data = bring_user_data_by_cookie_sessionToken();
 
@@ -225,9 +227,11 @@ function delete_all_sessions_user_request_or_account_delete(){
     }
 
     if ($stmt = $conn->prepare("DELETE FROM SESSION WHERE user_id = ? AND user_username = ?")) {
-        $stmt->bind_param("ss"
-        , $user_data_userId_encrypted
-        , $user_data_userUsername_encrypted);
+        $stmt->bind_param(
+            "ss",
+            $user_data_userId_encrypted,
+            $user_data_userUsername_encrypted
+        );
 
         $stmt->execute();
         $stmt->close();
@@ -235,13 +239,14 @@ function delete_all_sessions_user_request_or_account_delete(){
 
     $conn->close();
 
-    if(isset($_COOKIE["sessionToken"])){
+    if (isset($_COOKIE["sessionToken"])) {
         delete_cookie_sessionToken();
     }
 }
 
 // Closes the session the current user has to persist session.
-function delete_session_register_by_user_logout(){
+function delete_session_register_by_user_logout()
+{
     $token = $_COOKIE["sessionToken"];
 
     $conn = new mysqli(
@@ -256,8 +261,10 @@ function delete_session_register_by_user_logout(){
     }
 
     if ($stmt = $conn->prepare("DELETE FROM SESSION WHERE token = ?")) {
-        $stmt->bind_param("s"
-        , $token);
+        $stmt->bind_param(
+            "s",
+            $token
+        );
 
         $stmt->execute();
         $stmt->close();
@@ -268,7 +275,8 @@ function delete_session_register_by_user_logout(){
 
 // Closes all the sessions that are associated with the ID given.
 // This function is used when an user is deleted from the admin dashboard.
-function delete_user_sessions_admin($user_id){
+function delete_user_sessions_admin($user_id)
+{
     // Encrypts the data so can be referenced at session table.
     $user_data_userId_encrypted = AES128_encrypt($user_id);
 
@@ -285,6 +293,32 @@ function delete_user_sessions_admin($user_id){
 
     if ($stmt = $conn->prepare("DELETE FROM SESSION WHERE user_id = ?")) {
         $stmt->bind_param("s", $user_data_userId_encrypted);
+
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    $conn->close();
+}
+
+function delete_api_connection_token()
+{
+    $user_data = bring_user_data_by_cookie_sessionToken();
+    $user_id_encrypted = AES128_encrypt($user_data["user_id"]);
+
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    if ($stmt = $conn->prepare("DELETE FROM API_CONNECTION_TOKEN WHERE user_id = ?;")) {
+        $stmt->bind_param("s", $user_id_encrypted);
 
         $stmt->execute();
         $stmt->close();

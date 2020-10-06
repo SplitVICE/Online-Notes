@@ -455,7 +455,7 @@ function bring_username_by_its_id($userId)
         if (isset($array)) {
             foreach ($array as $value) {
                 return $value;
-              }
+            }
         } else {
             return "Error 500.";
         }
@@ -480,6 +480,8 @@ function bring_user_data_by_cookie_sessionToken()
 }
 
 // Brings SESSION information by COOKIE set on client browser.
+// Returns array with ID, user_id, user_username, and token.
+// Returns array with ID => no record found if user not found.
 function bring_sessionToken_info_by_sessionToken_value()
 {
     $sessionToken_value = $_COOKIE["sessionToken"];
@@ -520,4 +522,56 @@ function bring_sessionToken_info_by_sessionToken_value()
 
         return $array;
     }
+}
+
+// Brings the token number to the user on the cookie info stored at client browser.
+// Returns null if record not found.
+function bring_api_connection_token_by_user_cookie_info()
+{
+    $user_data = bring_sessionToken_info_by_sessionToken_value();
+    $user_id_encrypted = AES128_encrypt($user_data["user_id"]);
+
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $sql_query = "SELECT * FROM API_CONNECTION_TOKEN WHERE user_id = ?";
+
+    if ($stmt = $conn->prepare($sql_query)) {
+
+        $stmt->bind_param("s", $user_id_encrypted);
+
+        $stmt->execute();
+
+        $stmt->bind_result($ID, $user_id, $token);
+
+        $array = array();
+        if ($stmt->fetch()) {
+            $array = array(
+                'ID' => $ID
+                , 'user_id' => AES128_decrypt($user_id)
+                , 'token' => $token
+            );
+        } else {
+            $array = array('ID' => 'no record found');
+        }
+
+        $stmt->close();
+
+        $conn->close();
+
+        return $array;
+    }
+}
+
+function check_if_api_connection_token_exists()
+{
+    $user_data = bring_sessionToken_info_by_sessionToken_value();
 }

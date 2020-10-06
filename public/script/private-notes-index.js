@@ -24,6 +24,6 @@ function deleteUserAccount() {
     }
 }
 
-function openConnectionTokenPage(){
-    location.href = "./connection-token";
+function openApiConnectionTokenPage(){
+    location.href = "./api-connection-token";
 }

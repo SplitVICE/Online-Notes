@@ -311,3 +311,31 @@ function insert_private_note_rest_api($note_title, $note_description, $user_id)
 
     return $query_status;
 }
+
+// Creates an API connection token when required.
+function create_new_api_connection_token(){
+    $user_data = bring_sessionToken_info_by_sessionToken_value(); // Returns user info from cookie.
+    $apiConnectionToken = generate_apiConnectionToken();
+    $user_id_encrypted = AES128_encrypt($user_data["user_id"]);
+
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    if ($stmt = $conn->prepare("INSERT INTO API_CONNECTION_TOKEN (user_id, token) VALUES(?,?)")) {
+        $stmt->bind_param("ss"
+        , $user_id_encrypted
+        , $apiConnectionToken);
+
+        $stmt->execute();
+        $stmt->close();
+    }
+    $conn->close();
+}

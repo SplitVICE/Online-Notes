@@ -173,9 +173,9 @@ if (isset($_COOKIE['sessionToken'])) {
                         Delete you account and all associated notes. None of the info will be kept into our databases.
                     </div>
                     <div class="shadow p-3 mb-5 bg-white rounded alert alert-secondary">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" onclick="openConnectionTokenPage()">API connection token</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" onclick="openApiConnectionTokenPage()">API Connection Token</button>
                         <hr>
-                        <b>For developers.</b> Create a API connection token which can be used to insert and read your private notes from other software.
+                        <b>For developers.</b> Create a API Connection Token which can be used to insert and read your private notes from other software.
                     </div>
                 </div>
                 <div class="modal-footer">
