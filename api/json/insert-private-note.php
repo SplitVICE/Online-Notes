@@ -4,8 +4,8 @@
 //JSON template:
 /*
 {
-    "title":"REST API NOTE",
-    "description":"This private note was registered from API REST",
+    "title":"JSON API NOTE",
+    "description":"This private note was registered from API JSON",
     "username":"yourUsername",
     "pass":"yourPassword"
 }
@@ -16,6 +16,11 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
+
+require "../../memory.php";
+require "../../app/tasks.php";
+require "../../app/database/create.php";
+require "../../app/database/read.php";
 
 $data = json_decode(file_get_contents("php://input")); //Gets data from request JSON.
 
@@ -35,8 +40,6 @@ if (
         if ($title == "") { //If title not given, "Untitled note" is given as title.
             $title = "Untitled note";
         }
-
-        require "../../../app/database/create.php";
 
         if (insert_private_note_rest_api($title, $description, $user_status["ID"])) { //Note has been saved.
             echo json_encode(
@@ -85,7 +88,6 @@ function credentials_given($username, $pass)
 
 function credentialsValid_giveID($username, $pass)
 {
-    require "../../../app/database/read.php";
 
     $return_obj = array("status" => "false", "ID" => "no record found");
     $obj = check_credentials_return_id_rest_api($username, $pass);

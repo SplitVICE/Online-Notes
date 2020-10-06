@@ -4,8 +4,8 @@
 //JSON template:
 /*
 {
-    "title":"REST API NOTE",
-    "description":"This public note was registered from API REST"
+    "title":"JSON API NOTE",
+    "description":"This public note was registered from JSON"
 }
 */
 

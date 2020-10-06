@@ -275,7 +275,6 @@ function insert_private_note_api($note_title, $note_description, $user_id)
 // the database who's the owner of this private note.
 function insert_private_note_rest_api($note_title, $note_description, $user_id)
 {
-    require "../../../memory.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
