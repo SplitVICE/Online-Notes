@@ -166,7 +166,7 @@ function check_credentials_return_id_api($username_input, $password_input)
 // Returns ID if exists. Returns NA if password incorrect. 
 // Returns "no record found" if user not found. Returns key:value variable
 // with key parameter called "ID".
-function check_credentials_return_id_rest_api($username_input, $password_input)
+function check_credentials_return_id_json_api($username_input, $password_input)
 {
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
@@ -397,7 +397,7 @@ function return_all_accounts_in_an_array()
 // Returns int number with the number of private notes an user has created.
 // Required parameter: User's id. In other words, returns the number of private
 // notes an user is owner of.
-// If any note found, returns 0. 
+// If any note found, returns 0.
 function returnAmountOfPrivateNotesAssociatedWithUser($user_id)
 {
     $conn = new mysqli(
@@ -555,9 +555,7 @@ function bring_api_connection_token_by_user_cookie_info()
         $array = array();
         if ($stmt->fetch()) {
             $array = array(
-                'ID' => $ID
-                , 'user_id' => AES128_decrypt($user_id)
-                , 'token' => $token
+                'ID' => $ID, 'user_id' => AES128_decrypt($user_id), 'token' => $token
             );
         } else {
             $array = array('ID' => 'no record found');
@@ -574,4 +572,43 @@ function bring_api_connection_token_by_user_cookie_info()
 function check_if_api_connection_token_exists()
 {
     $user_data = bring_sessionToken_info_by_sessionToken_value();
+}
+
+// Returns an array of private notes by given the user ID.
+// Returns all private notes info decrypted.
+function fetch_private_notes_by_user_id_given($user_id)
+{
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT * FROM NOTE WHERE owner_id = '" . $user_id . "'";
+    $private_notes_result = $conn->query($sql);
+
+    $notes_array = array();
+
+    if ($private_notes_result->num_rows > 0) {
+        for ($i = 0; $row = $private_notes_result->fetch_assoc(); $i++) {
+            $notes_array[$i] = $row;
+        }
+
+        // Decrypts the notes.
+        for($i = 0; $i < count($notes_array); ++$i) {
+            $notes_array[$i]["title"] = AES128_decrypt($notes_array[$i]["title"]);
+            $notes_array[$i]["description"] = AES128_decrypt($notes_array[$i]["description"]);
+        }
+
+    }else{
+        $notes_array = array("status" => "warning", "description" => "user does not have private notes");
+    }
+
+    $conn->close();
+    return $notes_array;
 }

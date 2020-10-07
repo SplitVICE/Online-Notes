@@ -1,6 +1,6 @@
 <?php
 
-//Route: onlinenotes.ml/api/insert-public-note/index.php
+//Route: onlinenotes.ml/json/insert-public-note.php
 //JSON template:
 /*
 {

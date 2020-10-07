@@ -1,6 +1,6 @@
 <?php
 
-//Route: onlinenotes.vice/api/rest/insert-public-note/index.php
+//Route: onlinenotes.vice/api/json/insert-public-note.php
 //JSON template:
 /*
 {
