@@ -10,7 +10,7 @@
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 require "../../memory.php";
@@ -19,14 +19,20 @@ require "../../app/database/create.php";
 require "../../app/database/read.php";
 
 $data = json_decode(file_get_contents("php://input")); //Gets data from request JSON.
-$token = $data->token;
 
-if (token_given($token)) {
-    $user_id = tokenValid_returnId($token);
-    if ($user_id != null) {
-        $private_notes = fetch_private_notes_by_user_id_given($user_id);
-        echo json_encode($private_notes, JSON_PRETTY_PRINT);
+if (isset($data->token)) {
+    $token = $data->token;
+    if (token_given($token)) {
+        $user_id = tokenValid_returnId($token);
+        if ($user_id != null) {
+            $private_notes = fetch_private_notes_by_user_id_given($user_id);
+            echo json_encode($private_notes, JSON_PRETTY_PRINT);
+        }
     }
+} else {
+    echo json_encode(
+        array("status" => "failed", "description" => "token not given")
+    );
 }
 
 function token_given($token)
