@@ -23,12 +23,13 @@ $data = json_decode(file_get_contents("php://input")); //Gets data from request 
 $noteid = $data->noteid;
 $token = $data->token;
 
-if (    token_given($token)) {
+if (token_given($token)) {
     $user_id = tokenValid_returnId($token);
     if ($user_id != null) {
         delete_private_note_both_ids($noteid, $user_id);
         echo json_encode(
-            array("status" => "success", "description" => "query executed")
+            array("status" => "success", "description" => "query executed"),
+            JSON_PRETTY_PRINT
         );
     }
 }
@@ -39,7 +40,8 @@ function token_given($token)
         return true;
     }
     echo json_encode(
-        array("status" => "failed", "description" => "token not given")
+        array("status" => "failed", "description" => "token not given"),
+        JSON_PRETTY_PRINT
     );
     return false;
 }
@@ -57,7 +59,7 @@ function tokenValid_returnId($token)
             $return_obj
         );
         return null;
-    }else{ 
+    } else {
         return $obj["user_id"];
     }
 }
