@@ -569,11 +569,6 @@ function bring_api_connection_token_by_user_cookie_info()
     }
 }
 
-function check_if_api_connection_token_exists()
-{
-    $user_data = bring_sessionToken_info_by_sessionToken_value();
-}
-
 // Returns an array of private notes by given the user ID.
 // Returns all private notes info decrypted.
 function fetch_private_notes_by_user_id_given($user_id)
@@ -611,4 +606,50 @@ function fetch_private_notes_by_user_id_given($user_id)
 
     $conn->close();
     return $notes_array;
+}
+
+// Checks into the database if the token given exists.
+// If so, returns the user ID stored into the database.
+// If token does not exists, returns null.
+function api_connection_token_brind_id_if_exists($token){
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $sql_query = "SELECT * FROM API_CONNECTION_TOKEN WHERE token = ?";
+
+    if ($stmt = $conn->prepare($sql_query)) {
+
+        $stmt->bind_param("s", $token);
+
+        $stmt->execute();
+
+        $stmt->bind_result($ID, $user_id, $token);
+
+        $array = array();
+        if ($stmt->fetch()) {
+            $array = array(
+                'ID' => $ID, 'user_id' => AES128_decrypt($user_id), 'token' => $token
+            );
+        } else {
+            $array = array('ID' => 'no record found');
+        }
+
+        $stmt->close();
+
+        $conn->close();
+
+        if($array['ID'] == 'no record found'){
+            return null;
+        }else{
+            return $array;
+        }
+    }
 }
