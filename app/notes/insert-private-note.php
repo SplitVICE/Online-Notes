@@ -7,8 +7,8 @@ require "../database/create.php";
 require "../database/delete.php";
 require "../database/update.php";
 
-$note_title = $_GET['note_title'];
-$note_description = $_GET['note_description'];
+$note_title = $_POST['note_title'];
+$note_description = $_POST['note_description'];
 
 if ($note_title == '') {
     $note_title = "Untitled note";

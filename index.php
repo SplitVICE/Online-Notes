@@ -107,7 +107,7 @@ require "./app/database/update.php";
                 <div class="card-body">
 
                     <div class="container">
-                        <form action="app/notes/insert-public-note.php" method="GET">
+                        <form action="app/notes/insert-public-note.php" method="POST">
                             <div class="form-group">
                                 <input placeholder="Note's title" type="text" name="note_title" id="note_title" class="form-control">
                                 <small class="form-text text-muted">Note's title is optional</small>
@@ -118,7 +118,7 @@ require "./app/database/update.php";
                                     <div id="characters_left">
                                         Characters left:
                                         <spanclass="amount_of_characters">
-                                            1980
+                                            100000
                                             </span>
                                     </div>
                                 </small>

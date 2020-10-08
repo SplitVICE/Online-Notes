@@ -118,7 +118,7 @@ if (isset($_COOKIE['sessionToken'])) {
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
                     <div class="container">
-                        <form action="../app/notes/insert-private-note.php" method="GET">
+                        <form action="../app/notes/insert-private-note.php" method="POST">
 
                             <div class="form-group">
                                 <input placeholder="Note's title" type="text" name="note_title" id="note_title" class="form-control">
@@ -131,7 +131,7 @@ if (isset($_COOKIE['sessionToken'])) {
                                     <div id="characters_left">
                                         Characters left:
                                         <spanclass="amount_of_characters">
-                                            1980
+                                            100000
                                             </span>
                                     </div>
                                 </small>

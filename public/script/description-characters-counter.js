@@ -3,7 +3,7 @@ let noteLengthError_messageTooLarge_hasBeenShowed = false;
 // Updates the counter of max characters the database can handle
 // regarding how long the note description is.
 function characters_counter() {
-    const max_characters = 1980;
+    const max_characters = 100000;
     const text_area_value =
         document.getElementById("note_description").value;
     const number_of_characters = text_area_value.length;
