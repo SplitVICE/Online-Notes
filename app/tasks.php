@@ -113,3 +113,7 @@ function generate_apiConnectionToken()
 {
     return bin2hex(random_bytes(35)); 
 }
+
+function generate_accountDeletionCode(){
+    return bin2hex(random_bytes(10)); 
+}

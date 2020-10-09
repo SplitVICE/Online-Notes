@@ -188,32 +188,51 @@ if (isset($_COOKIE['sessionToken'])) {
     <div class="modal fade" id="deleteAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        <div class="h1">Delete account</div>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="h4">Your account will be permanently deleted if your procedure.</div>
-                    <div class="h4">
-                        Your username will be released and all associated notes
-                        will be deleted.
+                <form action="./delete-user.php" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            <div class="h1">Delete account</div>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <br>
-                    <div class="h4">
-                        Are you sure?
+                    <div class="modal-body">
+                        <div class="h4">Your account will be permanently deleted if your procedure.</div>
+                        <div class="h4">
+                            Your username will be released and all associated notes
+                            will be deleted.
+                        </div>
+                        <br>
+                        <div class="h4">
+                            Are you sure?
+                        </div>
+                        <br>
+                        To confirm this action please write the following code on the next text field and click "Delete my account" button.
+                        <br>
+                        Deletion code:
+                        <br>
+                        <?php
+                        // Creates a deletion code so to delete an account needs to be confirmed by the user.
+                        $_SESSION["userDeletionCode"] = generate_accountDeletionCode();
+                        echo '
+                        <div id="userDeletionCode" class="alert alert-warning" role="alert">' . $_SESSION["userDeletionCode"] . '</div>';
+                        ?>
+                        <div class="form-group">
+                            <input onkeyup="deletionCodeCheck()" name="input_userDeletionCode" id="deleteAccount_textField" class="form-control" placeholder="Deletion code" type="text">
+                        </div>
+                        <div id="userDeletionCode_notCorrect" class="alert alert-danger" role="alert">
+                            The code is not correct.
+                        </div>
+                        <div id="userDeletionCode_Correct" class="alert alert-success" role="alert">
+                            The code is correct.
+                        </div>
                     </div>
-                    <br>
-                    To confirm this action please write "Delete" on the next text field and click "Delete my account" button.
-                    <input type="text" name="" id="deleteAccount_textField">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteUserAccount()">Delete my account</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete my account</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

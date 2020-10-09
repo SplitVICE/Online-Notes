@@ -5,13 +5,45 @@ require "../app/tasks.php";
 require "../app/database/delete.php";
 require "../app/database/read.php";
 
-$user_data = bring_user_data_by_cookie_sessionToken();
+// Interpreted code.
+if (isset($_SESSION["userDeletionCode"]) && isset($_POST["input_userDeletionCode"])) {
+    echo "2";
+    if ($_SESSION["userDeletionCode"] == $_POST["input_userDeletionCode"]) {
+        echo "3";
+        delete_account();
+    } else {
+        return_to_private_notes();
+    }
+} else {
+    echo "4";
+    return_to_private_notes();
+}
 
-delete_user($user_data["user_id"]);
-delete_associated_notes($user_data["user_id"]);
-delete_all_sessions_user_request_or_account_delete();
+function delete_account()
+{
+    $user_data = bring_user_data_by_cookie_sessionToken();
+    delete_user($user_data["user_id"]);
+    delete_associated_notes($user_data["user_id"]);
+    delete_all_sessions_user_request_or_account_delete();
+    delete_cookie_sessionToken();
+    unset($_SESSION['userDeletionCode']);
+    redirect_to_account_deleted_page();
+}
 
-delete_cookie_sessionToken();
+function return_to_private_notes()
+{
+    $url = "./index.php";
+    header('Location: ' . $url);
+}
 
-$url = "../response/account-deleted/";
-header('Location: ' . $url);
+function return_to_public_notes()
+{
+    $url = "../index.php";
+    header('Location: ' . $url);
+}
+
+function redirect_to_account_deleted_page()
+{
+    $url = "../response/account-deleted/";
+    header('Location: ' . $url);
+}
