@@ -136,11 +136,20 @@ footer{
 
 .note_image { width: 10%; }
 
+@media only screen and (max-width: 520px){
+    .header_image{
+        width:340px;
+        height: auto;
+    }
+    .note_image { width: 24%; }
+}
+
 @media only screen and (max-width: 493px){
     .header_image{
         width:340px;
         height: auto;
     }
+    .note_image { width: 24%; }
 }
 
 @media only screen and (max-width: 385px){
@@ -151,6 +160,7 @@ footer{
     .note_action_button{
         margin-right: 0px;
     }
+    .note_image { width: 25%; }
 }
 
 @media only screen and (max-width: 325px){
@@ -165,4 +175,5 @@ footer{
         width:200px;
         height: auto;
     }
+    .note_image { width: 24%; }
 }
