@@ -86,7 +86,6 @@ body{
 }
 
 footer{
-    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -134,6 +133,8 @@ footer{
 .red{
     color:red;
 }
+
+.note_image { width: 13%; }
 
 @media only screen and (max-width: 493px){
     .header_image{

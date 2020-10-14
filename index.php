@@ -29,7 +29,6 @@ require "./app/database/update.php";
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <!-- Scripts and styles -->
-    <script src="public/script/global-script.js"></script>
     <script src="public/script/description-characters-counter.js"></script>
     <script src="public/script/sweetalert-functions.js"></script>
     <script src="public/script/copy-notes-info.js"></script>
@@ -149,8 +148,8 @@ require "./app/database/update.php";
             </div>
         </div>
     </footer>
-
     <script src="./public/script/public-notes-index.js"></script>
+    <script src="public/script/note_functions.js"></script>
 </body>
 
 </html>

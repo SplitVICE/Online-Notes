@@ -45,7 +45,6 @@ if (isset($_COOKIE['sessionToken'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <!-- Scripts and styles -->
-    <script src="../public/script/global-script.js"></script>
     <script src="../public/script/description-characters-counter.js"></script>
     <script src="../public/script/sweetalert-functions.js"></script>
     <script src="../public/script/copy-notes-info.js"></script>
@@ -256,6 +255,7 @@ if (isset($_COOKIE['sessionToken'])) {
     </footer>
 
     <script src="../public/script/private-notes-index.js"></script>
+    <script src="../public/script/note_functions.js"></script>
 </body>
 
 </html>
