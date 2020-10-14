@@ -26,7 +26,11 @@ function scrollIntoView_btnSubmitNote() {
 function regexMatcher_addImgTagToPlainTextString(plain_text) {
     // Source: https://stackoverflow.com/questions/38349684/javascript-plugin-for-finding-images-links-in-plain-text-and-converting-them-to
     const regexp = /\b(https?:\/\/\S+(?:png|jpe?g|gif)\S*)\b/ig;
-    const replace = "<img class='note_image' src='$1'>";
+    const replace = `
+    <a target='_blank' href="$1">
+        <img class='note_image' src='$1'>
+    </a>
+    `;
     return plain_text.replace(regexp, replace);
 }
 
