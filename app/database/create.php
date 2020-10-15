@@ -327,11 +327,24 @@ function create_new_api_connection_token(){
     if ($conn->connect_error) {
         die("Database connection failed: " . $conn->connect_error);
     }
-
-    if ($stmt = $conn->prepare("INSERT INTO API_CONNECTION_TOKEN (user_id, token) VALUES(?,?)")) {
-        $stmt->bind_param("ss"
+    
+    $tinyInt_boolTrue = 1;
+    $tinyInt_boolFalse = 0;
+    if ($stmt = $conn->prepare
+    ("INSERT INTO API_CONNECTION_TOKEN 
+    (user_id
+    , token
+    , ReadPermission
+    , PublishPermission
+    , DeletePermission) 
+    VALUES
+    (?,?,?,?,?)")) {
+        $stmt->bind_param("ssiii"
         , $user_id_encrypted
-        , $apiConnectionToken);
+        , $apiConnectionToken
+        , $tinyInt_boolTrue
+        , $tinyInt_boolTrue
+        , $tinyInt_boolFalse);
 
         $stmt->execute();
         $stmt->close();

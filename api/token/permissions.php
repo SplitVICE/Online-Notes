@@ -1,6 +1,9 @@
 <?php
+// =================================================================
+// === Usage. ===
+// Returns JSON with API Connection Token's current permissions.
 
-//Route: onlinenotes.vice/api/token/read-private-note.php
+//Route: onlinenotes.vice/api/token/permissions.php
 //JSON template:
 /*
 {
@@ -23,12 +26,18 @@ $data = json_decode(file_get_contents("php://input")); //Gets data from request 
 if (isset($data->token)) {
     $token = $data->token;
     if (token_given($token)) {
-        $user_id = tokenValid_returnUserId($token);
-        if ($user_id != null) {
-            if (tokenHasReadPermission($token)) {
-                $private_notes = fetch_private_notes_by_user_id_given($user_id);
-                echo json_encode($private_notes, JSON_PRETTY_PRINT);
-            }
+        $status = isTokenValid($token);
+        if ($status != null) {
+            $permissions = apiConnectionToken_bringPermissionDetails($token);
+            echo json_encode(
+                array(
+                    "status" => "success"
+                    , "description" => "token valid"
+                    , "ReadPermission" => $permissions["ReadPermission"]
+                    , "PublishPermission" => $permissions["PublishPermission"]
+                    , "DeletePermission" => $permissions["DeletePermission"]
+                )
+            );
         }
     }
 } else {
@@ -51,7 +60,7 @@ function token_given($token)
 // Checks if the token is valid.
 // If valid, returns user's ID.
 // If not valid, prints error code.
-function tokenValid_returnUserId($token)
+function isTokenValid($token)
 {
     $return_obj = array("status" => "failed", "description" => "token not valid");
     $obj = api_connection_token_brind_id_if_exists($token);
@@ -62,19 +71,6 @@ function tokenValid_returnUserId($token)
         );
         return null;
     } else {
-        return $obj["user_id"];
-    }
-}
-
-// Returns true if so. Prints error if no read permission.
-function tokenHasReadPermission($token)
-{
-    $tokenPermissions = apiConnectionToken_bringPermissionDetails($token);
-    if ($tokenPermissions["ReadPermission"] == 1) return true;
-    else {
-        echo json_encode(
-            array("status" => "failed", "description" => "read permission disallowed")
-        );
-        return null;
+        return true;
     }
 }

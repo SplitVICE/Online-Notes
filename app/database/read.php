@@ -550,12 +550,17 @@ function bring_api_connection_token_by_user_cookie_info()
 
         $stmt->execute();
 
-        $stmt->bind_result($ID, $user_id, $token);
+        $stmt->bind_result($ID, $user_id, $token, $ReadPermission, $PublishPermission, $DeletePermission);
 
         $array = array();
         if ($stmt->fetch()) {
             $array = array(
-                'ID' => $ID, 'user_id' => AES128_decrypt($user_id), 'token' => $token
+                'ID' => $ID
+                , 'user_id' => AES128_decrypt($user_id)
+                , 'token' => $token
+                , "ReadPermission" => $ReadPermission
+                , "PublishPermission" => $PublishPermission
+                , "DeletePermission" => $DeletePermission
             );
         } else {
             $array = array('ID' => 'no record found');
@@ -609,8 +614,9 @@ function fetch_private_notes_by_user_id_given($user_id)
 }
 
 // Checks into the database if the token given exists.
-// If so, returns the user ID stored into the database.
+// If so, returns the user ID whose belongs this token.
 // If token does not exists, returns null.
+// Note: function has name mistake: brind -> bring*.
 function api_connection_token_brind_id_if_exists($token){
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
@@ -631,7 +637,7 @@ function api_connection_token_brind_id_if_exists($token){
 
         $stmt->execute();
 
-        $stmt->bind_result($ID, $user_id, $token);
+        $stmt->bind_result($ID, $user_id, $token, $ReadPermission, $PublishPermission, $DeletePermission);
 
         $array = array();
         if ($stmt->fetch()) {
@@ -651,5 +657,49 @@ function api_connection_token_brind_id_if_exists($token){
         }else{
             return $array;
         }
+    }
+}
+
+// Returns array with read, delete, and publish permissions.
+// Used to check if the token's permissions.
+// Requires token's itself code.
+function apiConnectionToken_bringPermissionDetails($token){
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    $sql_query = "SELECT * FROM API_CONNECTION_TOKEN WHERE token = ?";
+
+    if ($stmt = $conn->prepare($sql_query)) {
+
+        $stmt->bind_param("s", $token);
+
+        $stmt->execute();
+
+        $stmt->bind_result($ID, $user_id, $token, $ReadPermission, $PublishPermission, $DeletePermission);
+
+        $array = array();
+        if ($stmt->fetch()) {
+            $array = array(
+                "ReadPermission" => $ReadPermission
+                , "PublishPermission" => $PublishPermission
+                , "DeletePermission" => $DeletePermission
+            );
+        } else {
+            $array = array('status' => 'no record found');
+        }
+
+        $stmt->close();
+
+        $conn->close();
+
+        return $array;
     }
 }

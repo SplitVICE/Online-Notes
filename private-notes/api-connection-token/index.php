@@ -5,6 +5,7 @@ require "../../app/tasks.php";
 require "../../app/database/read.php";
 require "../../app/database/create.php";
 require "../../app/database/delete.php";
+require "./functions.php";
 
 if (isset($_COOKIE['sessionToken'])) {
     $user_info = bring_user_data_by_cookie_sessionToken();
@@ -44,13 +45,13 @@ if (isset($_COOKIE['sessionToken'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <!-- Scripts and styles -->
-    <script src="../../public/script/global-script.js"></script>
     <script src="../../public/script/description-characters-counter.js"></script>
     <script src="../../public/script/sweetalert-functions.js"></script>
     <script src="../../public/script/copy-notes-info.js"></script>
     <link rel="stylesheet" href="../../public/styles/style.css">
     <link rel="stylesheet" href="../../public/styles/private-notes.css">
     <link rel="stylesheet" href="../../public/styles/white-background.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -107,20 +108,38 @@ if (isset($_COOKIE['sessionToken'])) {
         
         $result =  bring_api_connection_token_by_user_cookie_info();
         if(isset($result["user_id"])){
+            $publishPermissionContent = renderPublishCheckButton($result);
+            $readPermissionContent = renderReadCheckButton($result);
+            $deletePermissionContent = renderDeleteCheckButton($result);
             echo '
                 <div class=tokenExists>
                     <p class="h5">This account currently has an active API Connection Token.</p>
                     <hr>
                     <button id="btn_toggleApiVisible" class="btn btn-primary" type="button" onClick="apiConnectionToken_toggleVisible()">Show API Connection Token</button>
-                    <button class="btn btn-danger" type="button" onClick="delete_apiConnectionToken()">Delete API Connection Token</button>
                     <br>
                     <br>
-                    <div id="apiConnectionTokenHidden" class="alert alert-primary">
+                    <div id="apiConnectionTokenHidden" class="alert alert-primary token">
                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     </div>
-                    <div id="apiConnectionToken" class="alert alert-primary">
+                    <div id="apiConnectionToken" class="alert alert-primary token">
                         ' . $result["token"] . '
                     </div>
+                    <br>
+                    <br>
+                    <hr>
+                    <div class="h5">API Connection Token permissions</div>
+                    <p>
+                        Stablish what permissions you want to give to this API Connection Token.
+                    </p>
+                    <form method="POST" action="update-api-connection-token-permissions.php">
+                        ' . $readPermissionContent . '    
+                        ' . $publishPermissionContent . '   
+                        ' . $deletePermissionContent . '
+                        <input type="submit" value="Save changes" class="btn btn-primary">
+                   </form>
+                    <hr>
+                    <div class="h5">Options</div>
+                    <button class="btn btn-danger" type="button" onClick="delete_apiConnectionToken()">Delete API Connection Token</button>
                     <br>
                     <br>
                 </div>
@@ -138,7 +157,6 @@ if (isset($_COOKIE['sessionToken'])) {
         
         ?>
     </div>
-
     <!-- Modals -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

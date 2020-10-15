@@ -37,5 +37,8 @@ CREATE TABLE API_CONNECTION_TOKEN(
 	ID int NOT NULL AUTO_INCREMENT,
 	user_id varchar(250),
 	token varchar(250),
+	ReadPermission TINYINT,
+	PublishPermission TINYINT,
+	DeletePermission TINYINT,
 	PRIMARY KEY (ID)
 );

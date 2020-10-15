@@ -20,33 +20,48 @@ require "../../app/tasks.php";
 require "../../app/database/create.php";
 require "../../app/database/read.php";
 
-$data = json_decode(file_get_contents("php://input")); //Gets data from request JSON.
-$title = $data->title;
-$description = $data->description;
-$token = $data->token;
+$data = json_decode(file_get_contents("php://input")); // Gets data from request JSON.
 
-if (
-    description_given($description) &&
-    token_given($token)
-) {
-    $user_id = tokenValid_returnId($token);
-    if ($user_id != null) {
-        if ($title == "") {
-            $title = "Untitled note";
+if (isset($data->token)) {
+    $token = $data->token;
+    if (isset($data->description)) {
+        $description = $data->description;
+        $title = fetch_title($data);
+        if (
+            descriptionNotEmpty($description) &&
+            tokenNotEmpty($token)
+        ) {
+            $user_id = tokenValid_returnUserId($token);
+            if ($user_id != null) {
+                if (tokenHasPublishPermission($token)) {
+                    if ($title == "") {
+                        $title = "Untitled note";
+                    }
+                    if (insert_private_note_rest_api($title, $description, $user_id)) {
+                        echo json_encode(
+                            array("status" => "success", "description" => "private note has been saved")
+                        );
+                    } else {
+                        echo json_encode(
+                            array("status" => "failed", "description" => "error 500")
+                        );
+                    }
+                }
+            }
         }
-        if (insert_private_note_rest_api($title, $description, $user_id)) {
-            echo json_encode(
-                array("status" => "success", "description" => "private note has been saved")
-            );
-        } else {
-            echo json_encode(
-                array("status" => "failed", "description" => "error 500")
-            );
-        }
+    } else {
+        echo json_encode(
+            array("status" => "failed", "description" => "note description not given")
+        );
     }
+} else {
+    echo json_encode(
+        array("status" => "failed", "description" => "token not given")
+    );
 }
 
-function description_given($description)
+// Checks if description JSON key's value has content.
+function descriptionNotEmpty($description)
 {
     if ($description != "") {
         return true;
@@ -57,7 +72,7 @@ function description_given($description)
     return false;
 }
 
-function token_given($token)
+function tokenNotEmpty($token)
 {
     if ($token != "") {
         return true;
@@ -71,9 +86,9 @@ function token_given($token)
 // Checks if the token is valid.
 // If valid, returns user's ID.
 // If not valid, prints error code.
-function tokenValid_returnId($token)
+function tokenValid_returnUserId($token)
 {
-    $return_obj = array("status" => "false", "ID" => "token not valid");
+    $return_obj = array("status" => "failed", "description" => "token not valid");
     $obj = api_connection_token_brind_id_if_exists($token);
 
     if ($obj == null) {
@@ -81,7 +96,29 @@ function tokenValid_returnId($token)
             $return_obj
         );
         return null;
-    }else{ 
+    } else {
         return $obj["user_id"];
     }
+}
+
+// Returns true if so. Prints error if no read permission.
+function tokenHasPublishPermission($token)
+{
+    $tokenPermissions = apiConnectionToken_bringPermissionDetails($token);
+    if ($tokenPermissions["PublishPermission"] == 1) return true;
+    else {
+        echo json_encode(
+            array("status" => "failed", "description" => "publish permission disallowed")
+        );
+        return null;
+    }
+}
+
+// Returns title string. Returns "Untitled note" if not given.
+function fetch_title($data)
+{
+    if (isset($data->title))
+        return $data->title;
+    else
+        return "Untitled note";
 }

@@ -2,6 +2,17 @@ const btn_toggleApiVisible = document.getElementById("btn_toggleApiVisible");
 const apiConnectionTokenHidden = document.getElementById("apiConnectionTokenHidden");
 const apiConnectionToken = document.getElementById("apiConnectionToken");
 let = apiConnectionToken_isVisible = false;
+const publishPermission = document.getElementById("publishPermission");
+const readPermission = document.getElementById("readPermission");
+const deletePermission = document.getElementById("deletePermission");
+
+// Initial code execution. Makes API Connection Token not visible.
+function main() {
+    apiConnectionTokenHidden.style.display = "inline";
+    apiConnectionToken.style.display = "none";
+}
+
+main();
 
 // Makes the API Connection Token visible or not visible.
 function apiConnectionToken_toggleVisible() {
@@ -17,14 +28,6 @@ function apiConnectionToken_toggleVisible() {
         btn_toggleApiVisible.innerHTML = "Show API Connection Token";
     }
 }
-
-// Initial code execution. Makes API Connection Token not visible.
-function main() {
-    apiConnectionTokenHidden.style.display = "inline";
-    apiConnectionToken.style.display = "none";
-}
-
-main();
 
 // ================================================================================================
 // ================================================================================================
@@ -44,4 +47,8 @@ function delete_apiConnectionToken() {
             location.href = "./delete-api-connection-token.php";
         }
     })
+}
+
+function update_apiConnectionToken(){
+    
 }
