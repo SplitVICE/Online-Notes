@@ -1,8 +1,12 @@
 <?php
+//Route: onlinenotes.vice/api/isup
+//JSON template:
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-// API to see if the app is working.
-// Returns status:up if so.
-
-$response_raw = array("status"=>"up");
-
-echo json_encode($response_raw);
+echo json_encode(
+    array("status" => "up"),
+    JSON_PRETTY_PRINT
+);
