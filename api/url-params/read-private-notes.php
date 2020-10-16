@@ -2,6 +2,7 @@
 
 // Required variables: username, password, note-title, note-description.
 // note-title variable is optional.
+// onlinenotes.vice/api/url-params/read-private-notes.php?username=user&password=pass
 
 require "../../app/tasks.php";
 require "../../memory.php";
@@ -20,12 +21,12 @@ if (!isset($_GET['username']) || !isset($_GET['password'])) {
 
     $result = check_credentials_return_id_api($username, $password);
 
-    if ($result['ID'] != "NA") {
+    if ($result['ID'] != "NA" && $result['ID'] != "no record found") {
         $private_notes = fetch_private_notes_by_user_id_given($result["ID"]);
         echo json_encode($private_notes);
     } else {
         $response['status'] = "failed";
-        $response['description'] = "bad credentials";
+        $response['description'] = "credentials incorrect";
         echo $json_string = json_encode($response, JSON_PRETTY_PRINT);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-//Route: onlinenotes.vice/api/json/insert-public-note.php
+//Route: onlinenotes.vice/api/json/insert-private-note.php
 //JSON template:
 /*
 {
@@ -24,44 +24,44 @@ require "../../app/database/read.php";
 
 $data = json_decode(file_get_contents("php://input")); //Gets data from request JSON.
 
-$title = $data->title;
-$description = $data->description;
-$username = $data->username;
-$pass = $data->pass;
+if (isset($data->description) && isset($data->username) && isset($data->pass)) {
+    $title = "";
+    if (isset($data->title)) $title = $data->title;
+    $description = $data->description;
+    $username = $data->username;
+    $pass = $data->pass;
 
-if (
-    description_given($description) &&
-    credentials_given($username, $pass)
-) {
+    if (
+        description_given($description) &&
+        credentials_given($username, $pass)
+    ) {
+        $user_status = credentialsValid_giveID($username, $pass);
+        if ($user_status != null) {
+            if ($title == "") { // If title not given, "Untitled note" is given as title.
+                $title = "Untitled note";
+            }
 
-    $user_status = credentialsValid_giveID($username, $pass);
-
-    if ($user_status["status"] == "true") {
-        if ($title == "") { //If title not given, "Untitled note" is given as title.
-            $title = "Untitled note";
-        }
-
-        if (insert_private_note_rest_api($title, $description, $user_status["ID"])) { //Note has been saved.
-            echo json_encode(
-                array("status" => "success", "description" => "private note has been saved")
-            );
-        } else { //Error: internal database error.
-            echo json_encode(
-                array("status" => "failed", "description" => "internal database error")
-            );
-        }
-    } else {
-        if ($user_status["ID"] == "NA") { //Password incorrect.
-            echo json_encode(
-                array("status" => "failed", "description" => "password is incorrect")
-            );
-        }
-        if ($user_status["ID"] == "no record found") { // User was not found.
-            echo json_encode(
-                array("status" => "failed", "description" => "username does not exist")
-            );
+            if (insert_private_note_rest_api($title, $description, $user_status["ID"])) { //Note has been saved.
+                echo json_encode(
+                    array("status" => "success", "description" => "private note has been saved")
+                );
+            } else { //Error: internal database error.
+                echo json_encode(
+                    array("status" => "failed", "description" => "internal database error")
+                );
+            }
+        } else {
+            if ($user_status == null) { //Password incorrect.
+                echo json_encode(
+                    array("status" => "failed", "description" => "credentials incorrect")
+                );
+            }
         }
     }
+} else {
+    echo json_encode(
+        array("status" => "failed", "description" => "missing required JSON keys")
+    );
 }
 
 function description_given($description)
@@ -88,21 +88,16 @@ function credentials_given($username, $pass)
 
 function credentialsValid_giveID($username, $pass)
 {
-
     $return_obj = array("status" => "false", "ID" => "no record found");
-    $obj = check_credentials_return_id_rest_api($username, $pass);
+    $obj = check_credentials_return_id_api($username, $pass);
 
     if ($obj['ID'] == "NA") {
-        $return_obj["ID"] = "NA";
-        return $return_obj;
+        return null;
     }
 
     if ($obj['ID'] == "no record found") {
-        return $return_obj;
+        return null;
     }
-
-    $return_obj["status"] = "true";
     $return_obj["ID"] = $obj["ID"];
-
     return $return_obj;
 }

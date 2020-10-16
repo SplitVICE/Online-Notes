@@ -117,3 +117,9 @@ function generate_apiConnectionToken()
 function generate_accountDeletionCode(){
     return bin2hex(random_bytes(10)); 
 }
+
+// Returns the date.
+function getCurrentDate(){
+    date_default_timezone_set("America/New_York");
+    return date("Y/m/d h:i:sa");
+}

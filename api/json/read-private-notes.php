@@ -21,34 +21,29 @@ require "../../app/database/create.php";
 require "../../app/database/read.php";
 
 $data = json_decode(file_get_contents("php://input")); //Gets data from request JSON.
-
-if (isset($data)) {
+if (isset($data->username) && isset($data->pass)) {
     $username = $data->username;
     $pass = $data->pass;
-
     if (credentials_given($username, $pass)) {
-
         $user_status = credentialsValid_giveID($username, $pass);
-
-        if ($user_status["status"] == "true") {
+        if ($user_status != null) {
             $user_id = check_credentials_return_id_api($username, $pass);
             $private_notes = fetch_private_notes_by_user_id_given($user_id["ID"]);
             echo json_encode($private_notes, JSON_PRETTY_PRINT);
+        } else {
+            echo json_encode(
+                array("status" => "failed", "description" => "credentials incorrect")
+            );
         }
     } else {
         if ($user_status["ID"] == "NA") { //Password incorrect.
             echo json_encode(
-                array("status" => "failed", "description" => "password is incorrect")
-            );
-        }
-        if ($user_status["ID"] == "no record found") { // User was not found.
-            echo json_encode(
-                array("status" => "failed", "description" => "username does not exist")
+                array("status" => "failed", "description" => "missing required JSON keys")
             );
         }
     }
-}else{
-    echo json_encode(array("status" => "failed", "description" => "user data not given"));
+} else {
+    echo json_encode(array("status" => "failed", "description" => "credentials missing"));
 }
 
 function description_given($description)
@@ -79,16 +74,12 @@ function credentialsValid_giveID($username, $pass)
     $obj = check_credentials_return_id_json_api($username, $pass);
 
     if ($obj['ID'] == "NA") {
-        $return_obj["ID"] = "NA";
-        return $return_obj;
+        return null;
     }
 
     if ($obj['ID'] == "no record found") {
-        return $return_obj;
+        return null;
     }
-
-    $return_obj["status"] = "true";
     $return_obj["ID"] = $obj["ID"];
-
     return $return_obj;
 }

@@ -10,6 +10,7 @@ CREATE TABLE NOTE (
     description varchar(65535),
 	archived boolean,
 	in_trash_can boolean,
+	date varchar(100),
 	PRIMARY KEY (ID)
 );
 

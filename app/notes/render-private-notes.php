@@ -24,9 +24,13 @@ if ($private_notes_result->num_rows > 0) {
         $title = AES128_decrypt($notes_array[$array_length - 1]['title']);
         $description = AES128_decrypt($notes_array[$array_length - 1]['description']);
         $ID = $notes_array[$array_length - 1]['ID'];
+        $date = "";
+        if ($notes_array[$array_length - 1]['date'] != null) {
+            $date = "<span class='note_date'> - " . $notes_array[$array_length - 1]['date'] . "</span>";
+        }
 
         echo "<div class='note_container'>";
-        echo "<div class='note_title' id='note_title_". $ID ."'>" . $title . "</div>";
+        echo "<div class='note_title' id='note_title_" . $ID . "'>" . $title . "" . $date . "</div>";
         echo "<br>";
         echo "<div class='note_description' id='note_description_". $ID ."'>" . nl2br($description) . "</div>";
         echo "<div class='note_action_buttons_container'>";

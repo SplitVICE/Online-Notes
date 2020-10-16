@@ -76,3 +76,18 @@ function deletePrivateNote(note_id) {
   })
 }
 
+function deleteAllPublicNotes(){
+  Swal.fire({
+    title: 'Delete all public notes?',
+    text: "This cannot be undone.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Delete'
+}).then((result) => {
+    if (result.value) {
+        location.href = "./delete-all-public-notes.php";
+    }
+})
+}

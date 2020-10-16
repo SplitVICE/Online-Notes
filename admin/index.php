@@ -161,7 +161,7 @@ if (isset($_SESSION['admin_logged_in'])) {
         <div id="appSettingsManagementPanel">
         <br>
             <button type="button" class="btn btn-primary">Delete all sessions</button>
-            <button type="button" class="btn btn-primary">Delete all public notes</button>
+            <button type="button" class="btn btn-primary" onclick="deleteAllPublicNotes()">Delete all public notes</button>
             <button type="button" class="btn btn-primary">Delete all private notes</button>
             <button type="button" class="btn btn-primary">Delete all accounts</button>
             <button type="button" class="btn btn-primary">Wipe all data</button>

@@ -6,7 +6,7 @@ require "../memory.php";
 if ($_SESSION['admin_logged_in'] == true) {
     echo "Public notes deleted";
     delete_all_public_notes();
-    $url = "/dashboard";
+    $url = "./index.php";
     header('Location: ' . $url);
 } else {
     $url = "/";

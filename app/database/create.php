@@ -82,6 +82,8 @@ function register_new_session_token($token, $user_id, $username){
 function insert_public_note($note_title, $note_description)
 {
     require "../../memory.php";
+    require "../tasks.php";
+    $date = getCurrentDate();
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -94,9 +96,9 @@ function insert_public_note($note_title, $note_description)
     }
 
     // A prepared statement is made to perform the SQL query.
-    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
-                                    VALUES('public', ?, ?, false, false)")) {
-        $stmt->bind_param("ss", $note_title, $note_description);
+    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can, date)
+                                    VALUES('public', ?, ?, false, false, ?)")) {
+        $stmt->bind_param("sss", $note_title, $note_description, $date);
 
         $stmt->execute();
         $stmt->close();
@@ -116,6 +118,7 @@ function insert_private_note($note_title, $note_description)
     // the database.
     // User's ID will determine who's the owner of this private note.
     $user_info = bring_user_data_by_cookie_sessionToken();
+    $date = getCurrentDate();
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -131,9 +134,9 @@ function insert_private_note($note_title, $note_description)
     $note_title_encrypted = AES128_encrypt($note_title);
     $note_description_encrypted = AES128_encrypt($note_description);
 
-    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
-                                    VALUES(?, ?, ?, false, false)")) {
-        $stmt->bind_param("sss", $user_info["user_id"], $note_title_encrypted, $note_description_encrypted);
+    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can, date)
+                                    VALUES(?, ?, ?, false, false, ?)")) {
+        $stmt->bind_param("ssss", $user_info["user_id"], $note_title_encrypted, $note_description_encrypted, $date);
 
         $stmt->execute();
         $stmt->close();
@@ -158,6 +161,7 @@ function insert_private_note($note_title, $note_description)
 function insert_public_note_api($note_title, $note_description)
 {
     require "../../memory.php";
+    $date = getCurrentDate();
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -174,9 +178,9 @@ function insert_public_note_api($note_title, $note_description)
     // Returns false if there was some kind of error in the process.
     $query_status = true;
 
-    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
-                                    VALUES('public', ?, ?, false, false)")) {
-        $stmt->bind_param("ss", $note_title, $note_description);
+    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can, date)
+                                    VALUES('public', ?, ?, false, false, ?)")) {
+        $stmt->bind_param("sss", $note_title, $note_description, $date);
 
         $stmt->execute();
         $stmt->close();
@@ -194,6 +198,7 @@ function insert_public_note_api($note_title, $note_description)
 // Required variables: too descriptive.
 function insert_public_note_rest_api($note_title, $note_description)
 {
+    require "../../app/tasks.php";
     $conn = new mysqli(
         $_ENV['onlinenotes_database_server_name'],
         $_ENV['onlinenotes_database_username'],
@@ -209,10 +214,11 @@ function insert_public_note_rest_api($note_title, $note_description)
     // This variable is returned as true if the query was successful.
     // Returns false if there was some kind of error in the process.
     $query_status = true;
+    $date = getCurrentDate();
 
-    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
-                                    VALUES('public', ?, ?, false, false)")) {
-        $stmt->bind_param("ss", $note_title, $note_description);
+    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can, date)
+                                    VALUES('public', ?, ?, false, false, ?)")) {
+        $stmt->bind_param("sss", $note_title, $note_description, $date);
 
         $stmt->execute();
         $stmt->close();
@@ -244,17 +250,18 @@ function insert_private_note_api($note_title, $note_description, $user_id)
     }
 
     $query_status = true;
-
+    $date = getCurrentDate();
     $note_title_encrypted = AES128_encrypt($note_title);
     $note_description_encrypted = AES128_encrypt($note_description);
 
-    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
-                                    VALUES(?, ?, ?, false, false)")) {
+    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can, date)
+                                    VALUES(?, ?, ?, false, false, ?)")) {
         $stmt->bind_param(
-            "sss",
+            "ssss",
             $user_id,
             $note_title_encrypted,
-            $note_description_encrypted
+            $note_description_encrypted,
+            $date
         );
 
         $stmt->execute();
@@ -287,17 +294,18 @@ function insert_private_note_rest_api($note_title, $note_description, $user_id)
     }
 
     $query_status = true;
-
+    $date = getCurrentDate();
     $note_title_encrypted = AES128_encrypt($note_title);
     $note_description_encrypted = AES128_encrypt($note_description);
 
-    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can)
-                                    VALUES(?, ?, ?, false, false)")) {
+    if ($stmt = $conn->prepare("INSERT INTO NOTE (owner_id, title, description, archived, in_trash_can, date)
+                                    VALUES(?, ?, ?, false, false, ?)")) {
         $stmt->bind_param(
-            "sss",
+            "ssss",
             $user_id,
             $note_title_encrypted,
-            $note_description_encrypted
+            $note_description_encrypted,
+            $date
         );
 
         $stmt->execute();

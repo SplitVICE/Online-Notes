@@ -119,41 +119,28 @@ function check_credentials_return_id_api($username_input, $password_input)
         $_ENV['onlinenotes_database_password'],
         $_ENV['onlinenotes_database_name']
     );
-
     if ($conn->connect_error) {
         die("Database connection failed: " . $conn->connect_error);
     }
-
     $sql_query = "SELECT * FROM USER WHERE username = ?";
 
     if ($stmt = $conn->prepare($sql_query)) {
-
         $stmt->bind_param("s", $username_input);
-
         $stmt->execute();
-
         $stmt->bind_result($ID, $username, $password, $salt);
-
         $json = array();
         if ($stmt->fetch()) {
-
-            $json = array();
-
             $is_password_correct = sha512_compare($salt, $password_input, $password);
-
             if ($is_password_correct) {
                 $json['ID'] = $ID;
             } else {
                 $json['ID'] = "NA";
             }
         } else {
-            $json = array('ID' => 'no record found');
+            $json['ID'] = "no record found";
         }
-
         $stmt->close();
-
         $conn->close();
-
         return $json;
     }
 }
@@ -162,7 +149,7 @@ function check_credentials_return_id_api($username_input, $password_input)
 // Required variables: username and password.
 // This function is only used when an user wants to create a new private
 // note when using the REST API.
-// This function is used at: app/api/insert-private-note/index.php .
+// This function is used at: app/api/json/insert-private-note/index.php .
 // Returns ID if exists. Returns NA if password incorrect. 
 // Returns "no record found" if user not found. Returns key:value variable
 // with key parameter called "ID".
