@@ -41,3 +41,20 @@ function renderDeleteCheckButton($tokenParams){
         ';
     }
 }
+
+function renderAPIConnectionTokenActivePermissions($tokenParams){
+    $msg = "<b>Active private notes permissions: ";
+    if($tokenParams["DeletePermission"] == 0 && $tokenParams["PublishPermission"] == 0 && $tokenParams["ReadPermission"] == 0)
+        $msg .= "none.";
+    else{
+        if($tokenParams["ReadPermission"] == 1)
+        $msg .= "| Read ";
+        if($tokenParams["PublishPermission"] == 1)
+        $msg .= "| Publish ";
+        if($tokenParams["DeletePermission"] == 1)
+        $msg .= "| Delete ";
+        $msg .= "|";
+    }
+    $msg .= "</b>";
+    return $msg;
+}

@@ -101,16 +101,16 @@ if (isset($_COOKIE['sessionToken'])) {
     <div class="container">
         <br>
         <div class="h1">API Connection Token</div>
-        <p>API Connection Tokens can be used to publish and read private notes of this account ownership.</p>
-        <p>This is an IT developers functionality. Read <a href="#">API</a> page to learn more about API Connection Tokens and how to use them.</p>
+        <p>API Connection Tokens can be used to publish, read, and delete private notes of this account ownership from external software.</p>
+        <p>This is an IT developers functionality. Read <a href="#">API</a> page to learn more about API Connection Tokens and how to use it.</p>
         <hr>
-        <?php 
-        
+        <?php         
         $result =  bring_api_connection_token_by_user_cookie_info();
         if(isset($result["user_id"])){
             $publishPermissionContent = renderPublishCheckButton($result);
             $readPermissionContent = renderReadCheckButton($result);
             $deletePermissionContent = renderDeleteCheckButton($result);
+            $APIConnectionTokenActivePermissions = renderAPIConnectionTokenActivePermissions($result);
             echo '
                 <div class=tokenExists>
                     <p class="h5">This account currently has an active API Connection Token.</p>
@@ -130,6 +130,8 @@ if (isset($_COOKIE['sessionToken'])) {
                     <div class="h5">API Connection Token permissions</div>
                     <p>
                         Stablish what permissions you want to give to this API Connection Token.
+                        <br>
+                        ' . $APIConnectionTokenActivePermissions . '
                     </p>
                     <form method="POST" action="update-api-connection-token-permissions.php">
                         ' . $readPermissionContent . '    

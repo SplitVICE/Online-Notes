@@ -14,10 +14,6 @@ function deletePrivateNote(note_id) {
     })
 }
 
-function openApiConnectionTokenPage() {
-    location.href = "./api-connection-token";
-}
-
 // ====================================================================================================
 // ====================================================================================================
 // User deletion functions.

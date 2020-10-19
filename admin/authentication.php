@@ -75,11 +75,12 @@
                 </form>
                 ';
         } else {
-            echo '
+            echo "
                 <div class=title>
                     Please, set admin password at the environment variables.
                 </div>
-                ';
+                Read Online Note's documentation if you need more information.
+                ";
         }
         ?>
         <br>

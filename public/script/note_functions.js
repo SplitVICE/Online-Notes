@@ -14,6 +14,7 @@ function writeANewNote_openCollapse() {
 function scrollIntoView_btnSubmitNote() {
     setTimeout(() => {
         document.getElementById('btn_submitNote').scrollIntoView();
+        document.getElementById("note_title").focus();
     }, 200);
 }
 
@@ -40,7 +41,7 @@ function linkify(inputText) {
     replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
 
     //Change img addresses to <img> tag.
-	replacePattern4 = /(?<=>)(https?:\/\/\S+(?:png|jpe?g|gif)[^<]*)/g;
+    replacePattern4 = /(?<=>)(https?:\/\/\S+(?:png|jpe?g|gif)[^<]*)/g;
     replacedText = replacedText.replace(replacePattern4, '<img src="$1" class="note_image">');
 
     return replacedText;
@@ -50,5 +51,5 @@ function linkify(inputText) {
 const note_description_elements = document.getElementsByClassName("note_description");
 for (var i = 0; i < note_description_elements.length; i++) {
     note_description_elements[i].innerHTML =
-    linkify(note_description_elements[i].innerHTML);
+        linkify(note_description_elements[i].innerHTML);
 } 

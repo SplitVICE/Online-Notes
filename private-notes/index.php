@@ -158,23 +158,27 @@ if (isset($_COOKIE['sessionToken'])) {
                 </div>
                 <div class="modal-body">
                     <div class="shadow p-3 mb-5 bg-white rounded alert alert-secondary">
-                        <a href="./close-all-sessions.php">
-                            <button type="button" class="btn btn-primary">Close all sessions</button>
-                        </a>
+                        <div class="h5">Close all sessions</div>
                         <hr>
                         All your sessions will be closed. This means that if you left your private notes session
                         (login) open onto another computer, it will automatically be closed. Note: this session
                         will be closed too.
+                        <hr>
+                        <a href="./close-all-sessions.php">Close all open sessions.</a>
                     </div>
                     <div class="shadow p-3 mb-5 bg-white rounded alert alert-secondary">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteAccount">Delete my account</button>
+                        <div class="h5">API Connection Token</div>
                         <hr>
-                        Delete you account and all associated notes. None of the info will be kept into our databases.
+                        <b>For developers.</b> Create a API Connection Token which can be used to insert, read, and delete your private notes from external software.
+                        <hr>
+                        <a href="./api-connection-token">API Connection Token.</a>
                     </div>
                     <div class="shadow p-3 mb-5 bg-white rounded alert alert-secondary">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" onclick="openApiConnectionTokenPage()">API Connection Token</button>
+                        <div class="h5">Delete account</div>
                         <hr>
-                        <b>For developers.</b> Create a API Connection Token which can be used to insert and read your private notes from other software.
+                        Delete you account and all associated notes. None of the info will be kept in database.
+                        <hr>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#deleteAccount">Delete my account</button>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -197,7 +201,7 @@ if (isset($_COOKIE['sessionToken'])) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="h4">Your account will be permanently deleted if your procedure.</div>
+                        <div class="h4">Your account will be permanently deleted if you continue.</div>
                         <div class="h4">
                             Your username will be released and all associated notes
                             will be deleted.

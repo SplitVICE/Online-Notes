@@ -19,7 +19,7 @@
 
 <body>
     <div class="header">
-        <h5 class="">Online notes - Alpha 1.2.0</h5>
+        <h5 class="">Online notes - BETA</h5>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -50,7 +50,7 @@
         <div class="online-notes-container">
         <img class="online-notes-image" src="/public/img/online-notes-logo-plus-letters.png" alt="Missing image!">
         <br>
-        <span class="online_notes_version">Version 4.2.2-alpha</span>
+        <span class="online_notes_version">Version BETA-dev</span>
         </div>
         <br>
         <div class="vice_image_div_container">
@@ -73,6 +73,9 @@
             </li>
             <li>
                 <a target="_blank" href="https://github.com/vlucas/phpdotenv">PHP dotenv</a>
+            </li>
+            <li>
+                <a target="_blank" href="https://getbootstrap.com/">Bootstrap</a>
             </li>
             <li>
                 <a target="_blank" href="https://getcomposer.org/">Composer - Dependency Manager for PHP</a>

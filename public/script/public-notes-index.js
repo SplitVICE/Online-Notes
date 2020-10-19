@@ -13,4 +13,3 @@ function deletePublicNote(note_id) {
         }
     })
 }
-

@@ -75,7 +75,10 @@ require "./app/database/update.php";
                     <a class="nav-link" href="./faq/">FAQ<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/about">About<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="./about">About<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link text-muted" >BETA - Minor functionalities on the works.<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
         </div>
@@ -89,7 +92,6 @@ require "./app/database/update.php";
     </div>
     <?php require './app/notes/render-public-notes.php'; ?>
     <hr>
-
     <div class="accordion" id="accordionExample">
         <div class="card">
             <div class="card-header" id="headingTwo">
@@ -112,7 +114,7 @@ require "./app/database/update.php";
                                 <small class="form-text text-muted">Note's title is optional</small>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" cols="90" rows="11" required onkeyup="characters_counter()" placeholder="Note's description.&#13;&#10;Come here again anytime to see your note.&#13;&#10;You and anyone else can delete notes at any time.&#13;&#10;&#13;&#10;Do not store sensitive information.&#13;&#10;&#13;&#10;Create a free account to store private notes.&#13;&#10;Read FAQ for more info." name="note_description" id="note_description"></textarea>
+                                <textarea name="note_description" id="note_description" class="form-control" cols="90" rows="11" required onkeyup="characters_counter()" placeholder="Note's description.&#13;&#10;Come here again anytime to see your note.&#13;&#10;You and anyone else can delete notes at any time.&#13;&#10;&#13;&#10;Do not store sensitive information.&#13;&#10;&#13;&#10;Create a free account to store private notes.&#13;&#10;Read FAQ for more info."></textarea>
                                 <small id="emailHelp" class="form-text text-muted">
                                     <div id="characters_left">
                                         Characters left:
