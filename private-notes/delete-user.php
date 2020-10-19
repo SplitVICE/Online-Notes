@@ -7,15 +7,12 @@ require "../app/database/read.php";
 
 // Interpreted code.
 if (isset($_SESSION["userDeletionCode"]) && isset($_POST["input_userDeletionCode"])) {
-    echo "2";
     if ($_SESSION["userDeletionCode"] == $_POST["input_userDeletionCode"]) {
-        echo "3";
         delete_account();
     } else {
         return_to_private_notes();
     }
 } else {
-    echo "4";
     return_to_private_notes();
 }
 
@@ -25,6 +22,7 @@ function delete_account()
     delete_user($user_data["user_id"]);
     delete_associated_notes($user_data["user_id"]);
     delete_all_sessions_user_request_or_account_delete();
+    delete_api_connection_token_UserId($user_data["user_id"]);
     delete_cookie_sessionToken();
     unset($_SESSION['userDeletionCode']);
     redirect_to_account_deleted_page();

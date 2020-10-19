@@ -327,6 +327,31 @@ function delete_api_connection_token()
     $conn->close();
 }
 
+// Deletes all API Connection Tokens related to given UserId ID.
+function delete_api_connection_token_UserId($UserId){
+    $user_id_encrypted = AES128_encrypt($UserId);
+
+    $conn = new mysqli(
+        $_ENV['onlinenotes_database_server_name'],
+        $_ENV['onlinenotes_database_username'],
+        $_ENV['onlinenotes_database_password'],
+        $_ENV['onlinenotes_database_name']
+    );
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
+    if ($stmt = $conn->prepare("DELETE FROM API_CONNECTION_TOKEN WHERE user_id = ?;")) {
+        $stmt->bind_param("s", $user_id_encrypted);
+
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    $conn->close();
+}
+
 // Deletes a private notes.
 // Requires note ID and user ID.
 function delete_private_note_both_ids($note_id, $user_id)
