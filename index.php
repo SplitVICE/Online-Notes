@@ -78,7 +78,9 @@ require "./app/database/update.php";
                     <a class="nav-link" href="./about">About<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link text-muted" >BETA - Minor functionalities on the works.<span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-muted" href="javascript:;" data-toggle="modal" data-target="#beta_modal">
+                        0.1.0-beta
+                    </a>
                 </li>
             </ul>
         </div>
@@ -128,6 +130,29 @@ require "./app/database/update.php";
                         </form>
                         <br>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="beta_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Online Notes Beta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Online Notes still in beta. Minor bugs and functionalities are missing still. Stand by...
+                    <br>
+                    <br>
+                    - VICE
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
