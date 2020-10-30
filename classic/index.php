@@ -30,14 +30,14 @@
     
 
     <!-- Browser tab title -->
-    <title>Public notes</title>
+    <title>Online notes</title>
 </head>
 
 <body>
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <h1>Public notes</h1>
+                <h1>Online Notes</h1>
                 <h6>Store and delete public notes. Consult them anywhere</h6>
                 <div id="accordion" role="tablist">
                     <div class="card">
