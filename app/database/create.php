@@ -104,10 +104,6 @@ function insert_public_note($note_title, $note_description)
         $stmt->close();
     }
     $conn->close();
-
-    // When the query finishes, the user is redirected to project's root index.php.
-    $url = "../../";
-    header('Location: ' . $url);
 }
 
 // Function that inserts a new private note into the database.
@@ -143,11 +139,6 @@ function insert_private_note($note_title, $note_description)
     }
 
     $conn->close();
-
-    // User is redirected to the route private-notes because that's where the user inserts
-    // private notes.
-    $url = "../../private-notes";
-    header('Location: ' . $url);
 }
 
 ////////////////////////////////////////////////////////////
