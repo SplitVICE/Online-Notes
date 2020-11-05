@@ -178,7 +178,7 @@ if (isset($_COOKIE['sessionToken'])) {
                         <hr>
                         Delete you account and all associated notes. None of the info will be kept in database.
                         <hr>
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#deleteAccount">Delete my account</button>
+                        <a class="btn btn-warning" href="./delete-account">Delete my account</a>
                     </div>
                 </div>
                 <div class="modal-footer">

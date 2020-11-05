@@ -5,7 +5,6 @@ require "../app/tasks.php";
 require "../app/database/delete.php";
 require "../app/database/read.php";
 
-// Interpreted code.
 if (isset($_SESSION["userDeletionCode"]) && isset($_POST["input_userDeletionCode"])) {
     if ($_SESSION["userDeletionCode"] == $_POST["input_userDeletionCode"]) {
         delete_account();
