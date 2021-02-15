@@ -79,7 +79,7 @@ require "./app/database/update.php";
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link text-muted" href="javascript:;" data-toggle="modal" data-target="#beta_modal">
-                        0.1.0-beta
+                        0.2.0-beta
                     </a>
                 </li>
             </ul>
