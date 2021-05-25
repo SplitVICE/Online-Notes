@@ -54,13 +54,13 @@
         </div>
         <br>
         <div class="vice_image_div_container">
-            <img id="vice_image" src="../public/img/just-vice.png" alt="Missing image">
+            <img id="vice_image" src="../public/img/split-vice.png" alt="Missing image">
         </div>
         <p>
             Online Notes created entirely by VICE.
         </p>
         <p>
-            Visit the author's web page clicking here: <a target="_blank" href="https://justvice.github.io/">VICE's archive web page.</a>
+            Visit the author's web page clicking here: <a target="_blank" href="http://split-vice.com">VICE's archive web page.</a>
         </p>
         <br>
         <h5>Credits</h5>
@@ -88,7 +88,7 @@
         <p>
             You can download this entire project at it's Github repository and run your own Online Notes.
             <br>
-            <a target="_blank" href="https://www.github.com/JustVice/Online-Notes/">Online Notes repository</a>
+            <a target="_blank" href="https://www.github.com/SplitVice/Online-Notes/">Online Notes repository</a>
         </p>
     </div>
     <hr>

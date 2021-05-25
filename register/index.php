@@ -104,13 +104,13 @@
     <br>
     <footer>
         <div class="container">
-            <a target="_blank" href="https://github.com/JustVice/Online-Notes">
+            <a target="_blank" href="https://github.com/splitvice/Online-Notes">
                 <i class="fab fa-github-square fontawesome"></i>
             </a>
-            <a target="_blank" href="https://twitter.com/_JustVice_">
+            <a target="_blank" href="http://split-vice.com/s/twitter">
                 <i class="fab fa-twitter-square fontawesome"></i>
             </a>
-            <a target="_blank" href="https://justvice.github.io/technology/web-software/online-notes/">
+            <a target="_blank" href="http://split-vice.com/technology/web-software/online-notes/">
                 <i class="fas fa-laptop-code fontawesome"></i>
             </a>
             <br>
