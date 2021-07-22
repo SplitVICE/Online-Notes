@@ -3,6 +3,13 @@
 // Requires URL parameters -> note-description & note-title .
 // note-title parameter is optional.
 // onlinenotes.vice/api/url-params/insert-public-note.php?note-description="nteDesc"&note-title="nteTitle"
+
+// Headers
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
+
 require "../../app/database/create.php";
 require "../../app/tasks.php";
 $response = array();
